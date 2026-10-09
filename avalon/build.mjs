@@ -1,0 +1,12 @@
+import * as esbuild from 'esbuild';
+import fs from 'fs';
+const entry = process.argv[2] || 'src/main.js';
+const out = process.argv[3] || 'dist/index.html';
+const res = await esbuild.build({ entryPoints: [entry], bundle: true, minify: !process.env.DEV, format: 'iife', write: false, target: 'es2020', legalComments: 'none' });
+const js = res.outputFiles[0].text;
+const css = fs.existsSync('src/ui/style.css') ? fs.readFileSync('src/ui/style.css', 'utf8') : '';
+const shell = fs.readFileSync('src/index.html', 'utf8');
+fs.mkdirSync('dist', { recursive: true });
+const html = shell.replace('/*__CSS__*/', () => css).replace('/*__JS__*/', () => js.replace(/<\/script/g, '<\\/script'));
+fs.writeFileSync(out, html);
+console.log('built', out, (html.length / 1024).toFixed(0) + ' KB');

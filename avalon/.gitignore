@@ -1,0 +1,4 @@
+node_modules/
+shot.mjs
+shots.mjs
+dist/test.html

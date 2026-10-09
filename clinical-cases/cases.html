@@ -9,7 +9,8 @@
   body { font-family: "DejaVu Sans", Arial, sans-serif; font-size: 10.5pt; line-height: 1.42; color: #1a1a1a; margin: 0; }
   .page { page-break-after: always; }
   .page:last-child { page-break-after: auto; }
-  h1 { font-size: 22pt; color: #1f3a5f; margin: 40mm 0 4mm; }
+  h1 { font-size: 22pt; color: #1f3a5f; margin: 0 0 2mm; }
+  .sub { font-size: 12pt; color: #1f3a5f; margin-top: 0; }
   h2 { font-size: 14pt; color: #fff; background: #1f3a5f; padding: 6px 10px; margin: 0 0 8px; border-radius: 3px; }
   h2.ans { background: #2e6b3f; }
   .tag { float: right; font-size: 9pt; font-weight: normal; opacity: .9; margin-top: 3px; }
@@ -27,37 +28,19 @@
   .small { font-size: 9pt; color: #555; }
   ul { margin: 2px 0; padding-left: 18px; }
   .cover p { max-width: 150mm; }
-  .toc td { border: none; border-bottom: 1px solid #e3e8ee; padding: 3px 6px; }
+  .toc td { border: none; border-bottom: 1px solid #e3e8ee; padding: 2px 6px; font-size: 9.5pt; }
+  .toc tr.part td { background: #1f3a5f; color: #fff; font-weight: bold; padding: 4px 6px; }
+  .toc tr.part .small { color: #dbe4ef; }
 </style>
 </head>
 <body>
-
-<!-- ============ COVER ============ -->
 <div class="page cover">
   <h1>Clinical Case Bank</h1>
-  <p style="font-size:12pt;color:#1f3a5f;margin-top:0">15 exam-style cases built from the <i>Integrated Clinical Revision Guide</i> (Ain Shams 2025–2026, Levels A–C)</p>
+  <p class="sub">43 exam-style cases built from the <i>Integrated Clinical Revision Guide</i> (Ain Shams 2025–2026, Levels A–C)</p>
   <p><b>How to use:</b> each case is worth <b>10 marks</b>. Answer the case page on its own, then turn over: the next page has the model answer and the marking scheme. Doses are as printed in the source guide, so check them against your department's textbook.</p>
-  <table class="toc">
-    <tr><th>#</th><th>Case</th><th>Specialty</th></tr>
-    <tr><td>1</td><td>Crushing chest pain with hypotension (inferior STEMI + RV infarct)</td><td>Cardiology</td></tr>
-    <tr><td>2</td><td>Child with flitting joint pains and a new murmur (rheumatic fever)</td><td>Cardiology</td></tr>
-    <tr><td>3</td><td>Breathless young woman who can only say single words (acute severe asthma)</td><td>Chest</td></tr>
-    <tr><td>4</td><td>Chronic cough, night sweats and an apical cavity (pulmonary TB)</td><td>Chest</td></tr>
-    <tr><td>5</td><td>Tired woman with heavy periods (iron-deficiency anemia)</td><td>Hematology</td></tr>
-    <tr><td>6</td><td>Macrocytic anemia with numb feet (B12 deficiency)</td><td>Hematology</td></tr>
-    <tr><td>7</td><td>Petechiae in a well young woman (ITP)</td><td>Hematology</td></tr>
-    <tr><td>8</td><td>Fever, neck stiffness and a rash (meningococcal meningitis)</td><td>Tropical / ID</td></tr>
-    <tr><td>9</td><td>Undulant fever in a farmer (brucellosis)</td><td>Tropical / ID</td></tr>
-    <tr><td>10</td><td>Collapse after an antibiotic injection (anaphylaxis)</td><td>Immunology</td></tr>
-    <tr><td>11</td><td>Blisters and sore lips after a new drug (SJS/TEN)</td><td>Immunology</td></tr>
-    <tr><td>12</td><td>Painless penile ulcer (primary syphilis)</td><td>Dermatology / STI</td></tr>
-    <tr><td>13</td><td>Itchy family at night (scabies)</td><td>Dermatology</td></tr>
-    <tr><td>14</td><td>"They'd be better off without me" (major depression + suicide risk)</td><td>Psychiatry</td></tr>
-    <tr><td>15</td><td>Confused and shaking on day 3 after surgery (delirium tremens)</td><td>Psychiatry</td></tr>
-  </table>
+  <table class="toc"><tr class="part"><td colspan="2">Part 1 · Cardiology <span class="small">(6 cases)</span></td></tr><tr><td>1</td><td>Crushing chest pain with hypotension (inferior STEMI + RV infarct)</td></tr><tr><td>2</td><td>Sudden breathlessness after a long flight (pulmonary embolism)</td></tr><tr><td>3</td><td>Fever and a louder murmur after a dental extraction (infective endocarditis)</td></tr><tr><td>4</td><td>Breathless at night with pink frothy sputum (acute heart failure)</td></tr><tr><td>5</td><td>Irregular palpitations in an elderly woman (atrial fibrillation)</td></tr><tr><td>6</td><td>Child with flitting joint pains and a new murmur (rheumatic fever)</td></tr><tr class="part"><td colspan="2">Part 2 · Chest <span class="small">(6 cases)</span></td></tr><tr><td>7</td><td>Breathless woman who can only say single words (acute severe asthma)</td></tr><tr><td>8</td><td>Smoker with worse breathlessness and green sputum (COPD exacerbation)</td></tr><tr><td>9</td><td>Elderly man with fever, confusion and consolidation (pneumonia)</td></tr><tr><td>10</td><td>Tall young man with sudden chest pain (pneumothorax)</td></tr><tr><td>11</td><td>Progressive breathlessness with Velcro crackles (pulmonary fibrosis)</td></tr><tr><td>12</td><td>Chronic cough, night sweats and an apical cavity (pulmonary TB)</td></tr><tr class="part"><td colspan="2">Part 3 · Hematology & Clinical Pathology <span class="small">(6 cases)</span></td></tr><tr><td>13</td><td>Tired woman with heavy periods (iron-deficiency anemia)</td></tr><tr><td>14</td><td>Macrocytic anemia with numb feet (B12 deficiency)</td></tr><tr><td>15</td><td>Petechiae in a well young woman (ITP)</td></tr><tr><td>16</td><td>Child with severe bone pain and known HbSS (sickle cell crisis)</td></tr><tr><td>17</td><td>Boy with a hot swollen knee after minor trauma (hemophilia A)</td></tr><tr><td>18</td><td>Fever and back pain minutes into a blood transfusion (transfusion reaction)</td></tr><tr class="part"><td colspan="2">Part 4 · Tropical Medicine & Infectious Diseases <span class="small">(6 cases)</span></td></tr><tr><td>19</td><td>Fever, neck stiffness and a rash (meningococcal meningitis)</td></tr><tr><td>20</td><td>Undulant fever in a farmer (brucellosis)</td></tr><tr><td>21</td><td>Right upper quadrant pain after bloody diarrhea (amoebic liver abscess)</td></tr><tr><td>22</td><td>Jaundiced man with abnormal hepatitis serology (hepatitis B)</td></tr><tr><td>23</td><td>Canal swimmer with terminal hematuria (schistosomiasis)</td></tr><tr><td>24</td><td>Student with sore throat and a rash after ampicillin (infectious mononucleosis)</td></tr><tr class="part"><td colspan="2">Part 5 · Immunology & Allergy <span class="small">(5 cases)</span></td></tr><tr><td>25</td><td>Collapse after an antibiotic injection (anaphylaxis)</td></tr><tr><td>26</td><td>Swollen lips and abdominal colic with no hives (hereditary angioedema)</td></tr><tr><td>27</td><td>Daily hives for 3 months (chronic spontaneous urticaria)</td></tr><tr><td>28</td><td>Boy with repeated chest infections since infancy (primary immunodeficiency)</td></tr><tr><td>29</td><td>Blisters and sore lips after a new drug (SJS/TEN)</td></tr><tr class="part"><td colspan="2">Part 6 · Dermatology, Venereology & Andrology <span class="small">(8 cases)</span></td></tr><tr><td>30</td><td>Painless penile ulcer (primary syphilis)</td></tr><tr><td>31</td><td>Itchy family at night (scabies)</td></tr><tr><td>32</td><td>Profuse urethral pus 3 days after exposure (gonococcal urethritis)</td></tr><tr><td>33</td><td>Child with a scaly bald patch on the scalp (tinea capitis)</td></tr><tr><td>34</td><td>Child with honey-coloured crusts around the nose (impetigo)</td></tr><tr><td>35</td><td>Teenager with nodulocystic acne and scarring (acne vulgaris)</td></tr><tr><td>36</td><td>Painful band of blisters on one side of the chest (herpes zoster)</td></tr><tr><td>37</td><td>Couple unable to conceive for 2 years (male infertility)</td></tr><tr class="part"><td colspan="2">Part 7 · Psychiatry <span class="small">(6 cases)</span></td></tr><tr><td>38</td><td>"They'd be better off without me" (depression + suicide risk)</td></tr><tr><td>39</td><td>Young man hearing voices for 8 months (schizophrenia)</td></tr><tr><td>40</td><td>No sleep for a week and spending all his savings (bipolar mania + lithium)</td></tr><tr><td>41</td><td>Sudden attacks of chest pain and fear of dying (panic disorder)</td></tr><tr><td>42</td><td>Very thin teenager who thinks she is fat (anorexia nervosa)</td></tr><tr><td>43</td><td>Confused and shaking on day 3 after surgery (delirium tremens)</td></tr></table>
 </div>
-
-<!-- ============ CASE 1 ============ -->
+<!--T: Crushing chest pain with hypotension (inferior STEMI + RV infarct)-->
 <div class="page">
   <h2>Case 1 <span class="tag">Cardiology · 10 marks</span></h2>
   <div class="stem">A 58-year-old male smoker has had 2 hours of crushing retrosternal pain with sweating. BP 85/50 mmHg, pulse 54/min, JVP raised, lungs clear. ECG: ST elevation in II, III and aVF. The nearest primary-PCI centre is 3 hours away.</div>
@@ -88,10 +71,113 @@
   </table>
   <div class="pearl"><b>Pearl:</b> Inferior STEMI + hypotension + clear lungs = RV infarct until proven otherwise. Giving nitroglycerin here can crash the BP.</div>
 </div>
-
-<!-- ============ CASE 2 ============ -->
+<!--T: Sudden breathlessness after a long flight (pulmonary embolism)-->
 <div class="page">
   <h2>Case 2 <span class="tag">Cardiology · 10 marks</span></h2>
+  <div class="stem">A 34-year-old woman on the combined oral contraceptive pill develops sudden pleuritic chest pain and breathlessness 3 days after a 12-hour flight. Her left calf is swollen and tender. Pulse 112/min, BP 118/74 mmHg, RR 26/min, SpO₂ 91% on air. She has no previous VTE, no cancer and no hemoptysis.</div>
+  <ol class="q">
+    <li>Calculate her Wells score and interpret it (two-tier). <span class="m">[2]</span></li>
+    <li>What is the next diagnostic test? When would a D-dimer be the right first test instead? <span class="m">[2]</span></li>
+    <li>CTPA confirms PE. Echo shows RV/LV ratio 1.2 and troponin is raised. Classify the PE and give the treatment with doses. <span class="m">[3]</span></li>
+    <li>Two hours later her BP falls to 82/50 mmHg. What do you do? <span class="m">[1]</span></li>
+    <li><b>Special:</b> How long should she be anticoagulated? Name one situation where warfarin is mandatory and one where LMWH is preferred. <span class="m">[2]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 2 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td>Clinical signs of DVT <b>3</b> + PE most likely diagnosis <b>3</b> + HR &gt;100 <b>1.5</b> = <b>7.5 → PE likely (&gt;4)</b>. (Immobilisation counts only if ≥3 days in bed or surgery &lt;4 wk.)</td><td class="mk">1 + 1</td></tr>
+    <tr><td>2</td><td><b>CTPA directly</b> (PE likely). D-dimer first only when PE is <b>unlikely (Wells ≤4)</b>: a negative D-dimer (&lt;500 ng/mL) excludes PE; a positive one → CTPA.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>3</td><td><b>Submassive (intermediate-risk) PE</b>: normotensive with RV strain and ↑troponin. <b>Enoxaparin 1 mg/kg SC q12h</b> (or 1.5 mg/kg daily) or <b>Fondaparinux 7.5 mg</b>; monitor closely for deterioration. (Low-risk PE would get a DOAC: Apixaban 10 mg bid ×7 d → 5 mg bid, or Rivaroxaban 15 mg bid ×21 d → 20 mg daily.)</td><td class="mk">1 + 2</td></tr>
+    <tr><td>4</td><td>Now <b>massive (high-risk) PE</b> → <b>rescue thrombolysis</b>: Alteplase 100 mg over 2 h with UFH 80 U/kg + 18 U/kg/h. If contraindicated or failed → catheter/surgical embolectomy.</td><td class="mk">1</td></tr>
+    <tr><td>5</td><td>Provoked (flight + OCP): <b>at least 3 months</b>; stop the combined OCP. Unprovoked or persistent risk → extended/indefinite.<br>Warfarin (INR 2–3) mandatory in <b>antiphospholipid syndrome</b>; LMWH preferred in <b>cancer and pregnancy</b>.</td><td class="mk">1 + 1</td></tr>
+  </table>
+  <div class="pearl"><b>Pearl:</b> IVC filter only if anticoagulation is contraindicated or PE recurs despite treatment.</div>
+</div>
+
+<!--T: Fever and a louder murmur after a dental extraction (infective endocarditis)-->
+<div class="page">
+  <h2>Case 3 <span class="tag">Cardiology · 10 marks</span></h2>
+  <div class="stem">A 45-year-old man with known rheumatic mitral regurgitation had a dental extraction 4 weeks ago without antibiotic cover. He now has 3 weeks of fever 38.6 °C, weight loss, splinter hemorrhages, painful nodules on his finger pads and a louder MR murmur. Urine shows microscopic hematuria.</div>
+  <ol class="q">
+    <li>What is the likely diagnosis and organism? Name the painful finger nodules and one other immunologic sign. <span class="m">[2]</span></li>
+    <li>How should blood cultures be taken? Which echo comes first, and when is TEE needed? <span class="m">[2]</span></li>
+    <li>State the modified Duke criteria needed for a <b>definite</b> diagnosis. <span class="m">[2]</span></li>
+    <li>Give the empirical antibiotic regimen for native-valve IE with doses and duration. <span class="m">[2]</span></li>
+    <li><b>Special:</b> List 3 indications for urgent surgery. Who should receive dental prophylaxis, and with what? <span class="m">[2]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 3 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td><b>Subacute infective endocarditis</b> on a rheumatic mitral valve, most likely <b>viridans streptococci</b> (dental source). Painful finger-pad nodules = <b>Osler nodes</b>. Other immunologic signs: Roth spots, glomerulonephritis (hematuria), positive RF.</td><td class="mk">1 + 0.5 + 0.5</td></tr>
+    <tr><td>2</td><td><b>≥3 sets from separate sites</b>, ≥30–60 min between first and last, <b>before antibiotics</b>. <b>TTE first</b>; TEE if high risk, prosthetic valve or suspected abscess (or TTE negative with high suspicion).</td><td class="mk">1 + 1</td></tr>
+    <tr><td>3</td><td>Definite: <b>2 major</b>, or <b>1 major + 3 minor</b>, or <b>5 minor</b>. Major = typical organism in 2 separate cultures / persistent bacteremia; echo vegetation, abscess or new regurgitation. (Possible: 1 major + 1 minor, or 3 minor.)</td><td class="mk">1 + 1</td></tr>
+    <tr><td>4</td><td>IV for <b>4–6 weeks</b>: <b>Ampicillin-sulbactam 12 g/day in 4 doses + Gentamicin 3 mg/kg/day</b>, or <b>Vancomycin 15–20 mg/kg q8–12h + Gentamicin</b>. Adjust to culture sensitivity.</td><td class="mk">1.5 + 0.5</td></tr>
+    <tr><td>5</td><td>Surgery (any 3): <b>heart failure</b> from acute severe regurgitation · <b>uncontrolled infection</b> (bacteremia &gt;7–10 d, abscess, fistula, new heart block, fungal, enlarging vegetation) · <b>embolism prevention</b> (vegetation &gt;10 mm after an embolus).<br>Prophylaxis only for <b>high-risk</b> patients (prosthetic valve, prior IE, unrepaired cyanotic CHD, repaired CHD with residual defect): <b>Amoxicillin 2 g PO 30–60 min before</b>; allergy: Clindamycin 600 mg.</td><td class="mk">1 + 1</td></tr>
+  </table>
+  <div class="pearl"><b>Pearl:</b> Early prosthetic-valve IE (&lt;12 months): Vancomycin + Gentamicin + Rifampin 300 mg q8h.</div>
+</div>
+
+<!--T: Breathless at night with pink frothy sputum (acute heart failure)-->
+<div class="page">
+  <h2>Case 4 <span class="tag">Cardiology · 10 marks</span></h2>
+  <div class="stem">A 66-year-old man with a previous anterior MI wakes at 3 a.m. gasping, sitting up, coughing pink frothy sputum. He is sweaty and warm. BP 170/100 mmHg, pulse 118/min, SpO₂ 86% on air, bilateral crackles to the mid-zones, S3 gallop, raised JVP, pitting ankle edema.</div>
+  <ol class="q">
+    <li>What is the diagnosis? Classify his hemodynamic profile (Nohria-Stevenson). <span class="m">[2]</span></li>
+    <li>List 3 investigations and what each shows. <span class="m">[1.5]</span></li>
+    <li>Write the immediate management in order, with doses. <span class="m">[3]</span></li>
+    <li>When would you stop or avoid nitrates? <span class="m">[1]</span></li>
+    <li><b>Special:</b> Echo later shows EF 30%. Name the 4 pillars of long-term therapy (one drug + dose each) and one precaution when switching from an ACE inhibitor to an ARNI. <span class="m">[2.5]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 4 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td><b>Acute cardiogenic (flash) pulmonary edema / acute decompensated HF</b>. Profile: <b>warm &amp; wet</b> (the commonest).</td><td class="mk">1 + 1</td></tr>
+    <tr><td>2</td><td>Any 3: <b>BNP/NT-proBNP</b> (NT-proBNP &lt;125 rules out HF) · <b>CXR</b> (bat-wing edema, Kerley B, cardiomegaly, effusions) · <b>ECG / troponin</b> (ischemia, arrhythmia) · <b>echo</b> (EF, valves) · ABG, kidney function, electrolytes.</td><td class="mk">0.5 each</td></tr>
+    <tr><td>3</td><td>
+      <ol>
+        <li><b>Sit upright, legs dangling</b></li>
+        <li><b>O₂ if SpO₂ &lt;90% → CPAP/BiPAP</b> (PEEP 5–10 cm H₂O)</li>
+        <li><b>Furosemide 40–80 mg IV</b> (check urine output &gt;100–150 mL/h at 2 h)</li>
+        <li>SBP &gt;110: <b>IV nitroglycerin 10–20 → 100–200 mcg/min</b></li>
+      </ol></td><td class="mk">0.75 each</td></tr>
+    <tr><td>4</td><td>Avoid/hold nitrates if <b>SBP &lt;90</b>, <b>RV infarct</b> or <b>PDE-5 inhibitor</b> use. SBP &lt;90 = cardiogenic shock (cold &amp; wet): dobutamine 2–20 mcg/kg/min or milrinone ± norepinephrine.</td><td class="mk">1</td></tr>
+    <tr><td>5</td><td>Quadruple therapy: <b>ARNI</b> sacubitril/valsartan 24/26–49/51 mg bid → 97/103 mg bid · <b>β-blocker</b> bisoprolol 1.25 → 10 mg daily · <b>MRA</b> spironolactone 12.5–25 → 50 mg (hold if K⁺ &gt;5.0 or eGFR &lt;30) · <b>SGLT2i</b> dapagliflozin/empagliflozin 10 mg daily. Plus loop diuretic to dry weight.<br>ACEI → ARNI: <b>36-hour washout</b> (angioedema risk).</td><td class="mk">0.5 each</td></tr>
+  </table>
+</div>
+
+<!--T: Irregular palpitations in an elderly woman (atrial fibrillation)-->
+<div class="page">
+  <h2>Case 5 <span class="tag">Cardiology · 10 marks</span></h2>
+  <div class="stem">A 76-year-old woman with hypertension and type 2 diabetes has had palpitations and mild breathlessness for "about a week". Pulse 138/min, irregularly irregular; BP 132/80 mmHg; she is alert with no chest pain. ECG: narrow QRS, no P waves, irregular RR intervals.</div>
+  <ol class="q">
+    <li>What is the diagnosis? List 3 investigations to look for a cause. <span class="m">[2]</span></li>
+    <li>Is she stable or unstable? Give the acute rate-control drug with dose. <span class="m">[2]</span></li>
+    <li>Can she be cardioverted today? Explain. <span class="m">[2]</span></li>
+    <li>Calculate her CHA₂DS₂-VASc score and state the anticoagulation decision. <span class="m">[2]</span></li>
+    <li><b>Special:</b> What would you do if she became hypotensive and confused? Which drug is dangerous in pre-excited AF (WPW)? <span class="m">[2]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 5 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td><b>Atrial fibrillation with rapid ventricular response.</b> Any 3: <b>TSH</b> (thyrotoxicosis), electrolytes, <b>echo</b> (valve disease, LA size, LV function), troponin, CBC, glucose, kidney function.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>2</td><td><b>Stable</b> (no hypotension, ischemic pain, ↓consciousness or pulmonary edema). Rate control: <b>Metoprolol 2.5–5 mg IV</b> or <b>Diltiazem 0.25 mg/kg IV</b> (long-term: β-blocker, non-DHP CCB or digoxin).</td><td class="mk">1 + 1</td></tr>
+    <tr><td>3</td><td><b>No.</b> AF for <b>&gt;48 h or unknown duration</b> → <b>≥3 weeks of anticoagulation or a TEE</b> to exclude LA thrombus before cardioversion (risk of stroke). (If &lt;48 h: rhythm control, e.g. amiodarone 300 mg over 1 h.)</td><td class="mk">2</td></tr>
+    <tr><td>4</td><td>HTN 1 + DM 1 + age ≥75 = 2 + female 1 = <b>5</b>. Anticoagulate (≥3 in women, ≥2 in men): <b>DOAC preferred</b>.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>5</td><td>Unstable → <b>synchronised DC cardioversion</b> immediately. <b>Adenosine</b> (and AV-nodal blockers such as verapamil/digoxin) is dangerous in pre-excited AF.</td><td class="mk">1 + 1</td></tr>
+  </table>
+  <div class="pearl"><b>Pearl:</b> Rate control suits elderly or asymptomatic patients; rhythm control (amiodarone, flecainide, ablation) suits symptomatic, young or HF patients.</div>
+</div>
+<!--T: Child with flitting joint pains and a new murmur (rheumatic fever)-->
+<div class="page">
+  <h2>Case 6 <span class="tag">Cardiology · 10 marks</span></h2>
   <div class="stem">A 12-year-old girl (35 kg) from rural Upper Egypt had a sore throat 3 weeks ago. She now has fever 38.4 °C and painful swollen knees, then elbows, each lasting a few days. There is a new apical pansystolic murmur radiating to the axilla. ESR 75 mm/h, CRP 5 mg/dL, ECG PR interval 220 ms.</div>
   <ol class="q">
     <li>What is the diagnosis? List the criteria she fulfils. <span class="m">[3]</span></li>
@@ -101,7 +187,7 @@
   </ol>
 </div>
 <div class="page">
-  <h2 class="ans">Case 2 — Answers &amp; marking scheme</h2>
+  <h2 class="ans">Case 6 — Answers &amp; marking scheme</h2>
   <table>
     <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
     <tr><td>1</td><td><b>Acute rheumatic fever (first attack) with carditis.</b> Jones criteria (moderate/high-risk population):<br>Major: <b>carditis</b> (new MR murmur) + <b>migratory polyarthritis</b>. Minor: <b>fever ≥38 °C</b>, <b>ESR ≥30 / CRP ≥3</b> (a long PR does not count as minor when carditis is already a major criterion). Plus evidence of preceding GAS infection → 2 major criteria = diagnostic.</td><td class="mk">1 + 1 + 1</td></tr>
@@ -117,9 +203,9 @@
   <div class="pearl"><b>Pearl:</b> Prophylaxis durations: no carditis 5 y / until 21 · carditis, no residual disease 10 y / until 21 · residual valve disease 10 y / until 40.</div>
 </div>
 
-<!-- ============ CASE 3 ============ -->
+<!--T: Breathless woman who can only say single words (acute severe asthma)-->
 <div class="page">
-  <h2>Case 3 <span class="tag">Chest · 10 marks</span></h2>
+  <h2>Case 7 <span class="tag">Chest · 10 marks</span></h2>
   <div class="stem">A 24-year-old woman with asthma, who uses only a salbutamol inhaler, arrives breathless. She can speak only single words, is using accessory muscles, RR 34/min, pulse 128/min, SpO₂ 88% on air, PEF 40% of predicted, loud wheeze.</div>
   <ol class="q">
     <li>Classify the severity of this attack, giving 2 features that support it. <span class="m">[2]</span></li>
@@ -130,7 +216,7 @@
   </ol>
 </div>
 <div class="page">
-  <h2 class="ans">Case 3 — Answers &amp; marking scheme</h2>
+  <h2 class="ans">Case 7 — Answers &amp; marking scheme</h2>
   <table>
     <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
     <tr><td>1</td><td><b>Acute severe asthma.</b> Any 2: single words · RR &gt;30 · HR &gt;120 · SpO₂ &lt;90% · PEF ≤50% · accessory muscles.</td><td class="mk">1 + 1</td></tr>
@@ -147,10 +233,109 @@
     <tr><td>5</td><td><b>SABA alone (without ICS) is contraindicated.</b> Preferred (Track 1): <b>ICS-formoterol</b> as reliever ± maintenance, stepped up by severity (after this attack at least step 3–4: low/medium-dose ICS-formoterol maintenance + reliever). Check inhaler technique and triggers.</td><td class="mk">1 + 1</td></tr>
   </table>
 </div>
-
-<!-- ============ CASE 4 ============ -->
+<!--T: Smoker with worse breathlessness and green sputum (COPD exacerbation)-->
 <div class="page">
-  <h2>Case 4 <span class="tag">Chest · 10 marks</span></h2>
+  <h2>Case 8 <span class="tag">Chest · 10 marks</span></h2>
+  <div class="stem">A 68-year-old man (50 pack-years) with COPD has had 3 days of increased breathlessness and more, greener sputum. RR 28/min, SpO₂ 82% on air, widespread wheeze. In the ambulance he was given 15 L/min O₂ via a non-rebreather mask and is now drowsy. ABG: pH 7.29, PaCO₂ 68 mmHg, PaO₂ 95 mmHg.</div>
+  <ol class="q">
+    <li>Interpret the ABG and explain why he became drowsy. <span class="m">[2]</span></li>
+    <li>How should oxygen be given in this patient (device, %, target)? <span class="m">[1]</span></li>
+    <li>Write the drug treatment of the exacerbation with doses and durations. <span class="m">[3]</span></li>
+    <li>When is NIV indicated, and when does he need intubation? <span class="m">[2]</span></li>
+    <li><b>Special:</b> What diagnoses COPD on spirometry? Name the single most effective measure to slow FEV₁ decline and 2 vaccines. <span class="m">[2]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 8 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td><b>Acute-on-chronic type II (hypercapnic) respiratory failure with respiratory acidosis.</b> Uncontrolled high-flow O₂ → CO₂ retention (loss of hypoxic drive, V/Q worsening, Haldane effect) → <b>CO₂ narcosis</b>.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>2</td><td><b>Controlled O₂ via 24–28% Venturi mask, target SpO₂ 88–92%.</b></td><td class="mk">1</td></tr>
+    <tr><td>3</td><td>
+      <ul>
+        <li><b>Salbutamol 2.5–5 mg + Ipratropium 0.5 mg</b> nebulised q4–6h</li>
+        <li><b>Prednisone 40 mg daily for exactly 5 days</b></li>
+        <li><b>Antibiotics ×5 days</b> (≥2 Anthonisen criteria incl. purulence): Amox-clav 875/125 bid, or Azithromycin 500 mg, or Doxycycline 100 mg bid</li>
+      </ul></td><td class="mk">1 each</td></tr>
+    <tr><td>4</td><td><b>NIV (BiPAP) first-line</b> if pH ≤7.35 and PaCO₂ ≥45 despite therapy. <b>Intubate</b> if GCS &lt;8, exhaustion, pH &lt;7.25 or NIV failure.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>5</td><td><b>Post-bronchodilator FEV₁/FVC &lt;0.70.</b> <b>Stopping smoking</b> is the #1 measure. Vaccines: <b>influenza + pneumococcal</b> (PCV20/PPSV23). (Also pulmonary rehab, LTOT in very severe disease.)</td><td class="mk">0.5 + 0.5 + 1</td></tr>
+  </table>
+</div>
+
+<!--T: Elderly man with fever, confusion and consolidation (pneumonia)-->
+<div class="page">
+  <h2>Case 9 <span class="tag">Chest · 10 marks</span></h2>
+  <div class="stem">A 72-year-old man has had 2 days of fever, productive cough with rusty sputum and right-sided pleuritic pain. Today he is newly confused. RR 32/min, BP 95/55 mmHg, pulse 115/min, temperature 39.2 °C, bronchial breathing at the right base. Urea 9 mmol/L. CXR: right lower-lobe consolidation.</div>
+  <ol class="q">
+    <li>What is the diagnosis and most likely organism? <span class="m">[1]</span></li>
+    <li>Calculate his CURB-65 score, interpret it, and say where he should be managed. <span class="m">[3]</span></li>
+    <li>List 3 investigations apart from the CXR. <span class="m">[1.5]</span></li>
+    <li>Give the empirical antibiotics for his severity with doses. What would you give a healthy 30-year-old outpatient? <span class="m">[2.5]</span></li>
+    <li><b>Special:</b> If he had developed this pneumonia on day 5 of a hospital admission, what would change? <span class="m">[2]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 9 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td><b>Severe community-acquired pneumonia</b>, likely <i>Streptococcus pneumoniae</i>.</td><td class="mk">1</td></tr>
+    <tr><td>2</td><td><b>C</b>onfusion 1 + <b>U</b>rea &gt;7 1 + <b>R</b>R ≥30 1 + <b>B</b>P (diastolic ≤60) 1 + age ≥<b>65</b> 1 = <b>5</b>. Mortality 14–28% → <b>hospital, consider ICU</b> (4–5).</td><td class="mk">1 + 1 + 1</td></tr>
+    <tr><td>3</td><td>Any 3: <b>blood cultures</b> before antibiotics · <b>sputum Gram stain and culture</b> · CBC, CRP · kidney function/electrolytes · <b>ABG</b> · urinary pneumococcal/Legionella antigen.</td><td class="mk">0.5 each</td></tr>
+    <tr><td>4</td><td>Severe (ICU): <b>Ceftriaxone 2 g + Azithromycin 500 mg IV</b> (Pseudomonas risk: Pip-tazo 4.5 g q6h or Cefepime 2 g q8h; MRSA risk: add Vancomycin or Linezolid). (Ward, CURB 2–3: Ceftriaxone 1–2 g + Azithromycin, or Levofloxacin 750 mg.)<br>Healthy outpatient (0–1): <b>Amoxicillin 1 g tid</b> or Doxycycline 100 mg bid or Azithromycin, for ≥5 days (afebrile 48 h).</td><td class="mk">1.5 + 1</td></tr>
+    <tr><td>5</td><td><b>Hospital-acquired pneumonia</b> (≥48 h after admission): cover resistant Gram-negatives and MRSA → <b>Pip-tazo 4.5 g q6h or Meropenem 1 g q8h + Vancomycin</b>; de-escalate at 48–72 h on culture results.</td><td class="mk">2</td></tr>
+  </table>
+</div>
+
+<!--T: Tall young man with sudden chest pain (pneumothorax)-->
+<div class="page">
+  <h2>Case 10 <span class="tag">Chest · 10 marks</span></h2>
+  <div class="stem">A tall, thin 22-year-old smoker develops sudden left-sided chest pain and breathlessness at rest. He is otherwise well. RR 22/min, SpO₂ 95%, reduced breath sounds and hyper-resonance on the left. CXR: left pneumothorax with a 2.5 cm rim at the hilum.</div>
+  <ol class="q">
+    <li>What is the diagnosis and its usual cause? <span class="m">[1]</span></li>
+    <li>How do you manage him? How would you manage a rim &lt;2 cm with no symptoms? <span class="m">[2]</span></li>
+    <li>How would management differ in a 65-year-old with COPD? <span class="m">[1]</span></li>
+    <li><b>Special:</b> A trauma patient has severe distress, hypotension, distended neck veins and tracheal deviation away from the silent side. What is it, and what do you do immediately (exact site)? <span class="m">[3]</span></li>
+    <li>Give 3 indications for referral to thoracic surgery in pleural disease. <span class="m">[3]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 10 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td><b>Primary spontaneous pneumothorax</b>: rupture of apical blebs (tall thin young males, smoking).</td><td class="mk">1</td></tr>
+    <tr><td>2</td><td>≥2 cm: <b>needle aspiration</b>, then <b>chest drain if aspiration fails</b>. &lt;2 cm and asymptomatic: <b>observe</b> (repeat CXR, safety advice).</td><td class="mk">1 + 1</td></tr>
+    <tr><td>3</td><td><b>Secondary pneumothorax</b> (COPD, TB): <b>chest tube is mandatory</b>.</td><td class="mk">1</td></tr>
+    <tr><td>4</td><td><b>Tension pneumothorax</b>: clinical diagnosis, do not wait for a CXR. <b>Immediate needle decompression</b> in the <b>2nd intercostal space, mid-clavicular line</b> (or 5th ICS anterior axillary line) → <b>chest tube in the 5th ICS mid-axillary line with underwater seal</b>.</td><td class="mk">1 + 1 + 1</td></tr>
+    <tr><td>5</td><td>Any 3: <b>persistent air leak &gt;3–5 days</b> · <b>second (recurrent) pneumothorax</b> · multiloculated empyema failing drainage at 48–72 h · thick peel/trapped lung · <b>hemothorax &gt;1500 mL or &gt;200 mL/h</b>.</td><td class="mk">1 each</td></tr>
+  </table>
+</div>
+
+<!--T: Progressive breathlessness with Velcro crackles (pulmonary fibrosis)-->
+<div class="page">
+  <h2>Case 11 <span class="tag">Chest · 10 marks</span></h2>
+  <div class="stem">A 67-year-old retired man has had 18 months of slowly worsening exertional breathlessness and a dry cough. He has finger clubbing and fine bibasal end-inspiratory "Velcro" crackles. SpO₂ 95% at rest, falling to 86% on walking.</div>
+  <ol class="q">
+    <li>What is the most likely diagnosis? <span class="m">[1]</span></li>
+    <li>What pattern do you expect on pulmonary function tests (4 findings)? <span class="m">[2]</span></li>
+    <li>Describe the HRCT findings of a UIP pattern. <span class="m">[2]</span></li>
+    <li>Name the 2 antifibrotic drugs with doses, and 3 supportive measures. <span class="m">[3]</span></li>
+    <li><b>Special:</b> How do you tell this patient's breathlessness from COPD and from heart failure at the bedside? <span class="m">[2]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 11 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td><b>Idiopathic pulmonary fibrosis</b> (interstitial pulmonary fibrosis).</td><td class="mk">1</td></tr>
+    <tr><td>2</td><td><b>Restrictive</b>: ↓TLC, ↓FVC, <b>FEV₁/FVC normal or &gt;0.70</b>, <b>markedly ↓DLCO</b>; exertional desaturation.</td><td class="mk">0.5 each</td></tr>
+    <tr><td>3</td><td><b>Subpleural, basal reticulation</b>, <b>honeycombing</b>, <b>traction bronchiectasis</b>, little ground-glass.</td><td class="mk">2</td></tr>
+    <tr><td>4</td><td><b>Pirfenidone</b> titrated to 801 mg tid with meals · <b>Nintedanib 150 mg bid</b> with food (both slow FVC decline). Supportive: <b>O₂</b>, <b>pulmonary rehabilitation</b>, <b>early lung-transplant referral</b> (also vaccines, stop smoking).</td><td class="mk">1 + 1 + 1</td></tr>
+    <tr><td>5</td><td>IPF: <b>Velcro crackles + clubbing</b>, restrictive. COPD: smoker with <b>morning cough + wheeze</b>, obstructive spirometry. HF: <b>PND, orthopnea, S3</b>, raised JVP, edema.</td><td class="mk">1 + 1</td></tr>
+  </table>
+</div>
+<!--T: Chronic cough, night sweats and an apical cavity (pulmonary TB)-->
+<div class="page">
+  <h2>Case 12 <span class="tag">Chest · 10 marks</span></h2>
   <div class="stem">A 35-year-old man (60 kg) has had a cough for 5 weeks with streaky hemoptysis, evening fever, night sweats and 6 kg weight loss. CXR: right upper-lobe cavity.</div>
   <ol class="q">
     <li>List the investigations to confirm the diagnosis, saying what each offers. <span class="m">[3]</span></li>
@@ -160,7 +345,7 @@
   </ol>
 </div>
 <div class="page">
-  <h2 class="ans">Case 4 — Answers &amp; marking scheme</h2>
+  <h2 class="ans">Case 12 — Answers &amp; marking scheme</h2>
   <table>
     <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
     <tr><td>1</td><td>
@@ -177,9 +362,9 @@
   <div class="pearl"><b>Pearl:</b> Rifampicin is a CYP450 inducer, so warn about OCP failure and interactions with warfarin and ART. Streptomycin is contraindicated in pregnancy.</div>
 </div>
 
-<!-- ============ CASE 5 ============ -->
+<!--T: Tired woman with heavy periods (iron-deficiency anemia)-->
 <div class="page">
-  <h2>Case 5 <span class="tag">Hematology · 10 marks</span></h2>
+  <h2>Case 13 <span class="tag">Hematology · 10 marks</span></h2>
   <div class="stem">A 32-year-old woman (60 kg) with heavy periods complains of fatigue and craves ice. She has spoon-shaped nails and angular cheilitis. Hb 8 g/dL, MCV 68 fL, RBC 3.9 ×10¹²/L, RDW high; the smear shows pencil cells.</div>
   <ol class="q">
     <li>Give 2 differential diagnoses of microcytic anemia and show how iron studies separate them. <span class="m">[3]</span></li>
@@ -189,7 +374,7 @@
   </ol>
 </div>
 <div class="page">
-  <h2 class="ans">Case 5 — Answers &amp; marking scheme</h2>
+  <h2 class="ans">Case 13 — Answers &amp; marking scheme</h2>
   <table>
     <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
     <tr><td>1</td><td>
@@ -206,10 +391,9 @@
   </table>
   <div class="pearl"><b>Pearl:</b> Ferritin is an acute-phase reactant. A level of 30–100 can still mean iron deficiency when there is inflammation.</div>
 </div>
-
-<!-- ============ CASE 6 ============ -->
+<!--T: Macrocytic anemia with numb feet (B12 deficiency)-->
 <div class="page">
-  <h2>Case 6 <span class="tag">Hematology · 10 marks</span></h2>
+  <h2>Case 14 <span class="tag">Hematology · 10 marks</span></h2>
   <div class="stem">A 55-year-old woman with hypothyroidism has fatigue, a lemon-yellow tint and tingling in both feet. Examination: loss of vibration sense and joint-position sense in the legs, positive Romberg test. Hb 8 g/dL, MCV 115 fL, WBC and platelets mildly low, reticulocytes low, LDH raised.</div>
   <ol class="q">
     <li>What is the most likely diagnosis and cause? Name the neurological complication. <span class="m">[2]</span></li>
@@ -219,7 +403,7 @@
   </ol>
 </div>
 <div class="page">
-  <h2 class="ans">Case 6 — Answers &amp; marking scheme</h2>
+  <h2 class="ans">Case 14 — Answers &amp; marking scheme</h2>
   <table>
     <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
     <tr><td>1</td><td><b>Vitamin B12 deficiency megaloblastic anemia</b> due to <b>pernicious anemia</b> (autoimmune; linked to thyroid disease). Neuro: <b>subacute combined degeneration of the cord</b>.</td><td class="mk">1 + 1</td></tr>
@@ -234,10 +418,9 @@
     <tr><td>4</td><td>Folic acid alone corrects the <b>blood count</b> but lets the <b>neurological damage (SCD) progress irreversibly</b>. Always check and replace B12 first.</td><td class="mk">2</td></tr>
   </table>
 </div>
-
-<!-- ============ CASE 7 ============ -->
+<!--T: Petechiae in a well young woman (ITP)-->
 <div class="page">
-  <h2>Case 7 <span class="tag">Hematology · 10 marks</span></h2>
+  <h2>Case 15 <span class="tag">Hematology · 10 marks</span></h2>
   <div class="stem">A 24-year-old woman presents with petechiae on her legs, gum bleeding and epistaxis for 3 days. She is otherwise well and has no splenomegaly or lymphadenopathy. Platelets 8 ×10⁹/L (large platelets on the smear); Hb, WBC, PT and aPTT normal.</div>
   <ol class="q">
     <li>What is the most likely diagnosis? Give 3 conditions you must exclude. <span class="m">[2]</span></li>
@@ -248,7 +431,7 @@
   </ol>
 </div>
 <div class="page">
-  <h2 class="ans">Case 7 — Answers &amp; marking scheme</h2>
+  <h2 class="ans">Case 15 — Answers &amp; marking scheme</h2>
   <table>
     <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
     <tr><td>1</td><td><b>Immune thrombocytopenia (ITP)</b>: IgG anti-GPIIb/IIIa. Exclude (any 3): pseudothrombocytopenia (EDTA clumping → repeat in citrate) · TTP (schistocytes) · leukemia/aplastic anemia · drugs · HIV/HCV · SLE.</td><td class="mk">1 + 1</td></tr>
@@ -258,10 +441,81 @@
     <tr><td>5</td><td><b>Eltrombopag 50 mg daily</b> or <b>Romiplostim</b> weekly SC (TPO agonists) · <b>Rituximab</b> · <b>Splenectomy</b> (cures ~⅔; vaccinate first).</td><td class="mk">0.5 each (max 2)</td></tr>
   </table>
 </div>
-
-<!-- ============ CASE 8 ============ -->
+<!--T: Child with severe bone pain and known HbSS (sickle cell crisis)-->
 <div class="page">
-  <h2>Case 8 <span class="tag">Tropical / ID · 10 marks</span></h2>
+  <h2>Case 16 <span class="tag">Hematology · 10 marks</span></h2>
+  <div class="stem">A 14-year-old boy with sickle cell disease presents with severe pain in his back and legs after a febrile illness and poor fluid intake. Temperature 38.3 °C, mild jaundice, SpO₂ 97%. Hb 7.5 g/dL (baseline 8), reticulocytes 12%.</div>
+  <ol class="q">
+    <li>What is the type of crisis and what precipitated it? <span class="m">[1]</span></li>
+    <li>Explain the molecular defect and name 2 smear findings. <span class="m">[2]</span></li>
+    <li>Write the acute management. <span class="m">[2]</span></li>
+    <li>The next day he has chest pain, cough, SpO₂ 88% and a new infiltrate. What has happened, and what is the key treatment? <span class="m">[2]</span></li>
+    <li><b>Special:</b> List his long-term preventive measures, including how hydroxyurea works. Which crisis causes a sudden fall in Hb with <b>low</b> reticulocytes? <span class="m">[3]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 16 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td><b>Vaso-occlusive (painful) crisis</b>, precipitated by infection/fever and dehydration.</td><td class="mk">1</td></tr>
+    <tr><td>2</td><td><b>β6 Glu→Val</b>: HbS polymerises with hypoxia, acidosis and dehydration → sickling. Smear: <b>sickle cells, Howell-Jolly bodies</b> (target cells). HbS &gt;80% on electrophoresis.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>3</td><td><b>IV hydration, O₂ (if hypoxic), adequate analgesia</b> (opioids), treat infection (cultures + antibiotics), keep warm.</td><td class="mk">2</td></tr>
+    <tr><td>4</td><td><b>Acute chest syndrome.</b> O₂, antibiotics, analgesia + <b>exchange transfusion</b> (target HbS &lt;50%). Exchange is also used for stroke and priapism.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>5</td><td><b>Hydroxyurea</b> (↑HbF, target ≥20%; watch neutropenia) · <b>Penicillin V prophylaxis</b> · <b>pneumococcal, Hib and meningococcal vaccines</b> · <b>Folic acid 5 mg</b> daily.<br><b>Aplastic crisis</b> (parvovirus B19): sudden ↓Hb with reticulocytopenia.</td><td class="mk">2 + 1</td></tr>
+  </table>
+</div>
+
+<!--T: Boy with a hot swollen knee after minor trauma (hemophilia A)-->
+<div class="page">
+  <h2>Case 17 <span class="tag">Hematology · 10 marks</span></h2>
+  <div class="stem">An 8-year-old boy has a painful, hot, swollen right knee the day after a minor fall. He has had several similar episodes and a large thigh hematoma after a vaccination. His maternal uncle had a "bleeding problem". Platelets 260 ×10⁹/L, PT normal, aPTT 72 s (control 32 s), bleeding time normal.</div>
+  <ol class="q">
+    <li>What is the most likely diagnosis and its inheritance? <span class="m">[2]</span></li>
+    <li>Explain the bleeding pattern (primary vs secondary hemostasis). <span class="m">[1]</span></li>
+    <li>What does a 1:1 mixing study show here, and what would non-correction mean? Which test confirms the diagnosis? <span class="m">[3]</span></li>
+    <li>How do you treat this bleed? <span class="m">[2]</span></li>
+    <li><b>Special:</b> How does von Willebrand disease differ in the lab? When can DDAVP be used? <span class="m">[2]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 17 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td><b>Hemophilia A (factor VIII deficiency)</b> (hemophilia B = factor IX); <b>X-linked recessive</b>.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>2</td><td>Secondary (coagulation) defect: <b>hemarthroses, deep muscle hematomas, delayed bleeding</b> (primary/platelet defects give petechiae, mucosal and immediate bleeding).</td><td class="mk">1</td></tr>
+    <tr><td>3</td><td>Prolonged aPTT that <b>corrects on mixing = factor deficiency</b>. No correction = <b>inhibitor</b>: immediate = lupus anticoagulant; after 2 h at 37 °C = factor VIII inhibitor (acquired hemophilia). Confirm with a <b>factor VIII assay</b>.</td><td class="mk">1 + 1 + 1</td></tr>
+    <tr><td>4</td><td><b>Recombinant factor VIII concentrate</b> (on demand, then prophylaxis); tranexamic acid / EACA as adjunct; cryoprecipitate or FFP only if concentrate unavailable. Rest, ice, elevation; <b>no IM injections or NSAIDs</b>.</td><td class="mk">1.5 + 0.5</td></tr>
+    <tr><td>5</td><td><b>vWD</b>: autosomal dominant; <b>↑ bleeding time</b>, variable ↑aPTT, ↓vWF antigen and ristocetin cofactor; mucosal bleeding. <b>DDAVP 0.3 µg/kg</b>: mild hemophilia A and vWD (not hemophilia B).</td><td class="mk">1 + 1</td></tr>
+  </table>
+</div>
+
+<!--T: Fever and back pain minutes into a blood transfusion (transfusion reaction)-->
+<div class="page">
+  <h2>Case 18 <span class="tag">Hematology · 10 marks</span></h2>
+  <div class="stem">Ten minutes into a unit of packed red cells, a 50-year-old woman develops fever, rigors, loin pain, chest tightness and a feeling of doom. BP 85/50 mmHg; her urine turns dark red. The nurse finds the unit was meant for another patient in the next bed.</div>
+  <ol class="q">
+    <li>What is the reaction and its mechanism? <span class="m">[2]</span></li>
+    <li>What are your immediate steps? <span class="m">[3]</span></li>
+    <li>Name 3 lab findings that confirm intravascular hemolysis. <span class="m">[1.5]</span></li>
+    <li><b>Special:</b> Distinguish TRALI from TACO (2 features each). <span class="m">[2]</span></li>
+    <li>Which reaction is prevented by leukodepletion, and which by gamma-irradiation? <span class="m">[1.5]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 18 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td><b>Acute hemolytic transfusion reaction</b> (&lt;30 min): <b>ABO incompatibility</b> → IgM + complement → intravascular hemolysis.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>2</td><td><b>Stop the transfusion</b>, keep the line open with <b>normal saline</b>; ABC, fluids to maintain urine output; <b>return the bag and giving set to the blood bank</b>; repeat cross-match, check patient identity; monitor for DIC and AKI.</td><td class="mk">1 each</td></tr>
+    <tr><td>3</td><td>Any 3: <b>hemoglobinemia, hemoglobinuria</b>, absent haptoglobin, ↑LDH, ↑indirect bilirubin, <b>positive DAT</b>.</td><td class="mk">0.5 each</td></tr>
+    <tr><td>4</td><td><b>TRALI</b> (≤6 h): donor anti-HLA/anti-neutrophil antibodies; non-cardiogenic edema, <b>normal PCWP/JVP</b>, often hypotension; ventilate, <b>avoid diuretics</b>.<br><b>TACO</b>: volume overload; <b>hypertension, ↑JVP, S3, ↑BNP</b>; responds to <b>furosemide</b>.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>5</td><td>Leukodepletion → <b>febrile non-hemolytic reaction (FNHTR)</b>. Gamma-irradiation → <b>TA-GVHD</b> (&gt;90% fatal). (Washed cells → anaphylaxis in IgA deficiency.)</td><td class="mk">0.75 + 0.75</td></tr>
+  </table>
+</div>
+
+<!--T: Fever, neck stiffness and a rash (meningococcal meningitis)-->
+<div class="page">
+  <h2>Case 19 <span class="tag">Tropical / ID · 10 marks</span></h2>
   <div class="stem">A 19-year-old university-dorm student has 12 hours of fever, a severe headache and vomiting. Neck stiffness; a petechial rash that does not blanch with the glass test; GCS 14; no focal signs, no papilledema. BP 100/60 mmHg.</div>
   <ol class="q">
     <li>What is the most likely diagnosis and organism? <span class="m">[1]</span></li>
@@ -272,7 +526,7 @@
   </ol>
 </div>
 <div class="page">
-  <h2 class="ans">Case 8 — Answers &amp; marking scheme</h2>
+  <h2 class="ans">Case 19 — Answers &amp; marking scheme</h2>
   <table>
     <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
     <tr><td>1</td><td><b>Acute bacterial meningitis with meningococcemia</b>: <i>Neisseria meningitidis</i>.</td><td class="mk">1</td></tr>
@@ -282,10 +536,9 @@
     <tr><td>5</td><td>Close-contact chemoprophylaxis (any one): <b>Ciprofloxacin 500 mg once</b> · <b>Rifampin 600 mg bid ×2 days</b> · <b>Ceftriaxone 250 mg IM once</b>. Also notify public health; meningococcal vaccine for dorm residents.</td><td class="mk">1.5 + 0.5</td></tr>
   </table>
 </div>
-
-<!-- ============ CASE 9 ============ -->
+<!--T: Undulant fever in a farmer (brucellosis)-->
 <div class="page">
-  <h2>Case 9 <span class="tag">Tropical / ID · 10 marks</span></h2>
+  <h2>Case 20 <span class="tag">Tropical / ID · 10 marks</span></h2>
   <div class="stem">A 40-year-old sheep farmer who eats home-made unpasteurised cheese has had 4 weeks of fever that comes and goes in waves, drenching sweats with a mouldy smell, low-back pain and a painful swollen right testis. There is mild hepatosplenomegaly.</div>
   <ol class="q">
     <li>What is the diagnosis? Name the complication he has. <span class="m">[2]</span></li>
@@ -296,7 +549,7 @@
   </ol>
 </div>
 <div class="page">
-  <h2 class="ans">Case 9 — Answers &amp; marking scheme</h2>
+  <h2 class="ans">Case 20 — Answers &amp; marking scheme</h2>
   <table>
     <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
     <tr><td>1</td><td><b>Brucellosis</b> (<i>B. melitensis</i>, from sheep/goat dairy) complicated by <b>epididymo-orchitis</b> (back pain suggests sacroiliitis/spondylitis).</td><td class="mk">1 + 1</td></tr>
@@ -306,10 +559,105 @@
     <tr><td>5</td><td>Pregnancy: <b>TMP-SMX + Rifampin ×6 weeks</b>, avoiding doxycycline (teeth/bone) and aminoglycosides (fetal ototoxicity).<br>Main cause of death: <b>endocarditis (aortic valve)</b>, which needs valve replacement.</td><td class="mk">1 + 1</td></tr>
   </table>
 </div>
-
-<!-- ============ CASE 10 ============ -->
+<!--T: Right upper quadrant pain after bloody diarrhea (amoebic liver abscess)-->
 <div class="page">
-  <h2>Case 10 <span class="tag">Immunology · 10 marks</span></h2>
+  <h2>Case 21 <span class="tag">Tropical / ID · 10 marks</span></h2>
+  <div class="stem">A 32-year-old man had bloody mucoid diarrhea with tenesmus 2 months ago, treated at a pharmacy. He now has 10 days of fever and right upper quadrant pain referred to the right shoulder, with tender hepatomegaly and intercostal tenderness. Ultrasound: a single 7 cm hypoechoic lesion in the right lobe.</div>
+  <ol class="q">
+    <li>What is the most likely diagnosis? How did the organism reach the liver? <span class="m">[2]</span></li>
+    <li>Compare it with a pyogenic abscess and a hydatid cyst (aspirate/imaging). <span class="m">[2]</span></li>
+    <li>Write the drug treatment with doses. Why is a second drug needed? <span class="m">[3]</span></li>
+    <li>When is drainage indicated? <span class="m">[2]</span></li>
+    <li><b>Special:</b> Which bloody-diarrhea organism must <b>not</b> be treated with antibiotics or loperamide, and why? <span class="m">[1]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 21 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td><b>Amoebic liver abscess</b> (<i>Entamoeba histolytica</i>) following amoebic dysentery (flask-shaped colonic ulcers); trophozoites reach the liver via the <b>portal vein</b>.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>2</td><td>Amoebic: <b>"anchovy sauce"</b>, odourless, usually solitary right lobe. Pyogenic: <b>yellow-green foul pus, often multiple</b>, biliary source. Hydatid: <b>unilocular cyst, water-lily sign, daughter cysts</b>.</td><td class="mk">0.75 + 0.75 + 0.5</td></tr>
+    <tr><td>3</td><td>Tissue amoebicide: <b>Metronidazole 750–800 mg tds ×10 days</b> (or Tinidazole 2 g/day ×3 d), <b>then</b> luminal agent: <b>Diloxanide furoate 500 mg tds ×10 days</b> (or Paromomycin). The luminal agent eradicates intestinal cysts and prevents relapse and spread.</td><td class="mk">1 + 1 + 1</td></tr>
+    <tr><td>4</td><td>Seldom needed (metronidazole cures most ≤10 cm). Drain if: <b>imminent rupture</b>, <b>left-lobe abscess</b> (risk of pericardial rupture), <b>&gt;10 cm</b>, or <b>no response after 4 days</b>.</td><td class="mk">0.5 each</td></tr>
+    <tr><td>5</td><td><b>EHEC O157:H7</b>: antibiotics and loperamide increase Shiga-toxin release → <b>HUS</b>. Hydrate only.</td><td class="mk">1</td></tr>
+  </table>
+</div>
+
+<!--T: Jaundiced man with abnormal hepatitis serology (hepatitis B)-->
+<div class="page">
+  <h2>Case 22 <span class="tag">Tropical / ID · 10 marks</span></h2>
+  <div class="stem">A 28-year-old man presents with 1 week of anorexia, nausea, dark urine and jaundice. ALT 1450 U/L, bilirubin 6 mg/dL, INR 1.1. He had unprotected sex 3 months ago. Serology: HBsAg positive, anti-HBc IgM positive, anti-HCV negative, anti-HAV IgM negative.</div>
+  <ol class="q">
+    <li>Interpret his serology. What are the risks of becoming chronic in adults vs neonates? <span class="m">[2]</span></li>
+    <li>Interpret these profiles: (a) HBsAg + for &gt;6 months, anti-HBc IgG +; (b) anti-HBs + and anti-HBc IgG +; (c) anti-HBs + alone. <span class="m">[3]</span></li>
+    <li>Define acute liver failure. Which finding would make you worried in this patient? <span class="m">[2]</span></li>
+    <li>Name the oral drugs for chronic HBV with doses. <span class="m">[1]</span></li>
+    <li><b>Special:</b> His partner is 20 weeks pregnant. Which hepatitis virus carries a 20–25% mortality in pregnancy? Give the HBV vaccine schedule. <span class="m">[2]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 22 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td><b>Acute hepatitis B</b> (HBsAg + anti-HBc IgM). Chronicity: <b>5–10% in adults</b>, <b>~90% in neonates</b>.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>2</td><td>(a) <b>Chronic HBV infection</b> · (b) <b>recovered, immune by past infection</b> · (c) <b>vaccinated</b>.</td><td class="mk">1 each</td></tr>
+    <tr><td>3</td><td>Acute liver failure: <b>jaundice + INR &gt;1.5 + encephalopathy</b> in a patient without cirrhosis. Warning signs here: rising INR, confusion/drowsiness, hypoglycemia, shrinking liver.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>4</td><td><b>Tenofovir 300 mg daily</b> or <b>Entecavir 0.5 mg daily</b> (Peg-IFN α-2a 180 µg/week ×48 wk is an alternative).</td><td class="mk">1</td></tr>
+    <tr><td>5</td><td><b>Hepatitis E</b> (fecal-oral). HBV vaccine at <b>0, 1 and 6 months</b> (screen and vaccinate the partner; HBIG + vaccine for the newborn if she is HBsAg positive).</td><td class="mk">1 + 1</td></tr>
+  </table>
+</div>
+
+<!--T: Canal swimmer with terminal hematuria (schistosomiasis)-->
+<div class="page">
+  <h2>Case 23 <span class="tag">Tropical / ID · 10 marks</span></h2>
+  <div class="stem">A 16-year-old boy from a Nile Delta village who swims in irrigation canals complains of painful urination with blood in the last drops of urine. His 45-year-old uncle from the same village was admitted with hematemesis; he has splenomegaly and a shrunken-looking liver on ultrasound with "pipestem" periportal fibrosis.</div>
+  <ol class="q">
+    <li>Name the species causing the boy's illness and the uncle's illness. <span class="m">[2]</span></li>
+    <li>List 3 long-term complications of the urinary form. <span class="m">[1.5]</span></li>
+    <li>Give the treatment with dose. Is it safe in pregnancy? <span class="m">[2]</span></li>
+    <li>How would you manage the uncle's variceal bleeding (main lines)? <span class="m">[1.5]</span></li>
+    <li><b>Special:</b> A tourist develops fever, urticaria and eosinophilia 4 weeks after swimming in the Nile. What is this, and how is it treated? <span class="m">[3]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 23 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td>Boy: <b><i>S. haematobium</i></b> (urinary). Uncle: <b><i>S. mansoni</i></b> (intestinal/hepatic: Symmers pipestem fibrosis → presinusoidal portal hypertension, varices).</td><td class="mk">1 + 1</td></tr>
+    <tr><td>2</td><td>Any 3: <b>bladder calcification</b>, ureteric obstruction/<b>hydronephrosis</b>, <b>squamous cell carcinoma of the bladder</b>, recurrent UTI, renal failure.</td><td class="mk">0.5 each</td></tr>
+    <tr><td>3</td><td><b>Praziquantel 40 mg/kg on one day</b> (single dose or 2 doses 4–6 h apart). <b>Yes, safe in pregnancy.</b></td><td class="mk">1.5 + 0.5</td></tr>
+    <tr><td>4</td><td>Resuscitation (IV access, cautious transfusion), vasoactive drug, antibiotics, <b>endoscopic band ligation</b>; then praziquantel and secondary prophylaxis. (Liver function is usually preserved in schistosomal fibrosis.)</td><td class="mk">1.5</td></tr>
+    <tr><td>5</td><td><b>Katayama fever</b> (acute schistosomiasis), 2–8 weeks after exposure. <b>Prednisone 40 mg/day</b> to control the reaction, then <b>praziquantel after the worms mature</b> (it does not kill immature worms).</td><td class="mk">1 + 1 + 1</td></tr>
+  </table>
+</div>
+
+<!--T: Student with sore throat and a rash after ampicillin (infectious mononucleosis)-->
+<div class="page">
+  <h2>Case 24 <span class="tag">Tropical / ID · 10 marks</span></h2>
+  <div class="stem">A 19-year-old student has 1 week of fever, severe sore throat with exudative tonsillitis, fatigue and tender bilateral posterior cervical nodes. The spleen tip is palpable. A GP gave ampicillin and she developed a widespread maculopapular rash. Blood film: lymphocytosis with &gt;10% atypical lymphocytes; ALT mildly raised.</div>
+  <ol class="q">
+    <li>What is the diagnosis and the cause of the rash? <span class="m">[2]</span></li>
+    <li>Name 2 serological tests that confirm it. <span class="m">[2]</span></li>
+    <li>How do you differentiate it from CMV and toxoplasma mononucleosis (one clinical + one lab point each)? <span class="m">[2]</span></li>
+    <li>Outline management. When are steroids indicated? <span class="m">[2]</span></li>
+    <li><b>Special:</b> What advice do you give about contact sports, and why? <span class="m">[2]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 24 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td><b>Infectious mononucleosis (EBV).</b> Rash: <b>ampicillin/amoxicillin-induced rash</b> in EBV, which is not true penicillin allergy.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>2</td><td><b>Monospot (heterophile antibody)</b> positive; <b>VCA IgM</b> positive (EBNA absent acutely).</td><td class="mk">1 + 1</td></tr>
+    <tr><td>3</td><td><b>CMV</b>: mild throat, generalised nodes; Monospot −, anti-CMV IgM/PCR +. <b>Toxoplasma</b>: mild/no throat, unilateral non-tender nodes, minimal atypical lymphocytes; Monospot −, anti-Toxo IgM.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>4</td><td><b>Supportive</b>: rest, fluids, paracetamol; avoid ampicillin. <b>Prednisolone 40–60 mg ×3 days</b> for <b>airway obstruction</b>, severe thrombocytopenia or hemolysis.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>5</td><td><b>Avoid contact sports/heavy lifting for several weeks</b> (until the spleen is back to normal size), because of the risk of <b>splenic rupture</b> (splenomegaly in ~50%).</td><td class="mk">1 + 1</td></tr>
+  </table>
+</div>
+
+<!--T: Collapse after an antibiotic injection (anaphylaxis)-->
+<div class="page">
+  <h2>Case 25 <span class="tag">Immunology · 10 marks</span></h2>
   <div class="stem">Five minutes after an IM penicillin injection, a 30-year-old woman develops generalised flushing and hives, a hoarse voice with stridor, wheeze and abdominal cramps. BP 70/40 mmHg, pulse 135/min, weak.</div>
   <ol class="q">
     <li>What is the diagnosis? Give 2 features that distinguish it from a vasovagal faint. <span class="m">[2]</span></li>
@@ -320,7 +668,7 @@
   </ol>
 </div>
 <div class="page">
-  <h2 class="ans">Case 10 — Answers &amp; marking scheme</h2>
+  <h2 class="ans">Case 25 — Answers &amp; marking scheme</h2>
   <table>
     <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
     <tr><td>1</td><td><b>Anaphylaxis (anaphylactic shock)</b>. Vs vasovagal (any 2): tachycardia and a weak pulse (vasovagal: bradycardia) · urticaria/flushing/itch (vasovagal: pallor, no hives) · wheeze/stridor · shock that persists when supine.</td><td class="mk">1 + 1</td></tr>
@@ -336,10 +684,87 @@
     <tr><td>5</td><td><b>Type I (IgE-mediated) hypersensitivity</b>: allergen cross-links IgE on mast cells → degranulation (histamine, tryptase, leukotrienes).</td><td class="mk">1</td></tr>
   </table>
 </div>
-
-<!-- ============ CASE 11 ============ -->
+<!--T: Swollen lips and abdominal colic with no hives (hereditary angioedema)-->
 <div class="page">
-  <h2>Case 11 <span class="tag">Immunology / Dermatology · 10 marks</span></h2>
+  <h2>Case 26 <span class="tag">Immunology · 10 marks</span></h2>
+  <div class="stem">A 22-year-old woman has recurrent episodes of non-itchy swelling of the lips, hands and once the larynx, each lasting 2–3 days, often after dental work or around her periods. Some attacks cause severe abdominal colic; she once had an unnecessary laparotomy. Antihistamines, steroids and epinephrine did not help. Her father has similar attacks.</div>
+  <ol class="q">
+    <li>What is the most likely diagnosis and its inheritance? Which mediator causes the swelling? <span class="m">[2]</span></li>
+    <li>Give 3 features that separate it from mast-cell (allergic) angioedema. <span class="m">[1.5]</span></li>
+    <li>What is the screening test, and how do you tell type 1 from type 2? <span class="m">[2.5]</span></li>
+    <li>Write the treatment of an acute laryngeal attack, and 2 options for prophylaxis. <span class="m">[2.5]</span></li>
+    <li><b>Special:</b> A 60-year-old hypertensive man develops tongue swelling without urticaria. Which drug is the likely cause, and what do you do? <span class="m">[1.5]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 26 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td><b>Hereditary angioedema</b>: <b>autosomal dominant C1-inhibitor deficiency</b>; mediator = <b>bradykinin</b>.</td><td class="mk">1 + 0.5 + 0.5</td></tr>
+    <tr><td>2</td><td>Any 3: <b>no urticaria or itch</b> (tension, burning) · <b>severe abdominal colic</b> mimicking a surgical abdomen · triggers are trauma/dental work/stress/menses · <b>no response to epinephrine, steroids or antihistamines</b>.</td><td class="mk">0.5 each</td></tr>
+    <tr><td>3</td><td><b>Serum C4</b>: low even between attacks (a normal C4 during an attack excludes HAE). Then <b>C1-INH level and function</b>: <b>type 1 (85%)</b> low level + low function; <b>type 2 (15%)</b> normal/high level, low function.</td><td class="mk">1 + 1.5</td></tr>
+    <tr><td>4</td><td><b>Secure the airway</b>; <b>C1-INH concentrate IV</b> (Berinert, Cinryze, Ruconest) or <b>Icatibant 30 mg SC</b> or Ecallantide 30 mg SC.<br>Prophylaxis (any 2): <b>danazol/stanozolol</b>, <b>tranexamic acid</b> (children, pregnancy), regular C1-INH.</td><td class="mk">1.5 + 1</td></tr>
+    <tr><td>5</td><td><b>ACE inhibitor</b> (ACE = kininase II → bradykinin accumulates). <b>Stop it permanently</b> and protect the airway; do not switch to another ACEI.</td><td class="mk">1 + 0.5</td></tr>
+  </table>
+</div>
+
+<!--T: Daily hives for 3 months (chronic spontaneous urticaria)-->
+<div class="page">
+  <h2>Case 27 <span class="tag">Immunology · 10 marks</span></h2>
+  <div class="stem">A 35-year-old woman has had itchy wheals almost every day for 3 months, sometimes with lip swelling. Each wheal disappears within a few hours and leaves no mark. No clear trigger. She also has Hashimoto thyroiditis. Examination between attacks is normal.</div>
+  <ol class="q">
+    <li>What is the diagnosis, and what defines "chronic"? Give the 2 main subtypes. <span class="m">[2]</span></li>
+    <li>What investigations are needed? <span class="m">[1]</span></li>
+    <li>Outline the stepwise treatment ladder (EAACI/GA²LEN) with time frames. <span class="m">[4]</span></li>
+    <li><b>Special:</b> Which features suggest urticarial vasculitis instead, and what would you do? <span class="m">[2]</span></li>
+    <li>What is the emergency treatment if she develops airway swelling? <span class="m">[1]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 27 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td><b>Chronic spontaneous urticaria</b>: wheals ± angioedema for <b>≥6 weeks</b>, each wheal fading within 24 h. Subtypes: <b>CSU (80%)</b>, often autoreactive (anti-FcεRI/IgE, anti-TPO); <b>chronic inducible (20%)</b>: dermographism, cold, cholinergic, pressure, solar, aquagenic.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>2</td><td><b>No routine tests</b> for straightforward urticaria (limited CBC/CRP at most).</td><td class="mk">1</td></tr>
+    <tr><td>3</td><td>
+      <ol>
+        <li><b>2nd-generation H1 antihistamine</b>, standard dose (e.g. cetirizine 10 mg)</li>
+        <li>After 2–4 weeks: <b>up-titrate up to 4× dose</b></li>
+        <li>After 2–4 weeks: <b>add Omalizumab</b> (anti-IgE, 300 mg SC monthly)</li>
+        <li>After 6 months: <b>add Cyclosporine</b> (specialist)</li>
+      </ol></td><td class="mk">1 each</td></tr>
+    <tr><td>4</td><td>Red flags: <b>wheals lasting &gt;24 h</b>, <b>painful</b> lesions, <b>purpura/residual pigmentation</b>, ↑ESR/CRP, <b>low C3/C4</b> → <b>skin biopsy and refer</b>.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>5</td><td><b>Epinephrine 1:1000 0.5 mL IM</b> + hydrocortisone 100–200 mg IV (as for anaphylaxis).</td><td class="mk">1</td></tr>
+  </table>
+</div>
+
+<!--T: Boy with repeated chest infections since infancy (primary immunodeficiency)-->
+<div class="page">
+  <h2>Case 28 <span class="tag">Immunology · 10 marks</span></h2>
+  <div class="stem">A 3-year-old boy has had 4 pneumonias, recurrent otitis media and 2 episodes of sinusitis since the age of 7 months, each needing IV antibiotics. He is failing to thrive. Tonsils are barely visible and no lymph nodes are palpable. His maternal uncle died of infection in childhood. Serum IgG, IgA and IgM are all very low; CD19+ B cells are absent.</div>
+  <ol class="q">
+    <li>What is the most likely diagnosis? Why did infections start after 6 months of age? <span class="m">[2]</span></li>
+    <li>List 4 Jeffrey Modell warning signs present or relevant here. <span class="m">[2]</span></li>
+    <li>What is the main treatment? <span class="m">[2]</span></li>
+    <li><b>Special:</b> Which vaccines are contraindicated in cellular/combined immunodeficiency? Are inactivated vaccines safe? <span class="m">[2]</span></li>
+    <li>Match: (a) hypocalcemia + cardiac defect + absent thymus; (b) eczema + thrombocytopenia + infections; (c) recurrent <i>Neisseria</i> infections; (d) anaphylaxis to blood products. <span class="m">[2]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 28 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td><b>X-linked agammaglobulinemia (Bruton)</b>: B-cell defect. Infections start after ~6 months when <b>maternal IgG</b> has waned.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>2</td><td>Any 4: <b>≥8 otitis/yr</b> · <b>≥2 sinusitis</b> · <b>≥2 pneumonias</b> · <b>need for IV antibiotics</b> · <b>failure to thrive</b> · <b>family history</b> · deep abscesses · ≥2 months of oral antibiotics with little effect.</td><td class="mk">0.5 each</td></tr>
+    <tr><td>3</td><td><b>Lifelong IVIG or SCIG replacement</b>, with prompt antibiotics (± prophylactic co-trimoxazole).</td><td class="mk">2</td></tr>
+    <tr><td>4</td><td><b>Live vaccines</b>: BCG, OPV, MMR, varicella, rotavirus, yellow fever, intranasal flu. <b>Inactivated vaccines are safe.</b></td><td class="mk">1 + 1</td></tr>
+    <tr><td>5</td><td>(a) <b>DiGeorge</b> (22q11) · (b) <b>Wiskott-Aldrich</b> · (c) <b>C5–C9 (terminal complement) deficiency</b> · (d) <b>selective IgA deficiency</b>.</td><td class="mk">0.5 each</td></tr>
+  </table>
+  <div class="pearl"><b>Pearl:</b> HSCT is curative for SCID. Refer any infant with failure to thrive + recurrent infections, absent thymic shadow or lymphocytes &lt;1500/µL.</div>
+</div>
+<!--T: Blisters and sore lips after a new drug (SJS/TEN)-->
+<div class="page">
+  <h2>Case 29 <span class="tag">Immunology / Dermatology · 10 marks</span></h2>
   <div class="stem">A 45-year-old man started allopurinol 2 weeks ago. He now has fever, painful dusky-red macules that are blistering and peeling (about 15% of body surface), positive Nikolsky sign, hemorrhagic crusted lips, red eyes and genital erosions.</div>
   <ol class="q">
     <li>What is the diagnosis? How is it classified by body-surface area? <span class="m">[2]</span></li>
@@ -350,7 +775,7 @@
   </ol>
 </div>
 <div class="page">
-  <h2 class="ans">Case 11 — Answers &amp; marking scheme</h2>
+  <h2 class="ans">Case 29 — Answers &amp; marking scheme</h2>
   <table>
     <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
     <tr><td>1</td><td><b>SJS/TEN overlap</b> (15% detached), drug-induced (allopurinol). Detached BSA: <b>SJS &lt;10% · overlap 10–30% · TEN &gt;30%</b>; ≥2 mucosal sites involved.</td><td class="mk">1 + 1</td></tr>
@@ -368,9 +793,9 @@
   </table>
 </div>
 
-<!-- ============ CASE 12 ============ -->
+<!--T: Painless penile ulcer (primary syphilis)-->
 <div class="page">
-  <h2>Case 12 <span class="tag">Venereology · 10 marks</span></h2>
+  <h2>Case 30 <span class="tag">Venereology · 10 marks</span></h2>
   <div class="stem">A 25-year-old man has a single painless ulcer on the coronal sulcus that appeared 3 weeks after unprotected sex. The ulcer is firm and indurated with a clean base. He has bilateral rubbery, non-tender, non-suppurating inguinal nodes.</div>
   <ol class="q">
     <li>What is the most likely diagnosis? Give 2 differential diagnoses and how each differs. <span class="m">[3]</span></li>
@@ -381,7 +806,7 @@
   </ol>
 </div>
 <div class="page">
-  <h2 class="ans">Case 12 — Answers &amp; marking scheme</h2>
+  <h2 class="ans">Case 30 — Answers &amp; marking scheme</h2>
   <table>
     <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
     <tr><td>1</td><td><b>Primary syphilis (hard chancre).</b><br><b>Chancroid</b>: 3–7 d incubation, multiple, very painful, soft ulcers with ragged undermined edges and purulent base; tender suppurative bubo.<br><b>Genital herpes</b>: multiple grouped painful vesicles → shallow erosions; tender bilateral nodes.</td><td class="mk">1 + 1 + 1</td></tr>
@@ -398,10 +823,9 @@
   </table>
   <div class="pearl"><b>Pearl:</b> Late latent syphilis (&gt;1 y) needs Benzathine penicillin 2.4 MU IM <b>weekly ×3</b> (allergy: Doxycycline ×30 d).</div>
 </div>
-
-<!-- ============ CASE 13 ============ -->
+<!--T: Itchy family at night (scabies)-->
 <div class="page">
-  <h2>Case 13 <span class="tag">Dermatology · 10 marks</span></h2>
+  <h2>Case 31 <span class="tag">Dermatology · 10 marks</span></h2>
   <div class="stem">A father, his pregnant wife (24 weeks) and their 6-week-old baby all have severe itching that is worse at night. The father has excoriated papules and S-shaped burrows in the finger webs and on the wrists, around the umbilicus and on the genitalia. The baby has lesions on the scalp, palms and soles.</div>
   <ol class="q">
     <li>What is the diagnosis? Give 2 features that support it. <span class="m">[2]</span></li>
@@ -411,7 +835,7 @@
   </ol>
 </div>
 <div class="page">
-  <h2 class="ans">Case 13 — Answers &amp; marking scheme</h2>
+  <h2 class="ans">Case 31 — Answers &amp; marking scheme</h2>
   <table>
     <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
     <tr><td>1</td><td><b>Scabies</b> (<i>Sarcoptes scabiei</i>). Any 2: nocturnal itch · several family members affected · burrows (S-shaped, ending in a vesicle) · typical sites (finger webs, wrists, axillae, umbilicus, genitalia). The head is spared in adults but involved in infants.</td><td class="mk">1 + 1</td></tr>
@@ -421,10 +845,159 @@
   </table>
   <div class="pearl"><b>Pearl:</b> Crusted (Norwegian) scabies occurs in immunocompromised patients and is highly contagious.</div>
 </div>
-
-<!-- ============ CASE 14 ============ -->
+<!--T: Profuse urethral pus 3 days after exposure (gonococcal urethritis)-->
 <div class="page">
-  <h2>Case 14 <span class="tag">Psychiatry · 10 marks</span></h2>
+  <h2>Case 32 <span class="tag">Venereology · 10 marks</span></h2>
+  <div class="stem">A 26-year-old man has had burning on urination and a profuse, thick, creamy yellow urethral discharge for 1 day. He had unprotected intercourse with a new partner 3 days ago. Gram stain of the discharge: Gram-negative intracellular diplococci inside neutrophils.</div>
+  <ol class="q">
+    <li>What is the diagnosis and the organism? <span class="m">[1]</span></li>
+    <li>How does non-gonococcal urethritis differ (incubation, discharge, organisms, lab)? <span class="m">[2]</span></li>
+    <li>Write the treatment with doses. Why is a second drug added? <span class="m">[3]</span></li>
+    <li>List 2 complications in men and 2 in women. <span class="m">[2]</span></li>
+    <li><b>Special:</b> What is Reiter syndrome? Name one other essential step in management. <span class="m">[2]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 32 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td><b>Gonococcal urethritis</b>: <i>Neisseria gonorrhoeae</i> (Gram-negative kidney-shaped diplococcus, oxidase +).</td><td class="mk">1</td></tr>
+    <tr><td>2</td><td>NGU: incubation <b>2–3 weeks</b>; <b>scanty mucoid "morning drop"</b>; <b>Chlamydia trachomatis D–K</b>, Mycoplasma genitalium, Ureaplasma; <b>≥5 PMN/HPF without diplococci</b>, NAAT.</td><td class="mk">0.5 each</td></tr>
+    <tr><td>3</td><td><b>Ceftriaxone 250 mg IM once + Azithromycin 1 g PO once</b> (alternative: Spectinomycin 2 g IM). Azithromycin <b>covers co-existing Chlamydia</b>. Cure = discharge resolves by day 3.</td><td class="mk">1 + 1 + 1</td></tr>
+    <tr><td>4</td><td>Men (any 2): epididymitis, prostatitis, periurethral abscess, Tysonitis/Cowperitis, <b>urethral stricture</b>. Women (any 2): Bartholinitis, cervicitis, <b>PID → tubal infertility, ectopic pregnancy</b>.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>5</td><td><b>Reactive arthritis</b> after Chlamydia: urethritis + conjunctivitis + arthritis ("can't see, can't pee, can't climb a tree"). <b>Treat partner(s) at the same time</b> (and screen for syphilis/HIV).</td><td class="mk">1 + 1</td></tr>
+  </table>
+  <div class="pearl"><b>Pearl:</b> Trichomoniasis: frothy green-yellow discharge, strawberry cervix → Metronidazole or Tinidazole 2 g once; treat partner.</div>
+</div>
+
+<!--T: Child with a scaly bald patch on the scalp (tinea capitis)-->
+<div class="page">
+  <h2>Case 33 <span class="tag">Dermatology · 10 marks</span></h2>
+  <div class="stem">A 7-year-old boy (25 kg) has a round, scaly, grey patch of hair loss on the scalp with broken-off hairs. His classmate has a similar lesion. Under Wood's lamp the patch fluoresces bright green.</div>
+  <ol class="q">
+    <li>What is the diagnosis and the likely genus? <span class="m">[2]</span></li>
+    <li>Write the treatment with dose and duration. Why are topical antifungals alone not enough? <span class="m">[3]</span></li>
+    <li>What does it mean if there is <b>no</b> fluorescence and black dots on the scalp? <span class="m">[1]</span></li>
+    <li><b>Special:</b> The lesion becomes a boggy, pustular, tender swelling. What is it, how do you treat it, and what must you never do? <span class="m">[3]</span></li>
+    <li>Name the Wood's lamp colour of pityriasis versicolor and of erythrasma. <span class="m">[1]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 33 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td><b>Tinea capitis, scaly (grey patch) type</b>: <b><i>Microsporum</i></b>.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>2</td><td><b>Griseofulvin 12.5 mg/kg/day ×6–8 weeks</b> (≈300 mg/day for 25 kg), taken with fatty food. The fungus is inside the hair shaft/follicle, which topical agents do not reach (topicals/shampoo only reduce spread).</td><td class="mk">2 + 1</td></tr>
+    <tr><td>3</td><td><b>Black dot ringworm</b> (<i>T. violaceum</i>, endothrix): Griseofulvin 6–8 wk or Terbinafine 250 mg 4–6 wk.</td><td class="mk">1</td></tr>
+    <tr><td>4</td><td><b>Kerion</b> (inflammatory reaction). <b>Griseofulvin + prednisolone 1 mg/kg for 10–14 days</b>. <b>Never incise and drain.</b></td><td class="mk">1 + 1 + 1</td></tr>
+    <tr><td>5</td><td>Pityriasis versicolor: <b>golden-yellow</b>. Erythrasma: <b>coral red</b>.</td><td class="mk">0.5 + 0.5</td></tr>
+  </table>
+  <div class="pearl"><b>Pearl:</b> Favus = yellow cup-shaped scutula with mousy odour → griseofulvin 8–10 weeks; it leaves scarring alopecia.</div>
+</div>
+
+<!--T: Child with honey-coloured crusts around the nose (impetigo)-->
+<div class="page">
+  <h2>Case 34 <span class="tag">Dermatology · 10 marks</span></h2>
+  <div class="stem">A 5-year-old girl has had spreading red erosions with golden "honey-coloured", stuck-on crusts around her nose and mouth for 4 days. She is afebrile. Her younger brother has started to develop similar lesions.</div>
+  <ol class="q">
+    <li>What is the diagnosis and the organisms? <span class="m">[2]</span></li>
+    <li>Write the treatment of localised disease and of widespread disease (doses). <span class="m">[3]</span></li>
+    <li><b>Special:</b> 3 weeks later she has puffy eyes and cola-coloured urine. What is it? <span class="m">[1]</span></li>
+    <li>Contrast erysipelas with cellulitis (organism, depth, edge) and give a first-line treatment for erysipelas. <span class="m">[3]</span></li>
+    <li>Why should you never squeeze a furuncle on the upper lip or nose? <span class="m">[1]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 34 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td><b>Non-bullous impetigo</b> (contagious): <b>group A streptococcus ± <i>S. aureus</i></b>. (Bullous impetigo = <i>S. aureus</i> phage II exfoliative toxin, neonates.)</td><td class="mk">1 + 1</td></tr>
+    <tr><td>2</td><td>Localised: <b>remove crusts</b> (olive oil, warm saline), KMnO₄ 1/8000, <b>Fusidic acid 2% or Mupirocin 2% tid ×7 days</b>.<br>Widespread: <b>Amox-clav</b> (adult 1 g q12h; weight-based in children) or <b>Flucloxacillin</b> ×7–10 d; allergy: Erythromycin or Azithromycin. School exclusion until crusts dry.</td><td class="mk">1.5 + 1.5</td></tr>
+    <tr><td>3</td><td><b>Post-streptococcal glomerulonephritis</b> (2–3 weeks after impetigo).</td><td class="mk">1</td></tr>
+    <tr><td>4</td><td><b>Erysipelas</b>: GAS; superficial dermis and lymphatics; fiery red, <b>sharply demarcated raised border</b>; fever, rigors. <b>Cellulitis</b>: strep or <i>S. aureus</i>; deep dermis and fat; <b>ill-defined, not raised</b>.<br>Erysipelas: <b>Penicillin V 500 mg q6h ×10–14 d</b> (or procaine penicillin 1.2 MU IM daily; IV penicillin G if severe).</td><td class="mk">1 + 1 + 1</td></tr>
+    <tr><td>5</td><td>The "danger area of the face" drains to the <b>cavernous sinus</b>, so squeezing risks <b>cavernous sinus thrombosis</b>.</td><td class="mk">1</td></tr>
+  </table>
+</div>
+
+<!--T: Teenager with nodulocystic acne and scarring (acne vulgaris)-->
+<div class="page">
+  <h2>Case 35 <span class="tag">Dermatology · 10 marks</span></h2>
+  <div class="stem">A 19-year-old woman has had acne for 4 years. She now has painful nodules and cysts on the face and back with early scarring. Topical retinoid, benzoyl peroxide and 3 months of oral doxycycline did not help. She is sexually active.</div>
+  <ol class="q">
+    <li>List the 4 pathogenic factors in acne. <span class="m">[2]</span></li>
+    <li>Give the treatment of mild and of moderate acne. Why is topical clindamycin always combined with benzoyl peroxide? <span class="m">[3]</span></li>
+    <li>What is the treatment for her severity (dose, duration, cumulative dose)? <span class="m">[2]</span></li>
+    <li><b>Special:</b> What must be arranged before and during this treatment? Name 3 side effects to monitor. <span class="m">[3]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 35 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td><b>Follicular hyperkeratosis</b> · <b>androgen-driven sebum</b> · <b><i>Cutibacterium acnes</i></b> · <b>inflammation</b>.</td><td class="mk">0.5 each</td></tr>
+    <tr><td>2</td><td>Mild (comedones, few papules): <b>topical retinoid nightly</b> (tretinoin 0.025–0.05%, adapalene 0.1%) ± <b>benzoyl peroxide 2.5–5%</b> ± clindamycin 1%.<br>Moderate: topical retinoid + <b>oral Doxycycline 100 mg daily</b> (or Minocycline 50–100 mg) for 2–4 months.<br>BPO prevents <b>bacterial resistance</b> (no resistance to BPO).</td><td class="mk">1 + 1 + 1</td></tr>
+    <tr><td>3</td><td><b>Isotretinoin 0.5–1 mg/kg/day for ~6 months</b> (cumulative <b>120–150 mg/kg</b>). (Alternative in females: cyproterone acetate 2 mg + ethinylestradiol 35 µg.)</td><td class="mk">2</td></tr>
+    <tr><td>4</td><td><b>Teratogenic</b>: pregnancy test and <b>double contraception from 1 month before until 1 month after</b> treatment. <b>Baseline and periodic lipids (TG, cholesterol) and LFT.</b><br>Side effects (any 3): cheilitis, xerosis, epistaxis, ↑TG/cholesterol, ↑ALT.</td><td class="mk">1 + 1 + 1</td></tr>
+  </table>
+</div>
+
+<!--T: Painful band of blisters on one side of the chest (herpes zoster)-->
+<div class="page">
+  <h2>Case 36 <span class="tag">Dermatology · 10 marks</span></h2>
+  <div class="stem">A 68-year-old man had 3 days of burning pain over the left side of his chest, then a band of grouped vesicles on a red base appeared along the same area, stopping at the midline. The rash appeared 36 hours ago.</div>
+  <ol class="q">
+    <li>What is the diagnosis and the cause? <span class="m">[1]</span></li>
+    <li>Write the antiviral treatment with doses. What is the time window? <span class="m">[2]</span></li>
+    <li><b>Special:</b> What is Hutchinson sign and why does it matter? What is Ramsay Hunt syndrome? <span class="m">[3]</span></li>
+    <li>When should you suspect an underlying immunosuppression? <span class="m">[1]</span></li>
+    <li>Pain persists 2 months after the rash healed. What is it, and how is it treated (doses)? <span class="m">[3]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 36 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td><b>Herpes zoster (shingles)</b>: reactivation of latent <b>VZV</b> in the dorsal root ganglion.</td><td class="mk">1</td></tr>
+    <tr><td>2</td><td>Within <b>72 h</b> of rash onset: <b>Acyclovir 800 mg 5×/day ×7–10 d</b>, or Valacyclovir 1 g tds, or Famciclovir 500 mg tds ×7 d. Plus analgesia.</td><td class="mk">1.5 + 0.5</td></tr>
+    <tr><td>3</td><td><b>Hutchinson sign</b>: vesicles on the <b>tip of the nose</b> (nasociliary branch of V1) → high risk of <b>herpes zoster ophthalmicus / keratitis</b> → urgent eye review. <b>Ramsay Hunt</b>: <b>facial palsy + ear vesicles + loss of taste</b> (geniculate ganglion).</td><td class="mk">1.5 + 1.5</td></tr>
+    <tr><td>4</td><td><b>Bilateral or multidermatomal / disseminated zoster</b>, or young patient → look for HIV, lymphoma, immunosuppression.</td><td class="mk">1</td></tr>
+    <tr><td>5</td><td><b>Post-herpetic neuralgia</b> (pain &gt;1 month). <b>Amitriptyline 10–25 mg at night</b>, <b>Gabapentin 300 mg tds</b>, or Pregabalin.</td><td class="mk">1 + 2</td></tr>
+  </table>
+</div>
+
+<!--T: Couple unable to conceive for 2 years (male infertility)-->
+<div class="page">
+  <h2>Case 37 <span class="tag">Andrology · 10 marks</span></h2>
+  <div class="stem">A 30-year-old man and his wife have not conceived after 2 years of regular unprotected intercourse; her work-up is normal. He has gynecomastia, sparse body hair, long limbs and small, firm testes (3 mL each by orchidometer). Semen analysis (×2): volume 2 mL, no sperm even in the centrifuged pellet.</div>
+  <ol class="q">
+    <li>Define infertility. Name the semen finding. <span class="m">[1.5]</span></li>
+    <li>Give the WHO 2010 lower reference limits for concentration, total motility, progressive motility and morphology. <span class="m">[2]</span></li>
+    <li>What is the likely diagnosis? Which hormone and test confirm it? <span class="m">[2]</span></li>
+    <li><b>Special:</b> Classify azoospermia as obstructive vs non-obstructive vs hypogonadotropic (FSH, testis size, example, treatment). <span class="m">[3]</span></li>
+    <li>Another man has a "bag of worms" on the left side of the scrotum and OAT. What is it, why is it left-sided, and what is the treatment? <span class="m">[1.5]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 37 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td>No pregnancy after <b>12 months</b> of regular unprotected intercourse (male factor ≈50%). Finding: <b>azoospermia</b>.</td><td class="mk">1 + 0.5</td></tr>
+    <tr><td>2</td><td>Concentration <b>≥15 M/mL</b> · total motility <b>≥40%</b> · progressive motility <b>≥32%</b> · morphology <b>≥4%</b> (also volume ≥1.5 mL, total ≥39 M, vitality ≥58%).</td><td class="mk">0.5 each</td></tr>
+    <tr><td>3</td><td><b>Klinefelter syndrome (47,XXY)</b>: non-obstructive azoospermia. <b>↑FSH</b> (and LH, low testosterone); confirm with <b>karyotype</b>.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>4</td><td>
+      <table>
+        <tr><th></th><th>FSH</th><th>Testes</th><th>Example → treatment</th></tr>
+        <tr><td>Obstructive</td><td>Normal</td><td>Normal size</td><td>CBAVD (CFTR) → vaso-/epididymovasostomy, sperm retrieval</td></tr>
+        <tr><td>Non-obstructive</td><td>↑</td><td>Small</td><td>Klinefelter → micro-TESE + ICSI</td></tr>
+        <tr><td>Hypogonadotropic</td><td>↓ (LH ↓)</td><td>Small, soft</td><td>Kallmann (anosmia) → hCG + hMG</td></tr>
+      </table></td><td class="mk">1 per row</td></tr>
+    <tr><td>5</td><td><b>Varicocele</b> (grade III, visible). Left: the left testicular vein drains <b>at a right angle into the left renal vein</b>. Clinical varicocele + abnormal semen → <b>microsurgical varicocelectomy</b>.</td><td class="mk">0.5 each</td></tr>
+  </table>
+</div>
+
+<!--T: "They'd be better off without me" (depression + suicide risk)-->
+<div class="page">
+  <h2>Case 38 <span class="tag">Psychiatry · 10 marks</span></h2>
   <div class="stem">A 62-year-old man, widowed 6 months ago, has had 2 months of low mood, loss of interest, early-morning waking, 7 kg weight loss, poor concentration and guilt. He says his children "would be better off without me" and admits he has been saving his sleeping tablets. He has no history of mania. He had an MI last year and takes a β-blocker.</div>
   <ol class="q">
     <li>What is the diagnosis? Justify it using DSM-5 criteria. <span class="m">[2]</span></li>
@@ -434,7 +1007,7 @@
   </ol>
 </div>
 <div class="page">
-  <h2 class="ans">Case 14 — Answers &amp; marking scheme</h2>
+  <h2 class="ans">Case 38 — Answers &amp; marking scheme</h2>
   <table>
     <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
     <tr><td>1</td><td><b>Major depressive disorder (severe) with suicidal ideation.</b> ≥5 of 9 symptoms for ≥2 weeks, including depressed mood or anhedonia: mood, anhedonia, sleep, weight, concentration, guilt, suicidal thoughts. Duration and severity exceed normal grief.</td><td class="mk">1 + 1</td></tr>
@@ -443,10 +1016,104 @@
     <tr><td>4</td><td><b>SSRI: Sertraline 50–200 mg/day</b> (safest after MI), or Fluoxetine 20 mg / Citalopram 20–60 mg; + psychotherapy (CBT). Response lag 2–4 weeks; review often.<br><b>ECT</b> (6–12 sessions, 3/week): <b>severe suicidality, stupor, food refusal, psychotic features, treatment resistance</b>.</td><td class="mk">1.5 + 1.5</td></tr>
   </table>
 </div>
-
-<!-- ============ CASE 15 ============ -->
+<!--T: Young man hearing voices for 8 months (schizophrenia)-->
 <div class="page">
-  <h2>Case 15 <span class="tag">Psychiatry · 10 marks</span></h2>
+  <h2>Case 39 <span class="tag">Psychiatry · 10 marks</span></h2>
+  <div class="stem">A 22-year-old man has withdrawn from university over the past 8 months. He hears two voices commenting on his actions and believes his neighbours are controlling his thoughts through the TV. His speech is hard to follow and his affect is blunted. He neglects hygiene. He denies drug use; urine drug screen is negative.</div>
+  <ol class="q">
+    <li>What is the diagnosis? Justify it with DSM-5 criteria (symptoms + duration). <span class="m">[2]</span></li>
+    <li>Name his positive and negative symptoms. <span class="m">[1]</span></li>
+    <li>List 3 differentials to exclude and the tests used. <span class="m">[2]</span></li>
+    <li>Give first-line drug treatment with dose and the baseline tests before starting. <span class="m">[2]</span></li>
+    <li><b>Special:</b> On day 5 of haloperidol he is febrile (40 °C), rigid, sweaty, confused, with labile BP and CPK 8000. What is it, and how is it managed? <span class="m">[3]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 39 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td><b>Schizophrenia.</b> Criterion A: ≥2 symptoms for ≥1 month (at least one of delusions, hallucinations, disorganised speech) — he has hallucinations, delusions, disorganised speech, negative symptoms; B: marked functional decline; C: <b>continuous disturbance ≥6 months</b>.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>2</td><td>Positive: <b>auditory hallucinations, delusions of control/persecution, disorganised speech</b>. Negative: <b>blunted affect, withdrawal, avolition/self-neglect</b>.</td><td class="mk">0.5 + 0.5</td></tr>
+    <tr><td>3</td><td>Any 3: <b>substance-induced psychosis</b> (cannabis, amphetamine, tramadol, steroids; urine drug screen) · <b>mood disorder with psychosis</b> (bipolar/psychotic depression; history) · <b>delirium/organic</b> (encephalitis, epilepsy, tumour; CBC, LFT, RFT, MRI, EEG, CSF). Investigations only exclude organic causes; diagnosis is clinical.</td><td class="mk">2</td></tr>
+    <tr><td>4</td><td><b>Atypical antipsychotic</b>: Risperidone 4–6 mg/day, Olanzapine 10–20 mg, Quetiapine 300–600 mg or Aripiprazole 15–30 mg. Baseline: <b>ECG, CBC, fasting glucose, lipids</b> (weight).</td><td class="mk">1 + 1</td></tr>
+    <tr><td>5</td><td><b>Neuroleptic malignant syndrome.</b> <b>Stop the antipsychotic</b>, admit to <b>ICU</b>, <b>cooling, IV fluids</b> (protect kidneys from rhabdomyolysis), <b>dantrolene or bromocriptine</b>.</td><td class="mk">1 + 2</td></tr>
+  </table>
+</div>
+
+<!--T: No sleep for a week and spending all his savings (bipolar mania + lithium)-->
+<div class="page">
+  <h2>Case 40 <span class="tag">Psychiatry · 10 marks</span></h2>
+  <div class="stem">A 27-year-old man has slept 2 hours a night for 10 days but feels full of energy. He talks rapidly, jumps between topics, says he will become president, and has spent all his savings on cars. He had a depressive episode 2 years ago. He is irritable when interrupted.</div>
+  <ol class="q">
+    <li>What is the diagnosis? Justify it (duration + 3 features). <span class="m">[2]</span></li>
+    <li>How does bipolar II differ? <span class="m">[1]</span></li>
+    <li>Outline acute and maintenance treatment. When is prophylaxis indicated? <span class="m">[3]</span></li>
+    <li><b>Special:</b> Months later on lithium he develops vomiting, diarrhea, coarse tremor, ataxia and slurred speech after starting a diuretic. What is it, and how is it managed? <span class="m">[3]</span></li>
+    <li>Why should antidepressants be avoided alone in his future depressive episodes? <span class="m">[1]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 40 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td><b>Bipolar I disorder, current episode mania</b>: elevated/irritable mood <b>≥1 week</b> (any duration if hospitalised) + ≥3 of: <b>↓need for sleep, pressured speech, flight of ideas, grandiosity, reckless spending</b>, distractibility, ↑activity.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>2</td><td>Bipolar II: <b>hypomania (≥4 days, no marked impairment/psychosis) + major depression</b>; never full mania.</td><td class="mk">1</td></tr>
+    <tr><td>3</td><td>Acute: <b>antipsychotic</b> (olanzapine, risperidone, quetiapine) for rapid control ± <b>lithium</b> (first-line, 80% response, 1–2 week lag) or valproate/carbamazepine. Maintenance: lithium/mood stabiliser + psychoeducation, social-rhythm therapy. Prophylaxis if <b>≥2 episodes in 5 years</b>, or 1 severe episode + family history.</td><td class="mk">1 + 1 + 1</td></tr>
+    <tr><td>4</td><td><b>Lithium toxicity</b> (thiazides ↓ lithium clearance). <b>Stop lithium</b>, check level, <b>IV saline</b> ± sodium bicarbonate; <b>hemodialysis is definitive</b> (severe toxicity, encephalopathy, convulsions, renal failure).</td><td class="mk">1 + 2</td></tr>
+    <tr><td>5</td><td>Antidepressant monotherapy can <b>switch him into mania</b> / rapid cycling; use with a mood stabiliser (or quetiapine).</td><td class="mk">1</td></tr>
+  </table>
+</div>
+
+<!--T: Sudden attacks of chest pain and fear of dying (panic disorder)-->
+<div class="page">
+  <h2>Case 41 <span class="tag">Psychiatry · 10 marks</span></h2>
+  <div class="stem">A 26-year-old woman has visited the ED 4 times in 2 months with sudden attacks of palpitations, chest tightness, breathlessness, tingling fingers, dizziness and a feeling she is about to die. Each attack peaks within 10 minutes and settles within 30. ECGs and troponins were normal. She now avoids going out alone in case an attack happens.</div>
+  <ol class="q">
+    <li>What is the diagnosis? Give the DSM-5 criteria. What co-existing problem is suggested by her avoidance? <span class="m">[2]</span></li>
+    <li>List 4 medical conditions or substances that can mimic panic attacks, and a test for one. <span class="m">[2]</span></li>
+    <li>How do you manage an acute attack and the long-term condition? <span class="m">[3]</span></li>
+    <li><b>Special:</b> How does generalised anxiety disorder differ? What is the difference between anxiety and phobia? <span class="m">[2]</span></li>
+    <li>Which risk must be assessed in every patient with panic disorder? <span class="m">[1]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 41 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td><b>Panic disorder</b>: recurrent <b>unexpected</b> attacks peaking within minutes + <b>≥1 month</b> of worry about attacks or behaviour change. Avoidance suggests <b>agoraphobia</b>.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>2</td><td>Any 4: <b>pheochromocytoma</b> (24-h urine catecholamines/metanephrines) · <b>hyperthyroidism</b> (TSH) · hypoparathyroidism · B12 deficiency · cardiac arrhythmia/ischemia · <b>caffeine, cocaine, amphetamines</b>, bronchodilators · alcohol/BZD withdrawal.</td><td class="mk">1.5 + 0.5</td></tr>
+    <tr><td>3</td><td>Acute: <b>reassurance</b>, breathing control, a <b>short-acting benzodiazepine</b> only if needed. Long-term: <b>SSRI/SNRI</b> (start low, as SSRI start can worsen anxiety) + <b>CBT with interoceptive exposure</b>; avoid long-term BZDs.</td><td class="mk">1 + 2</td></tr>
+    <tr><td>4</td><td><b>GAD</b>: excessive, uncontrollable, <b>constant</b> worry about many things for <b>≥6 months</b> + tension, restlessness, fatigue, poor sleep (not discrete attacks). <b>Anxiety</b> = diffuse apprehension with a vague threat; <b>phobia</b> = fear of a specific known object or situation.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>5</td><td><b>Suicide risk.</b></td><td class="mk">1</td></tr>
+  </table>
+</div>
+
+<!--T: Very thin teenager who thinks she is fat (anorexia nervosa)-->
+<div class="page">
+  <h2>Case 42 <span class="tag">Psychiatry · 10 marks</span></h2>
+  <div class="stem">A 16-year-old girl is brought by her mother after losing 12 kg in 6 months; BMI is now 15. She exercises for hours, eats very little and says she "still has a fat stomach". Her periods stopped 4 months ago. Pulse 46/min, BP 85/55 mmHg, temperature 35.6 °C, fine downy hair on her arms.</div>
+  <ol class="q">
+    <li>What is the diagnosis? State the core criteria and the 2 subtypes. <span class="m">[2]</span></li>
+    <li>List 4 physical or lab complications. <span class="m">[2]</span></li>
+    <li><b>Special:</b> She is admitted for feeding. On day 3 she develops arrhythmia and heart failure. What is this, which electrolyte is key, and how is it prevented? <span class="m">[3]</span></li>
+    <li>Outline long-term management. <span class="m">[1]</span></li>
+    <li>How does bulimia nervosa differ (2 clinical signs + typical acid-base change), and which drug is approved for it? <span class="m">[2]</span></li>
+  </ol>
+</div>
+<div class="page">
+  <h2 class="ans">Case 42 — Answers &amp; marking scheme</h2>
+  <table>
+    <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
+    <tr><td>1</td><td><b>Anorexia nervosa</b>: restriction → <b>low weight (BMI &lt;18.5)</b>, <b>intense fear of weight gain</b>, <b>distorted body image</b>. Subtypes: <b>restricting</b> vs <b>binge-eating/purging</b>.</td><td class="mk">1 + 1</td></tr>
+    <tr><td>2</td><td>Any 4: <b>bradycardia, hypotension, hypothermia</b>, <b>lanugo</b>, <b>amenorrhea</b>, leukopenia, <b>osteoporosis</b>, electrolyte disturbance.</td><td class="mk">0.5 each</td></tr>
+    <tr><td>3</td><td><b>Refeeding syndrome</b>: key electrolyte <b>phosphate (hypophosphatemia)</b>. Prevent by <b>refeeding slowly</b> and <b>monitoring phosphate</b> (and K, Mg), with supplementation.</td><td class="mk">1 + 1 + 1</td></tr>
+    <tr><td>4</td><td><b>Nutritional rehabilitation</b> + <b>family-based therapy</b> and CBT.</td><td class="mk">1</td></tr>
+    <tr><td>5</td><td>Bulimia: binges + compensation ≥1/week for 3 months with <b>normal/high weight</b>; <b>Russell sign</b> (knuckle calluses), <b>parotid hypertrophy</b>, enamel erosion; <b>hypokalemic hypochloremic metabolic alkalosis</b>. <b>Fluoxetine 60 mg/day</b> (with CBT).</td><td class="mk">1 + 0.5 + 0.5</td></tr>
+  </table>
+</div>
+<!--T: Confused and shaking on day 3 after surgery (delirium tremens)-->
+<div class="page">
+  <h2>Case 43 <span class="tag">Psychiatry · 10 marks</span></h2>
   <div class="stem">On day 3 after a hernia repair, a 48-year-old man becomes acutely confused and agitated, sees insects on the walls, and has a coarse tremor, sweating, temperature 38.2 °C, pulse 124/min and BP 165/100 mmHg. His wife says he drinks a bottle of spirits a day. He had a brief fit yesterday.</div>
   <ol class="q">
     <li>What is the diagnosis? Explain how the timeline fits. <span class="m">[2]</span></li>
@@ -456,7 +1123,7 @@
   </ol>
 </div>
 <div class="page">
-  <h2 class="ans">Case 15 — Answers &amp; marking scheme</h2>
+  <h2 class="ans">Case 43 — Answers &amp; marking scheme</h2>
   <table>
     <tr><th>Q</th><th>Model answer</th><th>Marks</th></tr>
     <tr><td>1</td><td><b>Alcohol withdrawal → delirium tremens</b> (mortality 10–20%). Timeline from the last drink: 6–12 h tremor/anxiety/sweating → <b>12–48 h seizures</b> → <b>72–96 h DTs</b> (clouded consciousness, vivid visual hallucinations, autonomic hyperactivity).</td><td class="mk">1 + 1</td></tr>

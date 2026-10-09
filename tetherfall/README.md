@@ -2,7 +2,7 @@
 
 A blocky, high-speed grappling-hook action game that runs in the browser. Swing through a forest of giant trees on a two-anchor **Tether Rig**, manage your gas, and fell stone **Colossi** by cutting the glowing core at the back of their necks.
 
-Built with [Three.js](https://threejs.org) (vendored in `vendor/`). There's no build step. All textures, models, the world and the sound effects are generated in code.
+Built with [Three.js](https://threejs.org) (vendored in `vendor/`). The source runs without a build step. All textures, models, the world and the sound effects are generated in code.
 
 ## Play without a server
 

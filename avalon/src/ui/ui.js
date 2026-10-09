@@ -18,7 +18,8 @@ export class UI {
   constructor(game) {
     this.g = game;
     this.root = $('#ui');
-    this.settings = { quality: 'high', sens: 1, fov: 72, view: 176, touch: 'ontouchstart' in window, subtitles: true, volume: 0.8 };
+    const mobile = 'ontouchstart' in window && Math.min(screen.width, screen.height) < 900;
+    this.settings = { quality: mobile ? 'low' : 'high', sens: 1, fov: 72, view: mobile ? 112 : 176, touch: mobile, subtitles: true, volume: 0.8 };
     try { Object.assign(this.settings, JSON.parse(localStorage.getItem('avalon_settings') || '{}')); } catch (e) { /* ignore */ }
     this.modal = null; // 'book' | 'dialogue' | 'loot' | 'shop' | 'fire' | 'pause' | 'title' | 'ending'
     this.toasts = [];
@@ -618,7 +619,7 @@ export class UI {
     view.cx = P.pos.x; view.cz = P.pos.z;
     const draw = () => {
       const W = cv.clientWidth, H = cv.clientHeight;
-      if (cv.width !== W) { cv.width = W; cv.height = H; }
+      if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
       ctx.fillStyle = '#c8b48a'; ctx.fillRect(0, 0, W, H);
       const z = view.zoom;
       const ox = W / 2 - view.cx * z, oz = H / 2 - view.cz * z;
@@ -659,7 +660,7 @@ export class UI {
       gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(70,40,10,0.45)');
       ctx.fillStyle = gr; ctx.fillRect(0, 0, W, H);
     };
-    draw();
+    draw(); requestAnimationFrame(draw);
     let drag = null;
     cv.addEventListener('pointerdown', (e) => { drag = { x: e.clientX, y: e.clientY, cx: view.cx, cz: view.cz, moved: false }; });
     cv.addEventListener('pointermove', (e) => { if (!drag) return; const dx = e.clientX - drag.x, dy = e.clientY - drag.y; if (Math.abs(dx) + Math.abs(dy) > 4) drag.moved = true; view.cx = drag.cx - dx / view.zoom; view.cz = drag.cz - dy / view.zoom; draw(); });

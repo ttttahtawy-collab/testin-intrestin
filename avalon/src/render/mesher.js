@@ -137,8 +137,8 @@ function emitPlant(buf, b, below, wx, y, wz, lx, lz, sky) {
       const n = 2 + ((h(1) * 3) | 0);
       for (let i = 0; i < n; i++) {
         const px = X + 0.15 + h(10 + i) * 0.7, pz = Z + 0.15 + h(20 + i) * 0.7;
-        const hh = 0.3 + h(30 + i) * 0.55, w = 0.07;
-        const m = 1.0 + h(40 + i) * 0.35;
+        const hh = 0.25 + h(30 + i) * 0.5, w = 0.05;
+        const m = 0.9 + h(40 + i) * 0.3;
         emitBox(buf, px - w, y, pz - w, px + w, y + hh, pz + w, bc[0] * m, bc[1] * m, bc[2] * m, 0, 1, sky);
       }
       break;

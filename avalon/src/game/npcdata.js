@@ -91,7 +91,7 @@ export const NPCS = {
     name: 'Fenn', title: 'Peddler', settlement: 'crossroads', shop: 'peddler',
     app: { skin: 0xc8946c, hair: 0x6a5a4a, beard: 'stubble', top: 0x8a3a2a, topStyle: 'coat', fur: 0x6a5a3a, legs: 0x3a3a3a, helmet: 'cap', capColor: 0x2a4a3a },
     schedule: day('cross.trader', 'idle'),
-    barks: { greet: ['Wares from three villages! Well — two, now.', 'Crows at the crossroads mean luck. Bad luck, mostly.'] },
+    barks: { greet: ['Wares from three villages! Well — two, now.', 'Crows at the crossroads mean the harvest failed again.'] },
     alwaysTalk: true,
   },
   // ---------- Caer Dawn ----------

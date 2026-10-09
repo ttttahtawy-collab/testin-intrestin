@@ -10,7 +10,7 @@ export class Audio {
   }
 
   start() {
-    if (this.started) return;
+    if (this.started) { if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume(); return; }
     try {
       const AC = window.AudioContext || window.webkitAudioContext;
       if (!AC) return;

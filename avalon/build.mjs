@@ -9,4 +9,7 @@ const shell = fs.readFileSync('src/index.html', 'utf8');
 fs.mkdirSync('dist', { recursive: true });
 const html = shell.replace('/*__CSS__*/', () => css).replace('/*__JS__*/', () => js.replace(/<\/script/g, '<\\/script'));
 fs.writeFileSync(out, html);
+// artifact fragment (no doc skeleton; the host wraps it)
+const frag = `<title>Avalon: The Withering</title>\n<style>${css}\n:root{color-scheme:dark}</style>\n<canvas id="c"></canvas><div id="ui"></div>\n<script>${js.replace(/<\/script/g, '<\\/script')}</script>\n`;
+fs.writeFileSync('dist/avalon-artifact.html', frag);
 console.log('built', out, (html.length / 1024).toFixed(0) + ' KB');

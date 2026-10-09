@@ -116,6 +116,7 @@ export class Player {
       this.yaw -= input.mouse.dx * sens;
       this.pitch -= input.mouse.dy * sens;
       if (input.touch.active) { this.yaw -= input.touch.look.x; this.pitch -= input.touch.look.y; input.touch.look.x = 0; input.touch.look.y = 0; }
+      this.yaw -= input.edgeTurn() * dt * 2.2;
       this.pitch = Math.max(-1.5, Math.min(1.5, this.pitch));
     }
     // timers

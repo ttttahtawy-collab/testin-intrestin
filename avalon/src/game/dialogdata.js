@@ -206,7 +206,7 @@ DLG.tamsin = {
   start: (g) => S(g, 'sq_ring') === 'back' ? 'back' : D(g, 'sq_ring') ? 'after' : A(g, 'sq_ring') ? 'waiting' : 'hub',
   nodes: {
     hub: { t: 'Oh! You\'re the castaway. Um. You haven\'t seen a ring, have you? Gold, with a little blue stone. It was my mother\'s.', o: [{ t: 'Where did you lose it?', n: 'where' }, { t: 'Sorry, no.', n: 'end' }] },
-    where: { t: 'Down by the jetty on the mere. I was skipping stones. It slipped right off. Father will be furious.', o: [{ t: 'I\'ll look for it.', n: 'end', d: (g) => g.quests.start('sq_ring') }, { t: 'Good luck.', n: 'end' }] },
+    where: { t: 'Down by the jetty on the mere. I was skipping stones. It slipped right off. Father will be furious.', o: [{ t: 'I\'ll look for it.', n: 'end', d: (g) => g.quests.start('sq_ring') }, { t: 'I hope you find it.', n: 'end' }] },
     waiting: { t: 'The jetty, on the mere — east of the village. Please hurry before the herons swallow it.', o: [{ t: 'I\'m looking.', n: 'end' }] },
     back: {
       t: 'You found it?!',
@@ -482,7 +482,7 @@ DLG.pell = {
         { t: 'Farewell.', n: 'end' },
       ],
     },
-    claim: { t: 'Grimtooth? Dead? The lads owe me money — I said you\'d do it. Here\'s your bounty.', o: [{ t: 'Pleasure.', n: 'end', d: (g) => g.quests.complete('sq_bounty') }] },
+    claim: { t: 'Grimtooth? Dead? The lads didn\'t believe me when I said you\'d do it. Here\'s your bounty.', o: [{ t: 'Pleasure.', n: 'end', d: (g) => g.quests.complete('sq_bounty') }] },
   },
 };
 
@@ -518,7 +518,7 @@ DLG.nessa = {
 DLG.aldo = {
   start: (g) => S(g, 'sq_net') === 'back' ? 'back' : A(g, 'sq_net') ? 'waiting' : D(g, 'sq_net') ? 'after' : 'hub',
   nodes: {
-    hub: { t: 'Storm took my best net. Saw it tangled on the wreck of the Merrow, west along the beach — but I\'m too old to climb wet timber, and the tide\'s cruel there.', o: [{ t: 'I\'ll fetch it.', n: 'end', d: (g) => g.quests.start('sq_net') }, { t: 'Unlucky.', n: 'end' }] },
+    hub: { t: 'Storm took my best net. Saw it tangled on the wreck of the Merrow, west along the beach — but I\'m too old to climb wet timber, and the tide\'s cruel there.', o: [{ t: 'I\'ll fetch it.', n: 'end', d: (g) => g.quests.start('sq_net') }, { t: 'A hard loss.', n: 'end' }] },
     waiting: { t: 'West along the shore. The Merrow. Mind the gulls; they bite.', o: [{ t: 'Right.', n: 'end' }] },
     back: { t: 'My net! Barely a tear. Here — fresh grilled trout, and coin. You\'ve a fisherman\'s heart.', o: [{ t: 'Good fishing, Aldo.', n: 'end', d: (g) => { g.inventory.remove('net', 1); g.quests.complete('sq_net'); } }] },
     after: { t: 'Caught a pike this morning. Ugly beast. Delicious.', o: [{ t: 'Farewell.', n: 'end' }] },

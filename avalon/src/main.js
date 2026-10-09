@@ -50,7 +50,7 @@ canvas.addEventListener('click', () => {
 });
 document.addEventListener('pointerlockchange', () => {
   const locked = document.pointerLockElement === canvas;
-  if (!locked && game.state === 'play' && !game.ui.modal && !game.player.dead && !game.ui.settings.touch) setTimeout(() => { if (!game.ui.modal && document.pointerLockElement !== canvas) game.ui.openPause(); }, 30);
+  if (!locked && !game.input.freeLook && game.state === 'play' && !game.ui.modal && !game.player.dead && !game.ui.settings.touch) setTimeout(() => { if (!game.ui.modal && document.pointerLockElement !== canvas) game.ui.openPause(); }, 30);
 });
 
 (async () => {

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tetherfall</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Oswald:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">{ "imports": { "three": "./vendor/three.module.min.js" } }</script>
+</head>
+<body>
+  <canvas id="game"></canvas>
+
+  <div id="hud" class="hidden">
+    <div id="topcenter">
+      <div id="mode-title">First Flight</div>
+      <div id="mode-sub">Learn the Tether Rig</div>
+      <div id="objective"></div>
+    </div>
+
+    <div id="topleft">
+      <div id="kills"><span class="flag"></span><b id="kill-count">0</b> COLOSSI FELLED</div>
+      <div id="dialog" class="hidden">
+        <canvas id="portrait" width="16" height="16"></canvas>
+        <div><div id="dialog-name">SGT. WREN CALDER</div><div id="dialog-text"></div></div>
+      </div>
+    </div>
+
+    <div id="topright">
+      <canvas id="minimap" width="200" height="200"></canvas>
+      <div id="speed">0 km/h</div>
+    </div>
+
+    <div id="bottomleft" class="panel">
+      <div class="label">HEALTH</div>
+      <div class="bar"><div id="health-bar" class="fill red"></div></div>
+      <div class="label">GAS <span id="gas-pct">100%</span></div>
+      <div class="bar segmented"><div id="gas-bar" class="fill blue"></div></div>
+      <div class="label">BLADES</div>
+      <div id="blades"><div id="blade-l" class="blade"><i></i></div><div id="blade-r" class="blade"><i></i></div>
+        <div><b id="spares">×8</b><small>SPARE PAIRS · R TO SWAP</small></div></div>
+    </div>
+
+    <div id="help" class="panel">
+      <div><b>LMB / RMB</b><span>left / right anchor (hold)</span></div>
+      <div><b>SPACE</b><span>gas boost · jump</span></div>
+      <div><b>SHIFT</b><span>reel in fast</span></div>
+      <div><b>G</b><span>landing thrusters (brake)</span></div>
+      <div><b>WASD</b><span>run · steer &amp; pump swings</span></div>
+      <div><b>F</b><span>slash · spin cut at speed</span></div>
+      <div><b>R</b><span>swap blades</span></div>
+      <div><b>E</b><span>resupply at depot</span></div>
+      <div><b>B</b><span>build mode</span></div>
+      <div><b>V</b><span>camera view</span></div>
+      <div><b>Q / C</b><span>alt. anchor keys</span></div>
+      <div><b>H</b><span>hide this help</span></div>
+      <div><b>ESC</b><span>pause</span></div>
+    </div>
+
+    <div id="crosshair"><div class="ring"></div><div class="dot"></div><div id="aim-dist"></div></div>
+    <div id="prompt" class="hidden"></div>
+    <div id="popup"></div>
+    <div id="vignette"></div>
+    <div id="build-tag" class="hidden">BUILD MODE · LMB break · RMB place · 1-6 block</div>
+  </div>
+
+  <div id="menu" class="screen">
+    <div class="card">
+      <h1>TETHERFALL</h1>
+      <p class="tag">Ride the wind. Cut the core.</p>
+      <button id="btn-tutorial">First Flight <small>tutorial</small></button>
+      <button id="btn-free">Free Roam <small>colossi never stop coming</small></button>
+      <button id="btn-settings" class="ghost">Settings</button>
+      <p class="hint">Click to capture the mouse. Turning mouse sensitivity up helps at high speed.</p>
+    </div>
+  </div>
+
+  <div id="pause" class="screen hidden">
+    <div class="card">
+      <h2>Paused</h2>
+      <button id="btn-resume">Resume</button>
+      <button id="btn-settings2" class="ghost">Settings</button>
+      <button id="btn-quit" class="ghost">Main menu</button>
+    </div>
+  </div>
+
+  <div id="settings" class="screen hidden">
+    <div class="card">
+      <h2>Settings</h2>
+      <label>Mouse sensitivity <output id="o-sens"></output><input id="s-sens" type="range" min="0.2" max="4" step="0.1"></label>
+      <label>Field of view <output id="o-fov"></output><input id="s-fov" type="range" min="60" max="100" step="1"></label>
+      <label>Volume <output id="o-vol"></output><input id="s-vol" type="range" min="0" max="1" step="0.05"></label>
+      <label class="check"><input id="s-inv" type="checkbox"> Invert mouse Y</label>
+      <button id="btn-back">Back</button>
+    </div>
+  </div>
+
+  <div id="dead" class="screen hidden">
+    <div class="card">
+      <h2 id="dead-title">You fell</h2>
+      <p id="dead-text"></p>
+      <button id="btn-respawn">Try again</button>
+      <button id="btn-quit2" class="ghost">Main menu</button>
+    </div>
+  </div>
+
+  <div id="loading" class="screen">
+    <div class="card"><h1>TETHERFALL</h1><p id="load-text">Raising the walls…</p><div class="bar"><div id="load-bar" class="fill blue"></div></div></div>
+  </div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

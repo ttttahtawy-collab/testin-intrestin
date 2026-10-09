@@ -1,0 +1,92 @@
+:root {
+  --panel: rgba(18, 24, 38, 0.78);
+  --edge: #c9a54a;
+  --ink: #eef1f6;
+  --muted: #9aa6b8;
+  --red: #e0453a;
+  --blue: #bfe3ff;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: #0d1118; color: var(--ink); font-family: 'Oswald', 'Arial Narrow', sans-serif; }
+canvas#game { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+.hidden { display: none !important; }
+
+#hud { position: fixed; inset: 0; pointer-events: none; user-select: none; }
+.panel { background: var(--panel); border-left: 3px solid var(--edge); padding: 10px 14px; }
+
+#topcenter { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); text-align: center; }
+#mode-title { font-family: 'Cinzel', serif; font-size: 22px; letter-spacing: 3px; color: #f5e6c4; text-shadow: 0 2px 4px #000a; }
+#mode-sub { font-size: 13px; color: #e8dcc0; text-shadow: 0 1px 3px #000; }
+#objective { margin-top: 6px; display: inline-block; background: rgba(20, 30, 70, 0.85); padding: 5px 14px; font-size: 16px; }
+#objective:empty { display: none; }
+
+#topleft { position: absolute; top: 14px; left: 14px; max-width: 440px; }
+#kills { font-size: 13px; letter-spacing: 2px; color: #e8dcc0; margin-bottom: 4px; }
+#kills b { font-size: 18px; margin-right: 6px; color: #fff; }
+#kills .flag { display: inline-block; width: 12px; height: 12px; background: var(--red); margin-right: 6px; vertical-align: -1px; }
+#dialog { display: flex; gap: 12px; background: var(--panel); border-left: 3px solid var(--edge); padding: 10px 14px; align-items: flex-start; }
+#portrait { width: 64px; height: 64px; image-rendering: pixelated; border: 2px solid #3d4558; flex: none; }
+#dialog-name { color: var(--edge); font-size: 12px; letter-spacing: 2px; }
+#dialog-text { font-size: 15px; line-height: 1.35; }
+#dialog-text b { color: #fff; }
+
+#topright { position: absolute; top: 14px; right: 18px; text-align: center; }
+#minimap { width: 170px; height: 170px; border-radius: 50%; border: 3px solid var(--edge); box-shadow: 0 2px 10px #0008; }
+#speed { font-size: 16px; text-shadow: 0 1px 3px #000; margin-top: 2px; }
+
+#bottomleft { position: absolute; left: 14px; bottom: 14px; width: 300px; }
+.label { font-size: 12px; letter-spacing: 2px; color: #e8dcc0; margin-top: 6px; display: flex; justify-content: space-between; }
+.bar { height: 10px; background: rgba(255,255,255,0.12); margin-top: 3px; position: relative; overflow: hidden; }
+.fill { height: 100%; width: 100%; transition: width 0.12s linear; }
+.fill.red { background: var(--red); }
+.fill.blue { background: var(--blue); }
+.bar.segmented::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 9.5%, rgba(10,15,25,0.9) 9.5% 10%); }
+#blades { display: flex; gap: 8px; align-items: center; margin-top: 4px; }
+.blade { width: 10px; height: 38px; background: rgba(255,255,255,0.12); position: relative; }
+.blade i { position: absolute; bottom: 0; left: 0; right: 0; background: #e9eef4; height: 100%; }
+#blades b { font-size: 22px; margin-left: 12px; }
+#blades small { display: block; margin-left: 12px; font-size: 11px; letter-spacing: 1.5px; color: var(--muted); }
+
+#help { position: absolute; right: 14px; bottom: 14px; font-size: 13px; }
+#help div { display: flex; gap: 14px; line-height: 1.45; }
+#help b { color: #f5c542; width: 70px; }
+#help span { color: #dfe5ee; }
+
+#crosshair { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; }
+#crosshair .ring { position: absolute; inset: 8px; border: 2px solid rgba(255,255,255,0.75); border-radius: 50%; }
+#crosshair .dot { position: absolute; left: 18px; top: 18px; width: 4px; height: 4px; background: #fff; border-radius: 50%; }
+#crosshair.far .ring { border-color: rgba(255,90,80,0.7); }
+#crosshair.locked .ring { border-color: #7ff0ff; box-shadow: 0 0 8px #7ff0ff; }
+#crosshair.core .ring { border-color: #ffb347; box-shadow: 0 0 10px #ff7a2a; }
+#aim-dist { position: absolute; top: 42px; width: 100px; left: -30px; text-align: center; font-size: 12px; text-shadow: 0 1px 2px #000; }
+
+#prompt { position: absolute; left: 50%; top: 62%; transform: translateX(-50%); background: var(--panel); padding: 6px 14px; border-left: 3px solid #5fe39a; }
+#popup { position: absolute; left: 50%; top: 36%; transform: translate(-50%, -50%); font-family: 'Cinzel', serif; font-size: 34px; color: #ffcf6e; text-shadow: 0 2px 8px #000; opacity: 0; transition: opacity 0.25s; text-align: center; }
+#popup small { display: block; font-family: 'Oswald', sans-serif; font-size: 16px; color: #fff; }
+#popup.show { opacity: 1; }
+#vignette { position: absolute; inset: 0; box-shadow: inset 0 0 160px rgba(200, 0, 0, 0.0); transition: box-shadow 0.2s; }
+#build-tag { position: absolute; top: 120px; left: 50%; transform: translateX(-50%); background: #3a2a10cc; padding: 4px 12px; border: 1px solid var(--edge); }
+
+.screen { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: radial-gradient(ellipse at center, rgba(10,16,28,0.55), rgba(5,8,14,0.9)); z-index: 10; }
+.card { width: min(440px, calc(100vw - 32px)); background: rgba(16, 22, 36, 0.92); border: 1px solid #3a4560; border-top: 3px solid var(--edge); padding: 28px; text-align: center; }
+.card h1 { font-family: 'Cinzel', serif; font-size: 44px; letter-spacing: 6px; margin: 0; color: #f5e6c4; }
+.card h2 { font-family: 'Cinzel', serif; letter-spacing: 3px; margin-top: 0; color: #f5e6c4; }
+.tag { color: var(--muted); margin-top: 4px; }
+.hint { color: var(--muted); font-size: 13px; }
+button { display: block; width: 100%; margin: 10px 0; padding: 12px; font: 600 18px 'Oswald', sans-serif; letter-spacing: 1px; color: #1a1408; background: linear-gradient(#e7c66a, #c9a54a); border: none; cursor: pointer; }
+button small { display: block; font-weight: 400; font-size: 12px; opacity: 0.75; }
+button.ghost { background: transparent; color: var(--ink); border: 1px solid #4a5677; }
+button:hover { filter: brightness(1.1); }
+label { display: block; text-align: left; margin: 14px 0; color: #dfe5ee; }
+label output { float: right; color: var(--edge); }
+label input[type=range] { width: 100%; }
+label.check input { margin-right: 8px; }
+#loading .bar { margin-top: 18px; }
+#loading .fill { width: 0; }
+
+@media (max-width: 800px) {
+  #help { display: none; }
+  #bottomleft { width: 220px; }
+  #minimap { width: 120px; height: 120px; }
+  #topleft { max-width: 60vw; }
+}

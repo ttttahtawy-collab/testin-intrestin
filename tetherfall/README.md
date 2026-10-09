@@ -4,7 +4,11 @@ A blocky, high-speed grappling-hook action game that runs in the browser. Swing 
 
 Built with [Three.js](https://threejs.org) (vendored in `vendor/`). There's no build step. All textures, models, the world and the sound effects are generated in code.
 
-## Run it
+## Play without a server
+
+Open `tetherfall-standalone.html` directly in Chrome, Edge or Firefox (double-click it). It holds the whole game in one file. Rebuild it after code changes by bundling `src/main.js` with esbuild.
+
+## Run it from source
 
 Browsers block ES modules loaded from `file://`, so serve the folder over HTTP:
 

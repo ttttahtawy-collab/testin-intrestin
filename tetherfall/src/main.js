@@ -24,8 +24,8 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 renderer.setSize(window.innerWidth, window.innerHeight);
 const scene = new THREE.Scene();
 const HORIZON = new THREE.Color(0.80, 0.87, 0.95);
-scene.fog = new THREE.Fog(HORIZON, 80, 290);
-const camera = new THREE.PerspectiveCamera(settings.fov, window.innerWidth / window.innerHeight, 0.1, 900);
+scene.fog = new THREE.Fog(HORIZON, 100, 380);
+const camera = new THREE.PerspectiveCamera(settings.fov, window.innerWidth / window.innerHeight, 0.1, 1400);
 camera.rotation.order = 'YXZ';
 
 scene.add(makeSky());
@@ -36,12 +36,12 @@ sun.position.set(0.45, 1, 0.3);
 scene.add(sun);
 
 function makeSky() {
-  const geo = new THREE.SphereGeometry(800, 24, 16);
+  const geo = new THREE.SphereGeometry(1200, 24, 16);
   const col = [];
   const top = new THREE.Color(0.25, 0.5, 0.95);
   const p = geo.attributes.position;
   for (let i = 0; i < p.count; i++) {
-    const t = Math.max(0, p.getY(i) / 800);
+    const t = Math.max(0, p.getY(i) / 1200);
     const c = HORIZON.clone().lerp(top, Math.pow(t, 0.55));
     col.push(c.r, c.g, c.b);
   }
@@ -53,7 +53,7 @@ function makeSky() {
 }
 
 function makeClouds() {
-  const cell = 12, n = 64, y0 = 112, h = 5;
+  const cell = 14, n = 80, y0 = 116, h = 5;
   const filled = (i, j) => i >= 0 && j >= 0 && i < n && j < n && fbm(i / 7, j / 7, 55, 3) > 0.56;
   const pos = [], nor = [], idx = [];
   const quad = (a, b, c, d, nrm) => {
@@ -82,6 +82,10 @@ function makeClouds() {
   return m;
 }
 const clouds = makeClouds();
+const skirt = new THREE.Mesh(new THREE.PlaneGeometry(SX + 3000, SZ + 3000), new THREE.MeshLambertMaterial({ color: 0x5f8f3e }));
+skirt.rotation.x = -Math.PI / 2;
+skirt.position.set(SX / 2, 22.9, SZ / 2);
+scene.add(skirt);
 scene.add(clouds);
 
 // ---------------- world ----------------
@@ -141,8 +145,9 @@ class Particles {
 }
 const steam = new Particles(600, 2.6, 0xf2f4f7, 0.5);
 const sparks = new Particles(300, 0.35, 0xffb347, 0.95);
-const dust = new Particles(300, 1.6, 0xc8b89a, 0.45);
-scene.add(steam.points, sparks.points, dust.points);
+const dust = new Particles(400, 1.6, 0xc8b89a, 0.45);
+const streaks = new Particles(240, 0.09, 0xffffff, 0.55);
+scene.add(steam.points, sparks.points, dust.points, streaks.points);
 
 // ---------------- game objects ----------------
 const sfx = new Sfx();
@@ -407,23 +412,32 @@ function spawnDummy() {
   dummy = new Colossus(scene, y.x + 0.5, y.z - 1.5, 7.5, 0, { dummy: true, yaw: 0 });
   colossi.push(dummy);
 }
-function spawnColossus(x, z, H) {
-  const c = new Colossus(scene, x, z, H ?? 10 + Math.random() * 9 + (Math.random() < 0.15 ? 5 : 0), Math.floor(Math.random() * 5));
+function randomHeight() { return 12 + Math.random() * 10 + (Math.random() < 0.15 ? 8 : 0); }
+function spawnColossus(x, z, H, opts = {}) {
+  const c = new Colossus(scene, x, z, H ?? randomHeight(), Math.floor(Math.random() * 5), opts);
   c.pos.y = world.groundAt(x, z);
   colossi.push(c);
   return c;
 }
-function spawnAroundPlayer() {
+// Find open ground outside the walls within [rMin, rMax] of a point.
+function spawnNear(px, pz, rMin, rMax, opts) {
   const { town } = info;
-  for (let tries = 0; tries < 30; tries++) {
-    const a = Math.random() * Math.PI * 2, r = 90 + Math.random() * 70;
-    const x = player.pos.x + Math.cos(a) * r, z = player.pos.z + Math.sin(a) * r;
+  for (let tries = 0; tries < 60; tries++) {
+    const a = Math.random() * Math.PI * 2, r = rMin + Math.random() * (rMax - rMin);
+    const x = px + Math.cos(a) * r, z = pz + Math.sin(a) * r;
     if (x < 20 || z < 20 || x > SX - 20 || z > SZ - 20) continue;
-    if (Math.hypot(x - town.cx, z - town.cz) < town.R + 14) continue;
-    if (info.trees.some((t) => Math.hypot(t.x - x, t.z - z) < t.r + 6)) continue;
-    return spawnColossus(x, z);
+    if (Math.hypot(x - town.cx, z - town.cz) < town.R + 16) continue;
+    if (info.trees.some((t) => Math.hypot(t.x - x, t.z - z) < t.r + 8)) continue;
+    return spawnColossus(x, z, undefined, opts);
   }
   return null;
+}
+function spawnAroundPlayer() {
+  return spawnNear(player.pos.x, player.pos.z, 80, 170) || spawnNear(info.town.cx, info.town.cz, info.town.R + 25, info.town.R + 160);
+}
+// Colossi milling around outside the walls, visible from the ramparts.
+function spawnRing(n, opts) {
+  for (let i = 0; i < n; i++) spawnNear(info.town.cx, info.town.cz, info.town.R + 25, info.town.R + 130, opts);
 }
 
 // ---------------- HUD ----------------
@@ -510,7 +524,7 @@ function updateHud(dt) {
 const tut = { i: 0, acc: 0, done: false, startKills: 0 };
 const TUT = [
   {
-    text: 'Welcome to the wall, recruit. Walk with <b>WASD</b>, look with the mouse. Head to the yellow beacon.',
+    text: 'Welcome to the wall, recruit. See those colossi beyond the walls? You will learn to cut them down. Walk with <b>WASD</b>, look with the mouse, and head to the yellow beacon.',
     beacon: () => info.wallBeacon,
     obj: () => `Reach the beacon · ${Math.round(distTo(info.wallBeacon))} m`,
     check: () => distTo(info.wallBeacon) < 3.5,
@@ -602,6 +616,7 @@ function setObjectiveBeam(p) {
 
 function startFreeRoam(fromTutorial) {
   game.mode = 'free';
+  for (const c of colossi) c.passive = false;
   setMode('Free Roam', 'Colossi never stop coming');
   setObjectiveBeam(null);
   dialog(fromTutorial ? null : 'Colossi roam outside the walls and they never stop coming. Resupply at the <b>green beacons</b>. Good hunting, scout.');
@@ -622,8 +637,8 @@ function startGame(mode) {
   pickups.forEach((p) => { p.active = true; p.group.visible = true; });
   $('menu').classList.add('hidden');
   $('hud').classList.remove('hidden');
-  if (mode === 'tutorial') { setMode('First Flight', 'Learn the Tether Rig'); enterStep(0); }
-  else { startFreeRoam(false); for (let i = 0; i < 4; i++) spawnAroundPlayer(); }
+  if (mode === 'tutorial') { setMode('First Flight', 'Learn the Tether Rig'); enterStep(0); spawnRing(8, { passive: true }); }
+  else { startFreeRoam(false); spawnRing(9); }
   game.state = 'playing';
   lockPointer();
 }
@@ -820,6 +835,7 @@ function loop(now) {
       if (e.type === 'hookHit') sfx.hookHit();
       if (e.type === 'hurt') sfx.hurt();
       if (e.type === 'impact') game.shake = Math.max(game.shake, 0.4);
+      if (e.type === 'land') { dust.emit(_v1.set(player.pos.x, player.pos.y + 0.1, player.pos.z), Math.min(30, e.speed * 1.5), 0.8, 3, 0.8); if (e.speed > 12) game.shake = Math.max(game.shake, 0.15); }
       if (e.type === 'death') onDeath(e.cause);
     }
     player.events.length = 0;
@@ -830,9 +846,9 @@ function loop(now) {
     if (game.mode === 'free' && game.state === 'playing') {
       game.spawnTimer -= dt;
       const alive = colossi.filter((c) => c.alive && !c.dummy).length;
-      const want = Math.min(12, 5 + Math.floor(game.kills / 3));
-      if (alive < want && game.spawnTimer <= 0) { spawnAroundPlayer(); game.spawnTimer = 5; }
-      const near = colossi.filter((c) => c.alive && !c.dummy && c.pos.distanceTo(player.pos) < 130).length;
+      const want = Math.min(16, 8 + Math.floor(game.kills / 3));
+      if (alive < want && game.spawnTimer <= 0) { spawnAroundPlayer(); game.spawnTimer = 4; }
+      const near = colossi.filter((c) => c.alive && !c.dummy && c.pos.distanceTo(player.pos) < 160).length;
       $('objective').textContent = `Colossi nearby ${near} · Felled ${game.kills}`;
     } else if (game.mode === 'tutorial' && game.state === 'playing') updateTutorial(dt);
 
@@ -844,7 +860,7 @@ function loop(now) {
       slashArc.position.set(player.pos.x, player.pos.y + 1.1, player.pos.z);
       slashArc.rotation.set(-Math.PI / 2 + 0.3, 0, -player.model.root.rotation.y + (player.spin ? frame * 0.6 : 0));
     }
-    player.animate(dt, game.firstPerson);
+    player.animate(dt, game.firstPerson, scene);
     updateCamera(dt);
     lastAim = player.alive && !game.build ? aim() : null;
     updateRopes();
@@ -854,13 +870,26 @@ function loop(now) {
   } else if (game.state === 'menu') {
     // slow fly-over behind the menu
     const t = now / 1000;
-    camera.position.set(info.town.cx + Math.cos(t * 0.05) * 95, 92, info.town.cz + Math.sin(t * 0.05) * 95);
-    camera.lookAt(info.town.cx, 35, info.town.cz);
+    camera.position.set(info.town.cx + Math.cos(t * 0.04) * 150, 105, info.town.cz + Math.sin(t * 0.04) * 150);
+    camera.lookAt(info.town.cx, 30, info.town.cz);
+    if (frame % 10 === 0) chunks.cull(camera.position, 420);
     sfx.update(0, false);
   } else {
     sfx.update(0, false);
   }
+  if (player && game.state === 'playing') {
+    const sp = player.speed();
+    if (sp > 18) {
+      const n = Math.min(8, Math.floor((sp - 18) / 5) + 1);
+      for (let i = 0; i < n; i++) {
+        _v1.copy(camera.position).addScaledVector(player.vel, 0.35).add(_v2.set((Math.random() - 0.5) * 9, (Math.random() - 0.5) * 6, (Math.random() - 0.5) * 9));
+        streaks.emit(_v1, 1, 0, 0, 0.35);
+      }
+    }
+  }
+  if (chunks && frame % 10 === 0) chunks.cull(camera.position, 420);
   steam.update(dt, -0.6);
+  streaks.update(dt, 0);
   sparks.update(dt, 18);
   dust.update(dt, -0.3);
   renderer.render(scene, camera);

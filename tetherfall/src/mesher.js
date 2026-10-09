@@ -140,6 +140,15 @@ export class ChunkRenderer {
       yield (cz * n + cx + 1) / (n * m);
     }
   }
+  // Hide chunks past the fog so the big map stays cheap to draw.
+  cull(pos, dist) {
+    const d2 = dist * dist;
+    for (const [k, m] of this.meshes) {
+      const [cx, cz] = k.split(',').map(Number);
+      const dx = (cx + 0.5) * CHUNK - pos.x, dz = (cz + 0.5) * CHUNK - pos.z;
+      m.visible = dx * dx + dz * dz < d2;
+    }
+  }
   flushDirty() {
     for (const k of this.world.dirty) {
       const [cx, cz] = k.split(',').map(Number);

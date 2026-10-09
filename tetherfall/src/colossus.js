@@ -1,12 +1,14 @@
 // Colossi: lumbering stone giants. The only lethal cut is to the glowing core at the nape.
 import * as THREE from 'three';
 import { makeColossusModel } from './models.js';
+import { SX, SZ } from './world.js';
 
 const tmpA = new THREE.Vector3(), tmpB = new THREE.Vector3(), tmpC = new THREE.Vector3();
 
 export class Colossus {
   constructor(scene, x, z, H, variant, opts = {}) {
     this.dummy = !!opts.dummy;
+    this.passive = !!opts.passive; // wanders but ignores the player (tutorial scenery)
     this.H = H;
     this.m = makeColossusModel(variant, this.dummy);
     this.scale = H / this.m.height;
@@ -62,7 +64,7 @@ export class Colossus {
 
     const dx = player.pos.x - this.pos.x, dz = player.pos.z - this.pos.z;
     const dist = Math.hypot(dx, dz);
-    const aggro = player.alive && dist < 120;
+    const aggro = player.alive && !this.passive && dist < 150;
     const reach = this.H * 0.5 + 2.5;
 
     if (this.state === 'walk') {
@@ -108,12 +110,12 @@ export class Colossus {
         if (!this.hitDone && this.timer > 0.05) {
           const arm = this.attackArm ? m.armR : m.armL;
           this.limbSegment(arm, tmpA, tmpC, 3.9);
-          if (player.alive && distToSegment(player.chestPos(tmpB), tmpA, tmpC) < this.H * 0.1 + 1.6) {
+          if (player.alive && distToSegment(player.chestPos(tmpB), tmpA, tmpC) < this.H * 0.12 + 1.8) {
             this.hitDone = true;
             game.onGrabbed(this);
           }
         }
-        if (this.timer > 0.35) { this.state = 'walk'; this.cool = 1.6 + Math.random(); }
+        if (this.timer > 0.35) { this.state = 'walk'; this.cool = 1.2 + Math.random() * 0.8; }
       }
     }
     this.place(world);
@@ -138,8 +140,8 @@ export class Colossus {
       const td = Math.hypot(tx, tz), md = t.r + r + 1;
       if (td < md && td > 0.01) { this.pos.x = t.x + (tx / td) * md; this.pos.z = t.z + (tz / td) * md; }
     }
-    this.pos.x = Math.max(8, Math.min(312, this.pos.x));
-    this.pos.z = Math.max(8, Math.min(312, this.pos.z));
+    this.pos.x = Math.max(8, Math.min(SX - 8, this.pos.x));
+    this.pos.z = Math.max(8, Math.min(SZ - 8, this.pos.z));
   }
 
   place(world) {
@@ -159,7 +161,7 @@ export class Colossus {
     for (let i = 0; i < 2; i++) {
       let target = (i ? s : -s) * 0.8;
       if (this.state === 'windup' && this.attackArm === i) target = -2.7 * Math.min(1, this.timer / 0.5);
-      if (this.state === 'swipe' && this.attackArm === i) target = -2.7 + (this.timer / 0.35) * 2.3;
+      if (this.state === 'swipe' && this.attackArm === i) target = -2.7 + (this.timer / 0.35) * 2.6;
       if (this.armOut[i] > 0) target = 0.15;
       arms[i].rotation.x += (target - arms[i].rotation.x) * Math.min(1, dt * (this.state === 'swipe' ? 20 : 8));
       arms[i].rotation.z = i ? -0.08 : 0.08;
@@ -167,6 +169,9 @@ export class Colossus {
     }
     m.head.rotation.y = Math.sin(this.t * 0.7) * 0.25;
     m.fall.position.y = walking ? Math.abs(Math.sin(this.walkPhase || 0)) * 0.15 : 0;
+    // stoop forward to reach scouts on the ground while attacking
+    const stoop = this.state === 'windup' || this.state === 'swipe' ? 0.45 : 0;
+    m.fall.rotation.x += (stoop - m.fall.rotation.x) * Math.min(1, dt * 6);
   }
 
   // Returns {kind:'nape'|'limb'|null, ...}

@@ -1,7 +1,7 @@
 // Voxel storage, raycasting and AABB collision.
 import { B, BLOCKS, SOLID } from './blocks.js';
 
-export const SX = 320, SZ = 320, SY = 128;
+export const SX = 640, SZ = 640, SY = 128;
 export const CHUNK = 16;
 
 export class World {

@@ -36,84 +36,125 @@ function box(w, h, d, mats) {
 }
 
 // ---------------- player: an original scout design ----------------
+// Jointed rig: hips (tilt pivot) -> legs (hip, knee), torso -> head, arms (shoulder, elbow).
 export function makePlayerModel() {
-  const skin = [222, 178, 140], hair = [74, 50, 34];
+  const skin = [226, 184, 148], hair = [58, 40, 30];
+  const shirt = [196, 200, 208], vest = [36, 56, 90], brass = [204, 168, 78];
+  const pants = [92, 80, 64], boot = [46, 34, 28], glove = [74, 54, 40], scarfC = '#b23a30';
+
   const faceTex = pixTex(8, 8, (ctx) => {
-    noiseFill(ctx, 8, 8, skin, 10, 3);
-    ctx.fillStyle = rgb(...hair); ctx.fillRect(0, 0, 8, 2); ctx.fillRect(0, 2, 1, 2); ctx.fillRect(7, 2, 1, 2);
+    noiseFill(ctx, 8, 8, skin, 8, 3);
+    ctx.fillStyle = rgb(...hair); ctx.fillRect(0, 0, 8, 2); ctx.fillRect(0, 2, 1, 1); ctx.fillRect(6, 2, 2, 1);
+    ctx.fillStyle = rgb(70, 48, 36); ctx.fillRect(1, 3, 2, 1); ctx.fillRect(5, 3, 2, 1); // brows
     ctx.fillStyle = '#fff'; ctx.fillRect(1, 4, 2, 1); ctx.fillRect(5, 4, 2, 1);
-    ctx.fillStyle = '#2b4a6b'; ctx.fillRect(2, 4, 1, 1); ctx.fillRect(5, 4, 1, 1);
-    ctx.fillStyle = rgb(160, 110, 90); ctx.fillRect(3, 6, 2, 1);
+    ctx.fillStyle = '#3a6b4a'; ctx.fillRect(2, 4, 1, 1); ctx.fillRect(5, 4, 1, 1);
+    ctx.fillStyle = rgb(206, 160, 126); ctx.fillRect(3, 5, 2, 1);
+    ctx.fillStyle = rgb(150, 92, 80); ctx.fillRect(3, 6, 2, 1);
   });
-  const hairTex = pixTex(8, 8, (ctx) => noiseFill(ctx, 8, 8, hair, 24, 4));
-  const sideTex = pixTex(8, 8, (ctx) => { noiseFill(ctx, 8, 8, skin, 10, 5); ctx.fillStyle = rgb(...hair); ctx.fillRect(0, 0, 8, 3); ctx.fillRect(5, 3, 3, 2); });
-  const head = box(0.42, 0.42, 0.42, [
-    lam({ map: sideTex }), lam({ map: sideTex }), lam({ map: hairTex }), lam({ color: rgb(...skin) }), lam({ map: faceTex }), lam({ map: hairTex }),
-  ]);
-  head.position.y = 0.21;
-  const headPivot = new THREE.Group(); headPivot.position.y = 1.42; headPivot.add(head);
+  const sideTex = pixTex(8, 8, (ctx) => { noiseFill(ctx, 8, 8, skin, 8, 5); ctx.fillStyle = rgb(...hair); ctx.fillRect(0, 0, 8, 3); ctx.fillRect(4, 3, 4, 2); ctx.fillStyle = rgb(200, 150, 120); ctx.fillRect(2, 4, 1, 2); });
+  const hairTex = pixTex(8, 8, (ctx) => noiseFill(ctx, 8, 8, hair, 26, 4));
+  const hm = lam({ map: hairTex });
+  const head = box(0.32, 0.32, 0.3, [lam({ map: sideTex }), lam({ map: sideTex }), hm, lam({ color: rgb(...skin) }), lam({ map: faceTex }), hm]);
+  head.position.y = 0.17;
+  const headPivot = new THREE.Group(); headPivot.position.y = 0.52; headPivot.add(head);
+  // tousled hair volume
+  const cap = box(0.35, 0.09, 0.33, hm); cap.position.set(0, 0.35, -0.005); headPivot.add(cap);
+  const backHair = box(0.35, 0.22, 0.06, hm); backHair.position.set(0, 0.22, -0.16); headPivot.add(backHair);
+  for (const [x, w, h] of [[-0.11, 0.1, 0.07], [0.02, 0.12, 0.09], [0.12, 0.08, 0.05]]) {
+    const f = box(w, h, 0.04, hm); f.position.set(x, 0.32 - h / 2, 0.15); headPivot.add(f);
+  }
+  // flight goggles pushed up on the forehead
+  const strap = box(0.345, 0.04, 0.325, lam({ color: '#2d2a28' })); strap.position.y = 0.33; headPivot.add(strap);
+  const lensM = lam({ color: '#8fd3f0', emissive: '#1d5a72', emissiveIntensity: 0.6 });
+  const rimM = lam({ color: rgb(...brass) });
+  for (const s of [-1, 1]) {
+    const rim = box(0.11, 0.08, 0.04, rimM); rim.position.set(s * 0.07, 0.35, 0.16); rim.rotation.x = -0.35; headPivot.add(rim);
+    const lens = box(0.08, 0.055, 0.02, lensM); lens.position.set(s * 0.07, 0.355, 0.18); lens.rotation.x = -0.35; headPivot.add(lens);
+  }
 
-  // jacket with a navy tabard; the back carries a white compass-star crest
-  const jacket = [150, 104, 62];
-  const tabardTex = (back) => pixTex(16, 16, (ctx) => {
-    noiseFill(ctx, 16, 16, jacket, 14, back ? 7 : 8);
-    ctx.fillStyle = '#1f3a5c'; ctx.fillRect(3, 0, 10, 16);
-    ctx.fillStyle = '#c9a54a'; ctx.fillRect(3, 11, 10, 1);
-    if (back) {
-      ctx.fillStyle = '#e9edf2';
-      ctx.fillRect(7, 2, 2, 8); ctx.fillRect(4, 5, 8, 2);
-      ctx.fillRect(6, 4, 4, 4);
-      ctx.fillStyle = '#1f3a5c'; ctx.fillRect(7, 5, 2, 2);
-    } else {
-      ctx.fillStyle = '#e9edf2'; ctx.fillRect(4, 3, 2, 2);
-    }
+  // torso: padded navy vest over a grey shirt, brass buckles, compass-star crest on the back
+  const vestFront = pixTex(16, 16, (ctx) => {
+    noiseFill(ctx, 16, 16, vest, 12, 7);
+    ctx.fillStyle = rgb(...shirt); ctx.fillRect(6, 0, 4, 5);
+    ctx.fillStyle = rgb(24, 38, 62); for (let y = 3; y < 16; y += 4) ctx.fillRect(0, y, 16, 1);
+    ctx.fillStyle = rgb(28, 20, 14); ctx.fillRect(7, 5, 2, 11);
+    ctx.fillStyle = rgb(...brass); for (let y = 6; y < 16; y += 3) ctx.fillRect(7, y, 2, 1);
+    ctx.fillStyle = rgb(60, 44, 30); ctx.fillRect(2, 0, 2, 16); ctx.fillRect(12, 0, 2, 16); // harness straps
   });
-  const jm = lam({ map: pixTex(8, 8, (ctx) => noiseFill(ctx, 8, 8, jacket, 14, 9)) });
-  const body = box(0.5, 0.62, 0.28, [jm, jm, jm, jm, lam({ map: tabardTex(false) }), lam({ map: tabardTex(true) })]);
-  body.position.y = 1.11;
-  // belts / harness straps
-  const strap = lam({ color: '#3a2a1c' });
-  const belt = box(0.52, 0.07, 0.3, strap); belt.position.y = 0.86;
+  const vestBack = pixTex(16, 16, (ctx) => {
+    noiseFill(ctx, 16, 16, vest, 12, 8);
+    ctx.fillStyle = rgb(24, 38, 62); for (let y = 3; y < 16; y += 4) ctx.fillRect(0, y, 16, 1);
+    ctx.fillStyle = '#e9edf2';
+    ctx.fillRect(7, 2, 2, 9); ctx.fillRect(3, 5, 10, 2); ctx.fillRect(6, 4, 4, 4);
+    ctx.fillStyle = rgb(...brass); ctx.fillRect(7, 5, 2, 2);
+  });
+  const vestSide = pixTex(8, 16, (ctx) => { noiseFill(ctx, 8, 16, vest, 12, 9); ctx.fillStyle = rgb(24, 38, 62); for (let y = 3; y < 16; y += 4) ctx.fillRect(0, y, 8, 1); });
+  const vs = lam({ map: vestSide });
+  const torso = new THREE.Group(); torso.position.y = 0.1;
+  const chest = box(0.4, 0.46, 0.22, [vs, vs, lam({ color: rgb(...shirt) }), vs, lam({ map: vestFront }), lam({ map: vestBack })]);
+  chest.position.y = 0.25; torso.add(chest);
+  const scarfM = lam({ color: scarfC });
+  const collar = box(0.3, 0.1, 0.27, scarfM); collar.position.y = 0.5; torso.add(collar);
+  const knot = box(0.1, 0.1, 0.06, scarfM); knot.position.set(0.06, 0.45, 0.14); torso.add(knot);
+  // backpack gas cylinders
+  const metal = lam({ color: '#9aa3ad' }), dark = lam({ color: '#4b535c' });
+  for (const s of [-1, 1]) {
+    const tank = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.075, 0.44, 8), metal);
+    tank.position.set(s * 0.09, 0.24, -0.19); torso.add(tank);
+    const capT = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.06, 0.06, 8), rimM);
+    capT.position.set(s * 0.09, 0.49, -0.19); torso.add(capT);
+  }
+  const frame = box(0.3, 0.06, 0.08, dark); frame.position.set(0, 0.06, -0.17); torso.add(frame);
+  torso.add(headPivot);
+  const scarfAnchor = new THREE.Object3D(); scarfAnchor.position.set(-0.05, 0.5, -0.14); torso.add(scarfAnchor);
 
-  const pants = lam({ color: '#d9d4c7' }), boots = lam({ color: '#4a3020' });
+  const hips = new THREE.Group(); hips.position.y = 0.92;
+  const pm = lam({ color: rgb(...pants) });
+  const pelvis = box(0.36, 0.16, 0.21, pm); pelvis.position.y = 0.02; hips.add(pelvis);
+  const belt = box(0.38, 0.06, 0.23, lam({ color: '#3a2a1c' })); belt.position.y = 0.09; hips.add(belt);
+  const buckle = box(0.07, 0.05, 0.02, rimM); buckle.position.set(0, 0.09, 0.12); hips.add(buckle);
+  // hip anchor launchers and blade sheaths
+  for (const s of [-1, 1]) {
+    const launcher = box(0.08, 0.11, 0.16, dark); launcher.position.set(s * 0.22, 0.02, 0.02); hips.add(launcher);
+    const nozzle = box(0.04, 0.04, 0.06, metal); nozzle.position.set(s * 0.22, 0.04, 0.12); hips.add(nozzle);
+    const sheath = box(0.07, 0.12, 0.42, metal); sheath.position.set(s * 0.25, -0.12, -0.08); sheath.rotation.x = 0.35; hips.add(sheath);
+  }
+  hips.add(torso);
+
+  const bm = lam({ color: rgb(...boot) });
   const mkLeg = (x) => {
-    const g = new THREE.Group(); g.position.set(x, 0.8, 0);
-    const up = limb(0.22, 0.48, 0.24, pants); g.add(up);
-    const boot = limb(0.23, 0.34, 0.26, boots); boot.position.y = -0.46; g.add(boot);
-    return g;
+    const hip = new THREE.Group(); hip.position.set(x, 0, 0);
+    hip.add(limb(0.16, 0.44, 0.17, pm));
+    const knee = new THREE.Group(); knee.position.y = -0.44; hip.add(knee);
+    knee.add(limb(0.145, 0.3, 0.155, pm));
+    const b = box(0.165, 0.2, 0.25, bm); b.position.set(0, -0.38, 0.035); knee.add(b);
+    const cuff = box(0.175, 0.05, 0.18, lam({ color: '#5b4434' })); cuff.position.set(0, -0.27, 0); knee.add(cuff);
+    hips.add(hip);
+    return { hip, knee };
   };
-  const legL = mkLeg(-0.13), legR = mkLeg(0.13);
+  const legL = mkLeg(-0.1), legR = mkLeg(0.1);
 
-  const sleeve = lam({ color: rgb(...jacket) }), hand = lam({ color: rgb(...skin) });
-  const steel = lam({ color: '#c8d0d8', emissive: '#223', emissiveIntensity: 0.3 });
+  const sm = lam({ color: rgb(...shirt) }), gm = lam({ color: rgb(...glove) });
+  const steel = lam({ color: '#d6dde4', emissive: '#334', emissiveIntensity: 0.4 });
   const mkArm = (x) => {
-    const g = new THREE.Group(); g.position.set(x, 1.4, 0);
-    g.add(limb(0.18, 0.5, 0.2, sleeve));
-    const h = limb(0.17, 0.12, 0.19, hand); h.position.y = -0.5; g.add(h);
-    // blade: handle in hand, long thin plate pointing forward-down
-    const bladePivot = new THREE.Group(); bladePivot.position.set(0, -0.56, 0.02);
-    const grip = box(0.06, 0.06, 0.18, lam({ color: '#555' })); grip.position.z = 0.02;
-    const blade = box(0.02, 0.07, 0.95, steel); blade.position.z = 0.55;
-    bladePivot.add(grip, blade);
-    bladePivot.rotation.x = 0.5;
-    g.add(bladePivot);
-    g.userData.blade = blade;
-    return g;
+    const sh = new THREE.Group(); sh.position.set(x, 0.44, 0); torso.add(sh);
+    const pad = box(0.15, 0.1, 0.16, vs); pad.position.y = -0.03; sh.add(pad);
+    sh.add(limb(0.12, 0.27, 0.13, sm));
+    const elbow = new THREE.Group(); elbow.position.y = -0.27; sh.add(elbow);
+    elbow.add(limb(0.115, 0.17, 0.125, sm));
+    const gl = limb(0.125, 0.14, 0.135, gm); gl.position.y = -0.15; elbow.add(gl);
+    const blade = new THREE.Group(); blade.position.set(0, -0.27, 0.02); elbow.add(blade);
+    const grip = box(0.05, 0.05, 0.16, dark); grip.position.z = 0.02; blade.add(grip);
+    const plate = box(0.018, 0.075, 0.95, steel); plate.position.z = 0.56; blade.add(plate);
+    const tip = box(0.018, 0.04, 0.08, steel); tip.position.set(0, 0.02, 1.06); blade.add(tip);
+    blade.rotation.x = 0.4;
+    return { sh, elbow, blade };
   };
-  const armL = mkArm(-0.34), armR = mkArm(0.34);
-
-  // tether rig: gas tanks and hook launchers on the hips
-  const metal = lam({ color: '#8d96a0' });
-  const tankL = box(0.14, 0.14, 0.5, metal); tankL.position.set(-0.32, 0.78, -0.08);
-  const tankR = tankL.clone(); tankR.position.x = 0.32;
-  const pack = box(0.3, 0.22, 0.12, lam({ color: '#5d6670' })); pack.position.set(0, 0.9, -0.2);
+  const armL = mkArm(-0.27), armR = mkArm(0.27);
 
   const root = new THREE.Group();
-  const spin = new THREE.Group(); // used for spin cuts
-  spin.add(headPivot, body, belt, legL, legR, armL, armR, tankL, tankR, pack);
-  root.add(spin);
-  root.traverse((o) => { if (o.isMesh) o.castShadow = false; });
-  return { root, spin, head: headPivot, legL, legR, armL, armR };
+  root.add(hips);
+  return { root, hips, torso, head: headPivot, legL, legR, armL, armR, scarfAnchor, scarfMat: scarfM };
 }
 
 // ---------------- colossus: stone-skinned giant with a glowing nape core ----------------

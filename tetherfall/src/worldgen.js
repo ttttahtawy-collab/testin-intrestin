@@ -7,30 +7,33 @@ const SEED = 7;
 
 export function generate(world) {
   const rnd = mulberry32(SEED);
-  const town = { cx: 160, cz: 112, R: 46, wallH: 20 };
-  const pond = { x: 64, z: 58, r: 15 };
+  const town = { cx: 320, cz: 170, R: 84, wallH: 22 };
+  const pond = { x: 150, z: 470, r: 26 };
   const info = { town, pond, trees: [], depots: [], canisters: [], posts: [] };
+  const { cx, cz, R, wallH } = town;
+  const g = 24; // town ground block y (flattened)
+  const top = g + wallH;
 
   // ---------- terrain ----------
   const height = new Int16Array(SX * SZ);
   for (let z = 0; z < SZ; z++) for (let x = 0; x < SX; x++) {
-    let h = 24 + (fbm(x / 70, z / 70, SEED) - 0.5) * 18 + (fbm(x / 18, z / 18, SEED + 9) - 0.5) * 4;
-    const dt = Math.hypot(x - town.cx, z - town.cz);
-    const tb = smoothstep(town.R + 4, town.R + 26, dt);
+    let h = 25 + (fbm(x / 120, z / 120, SEED) - 0.5) * 26 + (fbm(x / 34, z / 34, SEED + 9) - 0.5) * 6;
+    const dt = Math.hypot(x - cx, z - cz);
+    const tb = smoothstep(R + 4, R + 40, dt);
     h = 24 * (1 - tb) + h * tb;
     const edge = Math.min(x, z, SX - 1 - x, SZ - 1 - z);
-    const eb = smoothstep(0, 24, edge);
+    const eb = smoothstep(0, 30, edge);
     h = 22 * (1 - eb) + h * eb;
     const dp = Math.hypot(x - pond.x, z - pond.z);
-    if (dp < pond.r + 6) h -= (1 - smoothstep(pond.r - 6, pond.r + 6, dp)) * 6;
-    height[z * SX + x] = Math.round(h);
+    if (dp < pond.r + 10) h -= (1 - smoothstep(pond.r - 8, pond.r + 10, dp)) * 8;
+    height[z * SX + x] = Math.max(8, Math.round(h));
   }
   const H = (x, z) => height[Math.max(0, Math.min(SZ - 1, z)) * SX + Math.max(0, Math.min(SX - 1, x))];
 
   const WATER_LEVEL = 21;
   for (let z = 0; z < SZ; z++) for (let x = 0; x < SX; x++) {
     const h = H(x, z);
-    const nearWater = h <= WATER_LEVEL + 1 && Math.hypot(x - pond.x, z - pond.z) < pond.r + 8;
+    const nearWater = h <= WATER_LEVEL + 1 && Math.hypot(x - pond.x, z - pond.z) < pond.r + 12;
     for (let y = 0; y <= h; y++) {
       let b = B.STONE;
       if (y === h) b = nearWater ? B.SAND : B.GRASS;
@@ -41,127 +44,187 @@ export function generate(world) {
     world.ground[z * SX + x] = h + 1;
   }
 
-  // ---------- town ----------
-  const { cx, cz, R, wallH } = town;
-  const g = 24; // town ground block y (flattened)
-  const top = g + wallH;
-  const gateHalf = 4;
+  // ---------- town wall with three gates (south, east, west) ----------
+  const gateAngles = [Math.PI / 2, 0, Math.PI];
+  const gateHalf = 5;
+  const inGate = (x, z) => gateAngles.some((a) => {
+    const along = (x - cx) * Math.cos(a) + (z - cz) * Math.sin(a);
+    const across = -(x - cx) * Math.sin(a) + (z - cz) * Math.cos(a);
+    return along > 0 && Math.abs(across) <= gateHalf;
+  });
   for (let z = cz - R - 4; z <= cz + R + 4; z++) for (let x = cx - R - 4; x <= cx + R + 4; x++) {
     const d = Math.hypot(x - cx, z - cz);
     if (d < R - 2.5 || d > R + 2.5) continue;
-    const inGate = Math.abs(x - cx) <= gateHalf && z > cz;
+    const gate = inGate(x, z);
     const ang = Math.atan2(z - cz, x - cx);
     for (let y = g + 1; y <= top; y++) {
-      if (inGate && y <= g + 11) continue;
+      if (gate && y <= g + 13) continue;
       const mossy = rnd() < (y < g + 8 ? 0.28 : 0.08);
       world.set(x, y, z, mossy ? B.MOSSY : B.BRICK);
     }
-    // outer battlements
     if (d > R + 1.2) {
       const seg = Math.floor(((ang + Math.PI) * R) / 2);
       if (seg % 2 === 0) world.set(x, top + 1, z, B.BRICK);
     }
-    // inner low parapet
     if (d < R - 1.7) world.set(x, top + 1, z, B.BRICK);
   }
-
-  // wall towers
-  const towerAngles = [-90, -35, 25, 150, 205, 0].map((a) => (a * Math.PI) / 180);
-  for (const a of towerAngles) {
+  // wall towers, spaced around the ring but clear of the gates
+  for (let deg = -180; deg < 180; deg += 30) {
+    const a = (deg * Math.PI) / 180;
+    if (gateAngles.some((ga) => Math.abs(Math.atan2(Math.sin(a - ga), Math.cos(a - ga))) < 0.2)) continue;
     const tx = Math.round(cx + Math.cos(a) * R), tz = Math.round(cz + Math.sin(a) * R);
-    tower(world, tx, tz, g, 5, 32, B.DARKSTONE, B.ROOF_BLUE, rnd);
+    tower(world, tx, tz, g, 5, 34, B.DARKSTONE, B.ROOF_BLUE, rnd);
   }
-  // tall inner towers
-  tower(world, cx - 26, cz - 10, g, 3, 44, B.DARKSTONE, B.ROOF_RED, rnd);
-  tower(world, cx + 24, cz + 16, g, 3, 40, B.DARKSTONE, B.ROOF_RED, rnd);
-  tower(world, cx + 10, cz - 30, g, 3, 36, B.BRICK, B.ROOF_BLUE, rnd);
+  // gatehouse towers flanking each gate
+  for (const a of gateAngles) {
+    for (const s of [-1, 1]) {
+      const px = cx + Math.cos(a) * R - Math.sin(a) * s * (gateHalf + 5);
+      const pz = cz + Math.sin(a) * R + Math.cos(a) * s * (gateHalf + 5);
+      tower(world, Math.round(px), Math.round(pz), g, 4, 30, B.BRICK, B.ROOF_RED, rnd);
+    }
+  }
 
-  // occupancy grid inside the walls for placing houses
+  // occupancy grid inside the walls
   const occ = new Uint8Array(SX * SZ);
   const mark = (x0, z0, x1, z1) => { for (let z = z0; z <= z1; z++) for (let x = x0; x <= x1; x++) occ[z * SX + x] = 1; };
   const free = (x0, z0, x1, z1) => {
     for (let z = z0; z <= z1; z++) for (let x = x0; x <= x1; x++) {
       if (occ[z * SX + x]) return false;
-      if (Math.hypot(x - cx, z - cz) > R - 6) return false;
+      if (Math.hypot(x - cx, z - cz) > R - 7) return false;
     }
     return true;
   };
 
   // training yard in the middle
-  const yard = { x0: cx - 13, z0: cz - 8, x1: cx + 13, z1: cz + 10 };
+  const yard = { x0: cx - 17, z0: cz - 12, x1: cx + 17, z1: cz + 12 };
   for (let z = yard.z0; z <= yard.z1; z++) for (let x = yard.x0; x <= yard.x1; x++) {
     world.set(x, g, z, B.DIRT);
     const border = x === yard.x0 || x === yard.x1 || z === yard.z0 || z === yard.z1;
     if (border && (x + z) % 7 !== 0) world.set(x, g + 1, z, B.PLANKS);
   }
-  // gaps in fence for entrances
-  for (let x = cx - 2; x <= cx + 2; x++) { world.set(x, g + 1, yard.z0, B.AIR); world.set(x, g + 1, yard.z1, B.AIR); }
-  mark(yard.x0 - 3, yard.z0 - 3, yard.x1 + 3, yard.z1 + 3);
-  for (const [px, pz] of [[yard.x0 + 4, yard.z0 + 4], [yard.x1 - 4, yard.z0 + 4], [yard.x0 + 4, yard.z1 - 4], [yard.x1 - 4, yard.z1 - 4]]) {
-    for (let y = g + 1; y <= g + 16; y++) world.set(px, y, pz, B.LOG);
-    info.posts.push({ x: px + 0.5, z: pz + 0.5 });
+  for (let k = -2; k <= 2; k++) {
+    world.set(cx + k, g + 1, yard.z0, B.AIR); world.set(cx + k, g + 1, yard.z1, B.AIR);
+    world.set(yard.x0, g + 1, cz + k, B.AIR); world.set(yard.x1, g + 1, cz + k, B.AIR);
   }
-  info.yard = { x: cx, z: cz + 1, y: g + 1, ...yard };
+  mark(yard.x0 - 3, yard.z0 - 3, yard.x1 + 3, yard.z1 + 3);
+  for (const [px, pz, ph] of [[-12, -7, 16], [12, -7, 18], [-12, 7, 14], [12, 7, 16], [0, -8, 22], [-5, 8, 12]]) {
+    for (let y = g + 1; y <= g + ph; y++) world.set(cx + px, y, cz + pz, B.LOG);
+    info.posts.push({ x: cx + px + 0.5, z: cz + pz + 0.5 });
+  }
+  info.yard = { x: cx, z: cz + 2, y: g + 1, ...yard };
 
-  // roads (cobble) from gate to yard and east-west
-  for (let z = yard.z1 + 1; z <= cz + R + 3; z++) for (let x = cx - 3; x <= cx + 3; x++) world.set(x, g, z, B.COBBLE);
-  for (let x = cx - R + 3; x <= cx + R - 3; x++) for (let z = cz - 2; z <= cz + 2; z++) if (x < yard.x0 || x > yard.x1) world.set(x, g, z, B.GRAVEL);
-  mark(cx - 4, yard.z1, cx + 4, cz + R);
-  mark(cx - R, cz - 3, cx + R, cz + 3);
-  for (const [tx, tz] of [[cx - 26, cz - 10], [cx + 24, cz + 16], [cx + 10, cz - 30]]) mark(tx - 5, tz - 5, tx + 5, tz + 5);
+  // roads from each gate to the yard, and a gravel ring road inside the wall
+  for (let z = yard.z1 + 1; z <= cz + R + 3; z++) for (let x = cx - 4; x <= cx + 4; x++) world.set(x, g, z, B.COBBLE);
+  for (let x = yard.x1 + 1; x <= cx + R + 3; x++) for (let z = cz - 4; z <= cz + 4; z++) world.set(x, g, z, B.COBBLE);
+  for (let x = cx - R - 3; x < yard.x0; x++) for (let z = cz - 4; z <= cz + 4; z++) world.set(x, g, z, B.COBBLE);
+  for (let x = cx - 3; x <= cx + 3; x++) for (let z = cz - R + 8; z < yard.z0; z++) world.set(x, g, z, B.GRAVEL);
+  for (let z = cz - R; z <= cz + R; z++) for (let x = cx - R; x <= cx + R; x++) {
+    const d = Math.hypot(x - cx, z - cz);
+    if (d > R - 15 && d < R - 11) { world.set(x, g, z, B.GRAVEL); occ[z * SX + x] = 1; }
+  }
+  mark(cx - 5, yard.z1, cx + 5, cz + R);
+  mark(yard.x1, cz - 5, cx + R, cz + 5);
+  mark(cx - R, cz - 5, yard.x0, cz + 5);
+  mark(cx - 4, cz - R, cx + 4, yard.z0);
+
+  // market square with a fountain (north-east quarter)
+  const mx = cx + 34, mz = cz - 34;
+  for (let z = mz - 9; z <= mz + 9; z++) for (let x = mx - 9; x <= mx + 9; x++) world.set(x, g, z, B.COBBLE);
+  for (let z = mz - 3; z <= mz + 3; z++) for (let x = mx - 3; x <= mx + 3; x++) {
+    const rim = Math.abs(x - mx) === 3 || Math.abs(z - mz) === 3;
+    world.set(x, g + 1, z, rim ? B.BRICK : B.WATER);
+  }
+  for (let y = g + 1; y <= g + 6; y++) world.set(mx, y, mz, B.STONE);
+  world.set(mx, g + 7, mz, B.MOSSY);
+  mark(mx - 10, mz - 10, mx + 10, mz + 10);
+
+  // tall inner towers
+  const inner = [[-40, -22, 46, B.ROOF_RED], [42, 26, 42, B.ROOF_RED], [12, -52, 38, B.ROOF_BLUE], [-30, 40, 40, B.ROOF_BLUE], [-58, -2, 34, B.ROOF_RED], [56, -10, 36, B.ROOF_BLUE]];
+  for (const [ox, oz, h, roof] of inner) {
+    const tx = cx + ox, tz = cz + oz;
+    if (!free(tx - 4, tz - 4, tx + 4, tz + 4)) continue;
+    tower(world, tx, tz, g, 3, h, B.DARKSTONE, roof, rnd);
+    mark(tx - 6, tz - 6, tx + 6, tz + 6);
+  }
 
   // houses
   let placed = 0;
-  for (let i = 0; i < 400 && placed < 34; i++) {
-    const w = 7 + Math.floor(rnd() * 5), d = 7 + Math.floor(rnd() * 4);
-    const x0 = Math.floor(cx - R + 5 + rnd() * (2 * R - 10 - w));
-    const z0 = Math.floor(cz - R + 5 + rnd() * (2 * R - 10 - d));
+  for (let i = 0; i < 2000 && placed < 120; i++) {
+    const w = 7 + Math.floor(rnd() * 7), d = 7 + Math.floor(rnd() * 5);
+    const x0 = Math.floor(cx - R + 7 + rnd() * (2 * R - 14 - w));
+    const z0 = Math.floor(cz - R + 7 + rnd() * (2 * R - 14 - d));
     const x1 = x0 + w - 1, z1 = z0 + d - 1;
     if (!free(x0 - 2, z0 - 2, x1 + 2, z1 + 2)) continue;
     mark(x0 - 1, z0 - 1, x1 + 1, z1 + 1);
     house(world, x0, z0, x1, z1, g, rnd);
     placed++;
   }
-  // hedges and small trees in leftover space
-  for (let i = 0; i < 60; i++) {
-    const x = Math.floor(cx - R + 6 + rnd() * (2 * R - 12)), z = Math.floor(cz - R + 6 + rnd() * (2 * R - 12));
+  for (let i = 0; i < 200; i++) {
+    const x = Math.floor(cx - R + 8 + rnd() * (2 * R - 16)), z = Math.floor(cz - R + 8 + rnd() * (2 * R - 16));
     if (!free(x - 1, z - 1, x + 2, z + 2)) continue;
     mark(x - 1, z - 1, x + 2, z + 2);
     if (rnd() < 0.5) { for (let a = 0; a < 2; a++) for (let b = 0; b < 2; b++) world.set(x + a, g + 1, z + b, B.HEDGE); }
     else smallTree(world, x, z, g + 1, rnd);
   }
 
-  // ---------- trees ----------
+  // ---------- outside the walls ----------
+  // ruins of an old outer wall to the south, good anchor points
+  const ruinR = R + 150;
+  for (let z = cz; z <= cz + ruinR + 3; z++) for (let x = cx - ruinR - 3; x <= cx + ruinR + 3; x++) {
+    if (x < 6 || z < 6 || x >= SX - 6 || z >= SZ - 6) continue;
+    const d = Math.hypot(x - cx, z - cz);
+    if (d < ruinR - 2 || d > ruinR + 2) continue;
+    const ang = Math.atan2(z - cz, x - cx);
+    if (ang < 0.15 || ang > Math.PI - 0.15) continue;
+    const hh = Math.floor(fbm(ang * 9, 0.5, SEED + 77) * 26) - 6;
+    if (hh <= 0) continue;
+    const gy = H(x, z);
+    for (let y = gy + 1; y <= gy + hh; y++) world.set(x, y, z, rnd() < 0.3 ? B.MOSSY : B.BRICK);
+  }
+  // outer watchtowers
+  const watch = [[cx - 180, cz + 120], [cx + 190, cz + 100], [cx - 40, cz + 300], [cx + 120, cz + 330], [cx - 220, cz - 60], [cx + 230, cz - 90]];
+  info.watch = [];
+  for (const [wx, wz] of watch) {
+    if (wx < 20 || wz < 20 || wx > SX - 20 || wz > SZ - 20) continue;
+    tower(world, wx, wz, H(wx, wz), 4, 30, B.BRICK, B.ROOF_RED, rnd);
+    info.watch.push({ x: wx, z: wz, r: 5 });
+  }
+
+  // giant trees: dense forest patches, a meadow ring around the town
+  const forestNoise = (x, z) => fbm(x / 110, z / 110, SEED + 5, 3);
   const trunkOK = (x, z, r) => {
-    if (x < 14 || z < 14 || x > SX - 14 || z > SZ - 14) return false;
-    if (Math.hypot(x - cx, z - cz) < R + 16 + r) return false;
-    if (Math.hypot(x - pond.x, z - pond.z) < pond.r + 6 + r) return false;
+    if (x < 16 || z < 16 || x > SX - 16 || z > SZ - 16) return false;
+    if (Math.hypot(x - cx, z - cz) < R + 30 + r) return false;
+    if (Math.hypot(x - pond.x, z - pond.z) < pond.r + 8 + r) return false;
+    if (Math.abs(Math.hypot(x - cx, z - cz) - ruinR) < r + 4) return false;
+    for (const w of info.watch) if (Math.hypot(w.x - x, w.z - z) < r + 12) return false;
     for (const t of info.trees) if (Math.hypot(t.x - x, t.z - z) < t.r + r + 13) return false;
     return true;
   };
   const step = 20;
   for (let gz = 10; gz < SZ - 10; gz += step) for (let gx = 10; gx < SX - 10; gx += step) {
-    const forest = gz > 182 || gx < 80 || (gx > 250 && gz > 120);
-    if (!forest && rnd() > 0.22) continue;
+    const fn = forestNoise(gx, gz);
+    const forest = fn > 0.47;
+    if (!forest && rnd() > 0.12) continue;
     const x = Math.round(gx + (rnd() - 0.5) * step * 0.9), z = Math.round(gz + (rnd() - 0.5) * step * 0.9);
-    const r = 2.2 + rnd() * 2.2;
+    const r = 2.2 + rnd() * 2.4;
     if (!trunkOK(x, z, r)) continue;
-    const h = Math.round(48 + rnd() * 26 + (forest ? 6 : 0));
-    giantTree(world, x, z, H(x, z) + 1, h, r, rnd);
+    const h = Math.round(46 + rnd() * 26 + (forest ? 8 : 0));
+    giantTree(world, x, z, H(x, z) + 1, Math.min(h, SY - H(x, z) - 16), r, rnd);
     info.trees.push({ x: x + 0.5, z: z + 0.5, r, h });
   }
-  // ordinary trees across the fields
-  for (let i = 0; i < 260; i++) {
+  for (const w of info.watch) info.trees.push(w); // colossi walk around watchtowers too
+  for (let i = 0; i < 1100; i++) {
     const x = Math.floor(8 + rnd() * (SX - 16)), z = Math.floor(8 + rnd() * (SZ - 16));
-    if (Math.hypot(x - cx, z - cz) < R + 6) continue;
-    if (Math.hypot(x - pond.x, z - pond.z) < pond.r + 3) continue;
+    if (Math.hypot(x - cx, z - cz) < R + 8) continue;
+    if (Math.hypot(x - pond.x, z - pond.z) < pond.r + 4) continue;
     if (world.get(x, H(x, z), z) !== B.GRASS || world.get(x, H(x, z) + 1, z) !== B.AIR) continue;
     smallTree(world, x, z, H(x, z) + 1, rnd);
   }
 
   // plants
   for (let z = 1; z < SZ - 1; z++) for (let x = 1; x < SX - 1; x++) {
-    const y = world.topSolid(x, z, 60);
+    const y = world.topSolid(x, z, 70);
     if (world.get(x, y - 1, z) !== B.GRASS || world.get(x, y, z) !== B.AIR) continue;
     const k = rnd();
     if (k < 0.1) world.set(x, y, z, B.TALLGRASS);
@@ -174,34 +237,38 @@ export function generate(world) {
     const a = (deg * Math.PI) / 180;
     return { x: cx + Math.cos(a) * (R - inset), z: cz + Math.sin(a) * (R - inset), y: top + 1 };
   };
-  const sp = wallPoint(-112, 0.5);
+  const sp = wallPoint(-100, 0.5);
   info.spawn = { x: sp.x, y: sp.y + 0.01, z: sp.z, yaw: -Math.PI / 2 + 0.1 };
-  info.wallBeacon = wallPoint(-98, 0.5);
-  info.depots.push({ ...wallPoint(-120, 0.5), name: 'North wall depot' });
+  info.wallBeacon = wallPoint(-92, 0.5);
+  info.depots.push({ ...wallPoint(-108, 0.5), name: 'North wall depot' });
   info.depots.push({ ...wallPoint(160, 0.5), name: 'West wall depot' });
-  info.depots.push({ x: cx + 7, y: g + 1, z: cz - 12, name: 'Yard depot' });
-  // forest outpost south of the gate
-  const ox = cx + 2, oz = cz + R + 26;
-  const oy = H(ox, oz) + 1;
-  for (let x = ox - 2; x <= ox + 2; x++) for (let z = oz - 2; z <= oz + 2; z++) {
-    for (let y = oy; y < oy + 6; y++) world.set(x, y, z, B.AIR);
-    world.set(x, oy - 1, z, B.PLANKS);
-  }
-  world.set(ox - 2, oy, oz - 2, B.PLANKS); world.set(ox + 2, oy, oz - 2, B.PLANKS);
-  info.depots.push({ x: ox + 0.5, y: oy, z: oz + 0.5, name: 'Forest outpost' });
-  info.gateOutside = { x: cx + 0.5, z: cz + R + 18 };
+  info.depots.push({ ...wallPoint(30, 0.5), name: 'East wall depot' });
+  info.depots.push({ x: cx + 8, y: g + 1, z: cz - 16, name: 'Yard depot' });
+  const outpost = (ox, oz, name) => {
+    const oy = H(ox, oz) + 1;
+    for (let x = ox - 2; x <= ox + 2; x++) for (let z = oz - 2; z <= oz + 2; z++) {
+      for (let y = oy; y < oy + 6; y++) world.set(x, y, z, B.AIR);
+      world.set(x, oy - 1, z, B.PLANKS);
+    }
+    info.depots.push({ x: ox + 0.5, y: oy, z: oz + 0.5, name });
+  };
+  outpost(cx + 2, cz + R + 30, 'South gate outpost');
+  outpost(cx + R + 30, cz + 2, 'East gate outpost');
+  outpost(cx - R - 30, cz + 2, 'West gate outpost');
+  outpost(cx - 10, cz + R + 210, 'Deep forest camp');
+  for (const w of info.watch) outpost(w.x + 8, w.z, 'Watchtower camp');
+  info.gateOutside = { x: cx + 0.5, z: cz + R + 22 };
 
   // gas canisters scattered on the ground and on the walls
-  for (let i = 0; i < 400 && info.canisters.length < 22; i++) {
-    const x = Math.floor(14 + rnd() * (SX - 28)), z = Math.floor(14 + rnd() * (SZ - 28));
-    const d = Math.hypot(x - cx, z - cz);
-    if (d < R + 8) continue;
-    const y = world.topSolid(x, z, 60);
-    if (y > 40 || world.get(x, y - 1, z) === B.WATER || world.get(x, y - 1, z) === B.LEAVES) continue;
-    if (info.canisters.some((c) => Math.hypot(c.x - x, c.z - z) < 30)) continue;
+  for (let i = 0; i < 3000 && info.canisters.length < 70; i++) {
+    const x = Math.floor(16 + rnd() * (SX - 32)), z = Math.floor(16 + rnd() * (SZ - 32));
+    if (Math.hypot(x - cx, z - cz) < R + 8) continue;
+    const y = world.topSolid(x, z, 70);
+    if (y > 50 || world.get(x, y - 1, z) === B.WATER || world.get(x, y - 1, z) === B.LEAVES) continue;
+    if (info.canisters.some((c) => Math.hypot(c.x - x, c.z - z) < 38)) continue;
     info.canisters.push({ x: x + 0.5, y: y + 0.5, z: z + 0.5 });
   }
-  for (const deg of [-60, 60, 120, 240]) info.canisters.push({ ...wallPoint(deg, 0.5), y: top + 1.5 });
+  for (const deg of [-60, 60, 120, 210, 250, -20]) info.canisters.push({ ...wallPoint(deg, 0.5), y: top + 1.5 });
 
   return info;
 }
@@ -236,8 +303,8 @@ function tower(world, tx, tz, g, r, h, mat, roof, rnd) {
 }
 
 function house(world, x0, z0, x1, z1, g, rnd) {
-  const two = rnd() < 0.65;
-  const Hh = two ? 9 : 5;
+  const floors = rnd() < 0.22 ? 3 : rnd() < 0.7 ? 2 : 1;
+  const Hh = floors * 4 + 1;
   const roof = rnd() < 0.72 ? B.ROOF_RED : B.ROOF_BLUE;
   const base = rnd() < 0.3 ? B.BRICK : B.PLASTER;
   for (let x = x0; x <= x1; x++) for (let z = z0; z <= z1; z++) {
@@ -252,11 +319,11 @@ function house(world, x0, z0, x1, z1, g, rnd) {
       const corner = edgeX && edgeZ;
       const ly = y - g;
       let b = ly <= 4 ? base : B.PLASTER;
-      if (corner || ly === 5) b = B.TIMBER;
+      if (corner || (ly > 1 && ly % 4 === 1)) b = B.TIMBER;
       else {
         const along = edgeX ? z - z0 : x - x0;
         const len = edgeX ? z1 - z0 : x1 - x0;
-        if (along % 3 === 2 && along < len - 1 && (ly === 2 || ly === 3 || ly === 7 || ly === 8)) b = B.WINDOW;
+        if (along % 3 === 2 && along < len - 1 && (ly % 4 === 2 || ly % 4 === 3)) b = B.WINDOW;
         if (ly > 5 && along % 3 === 0) b = B.TIMBER;
       }
       world.set(x, y, z, b);

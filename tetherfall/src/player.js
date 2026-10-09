@@ -54,7 +54,8 @@ export class Player {
     this.alive = true;
     this.slashT = 0; this.slashCD = 0; this.swapT = 0; this.spin = false;
     this.hurtT = 0; this.airTime = 0; this.boosting = false; this.reeling = false; this.braking = false;
-    this.walkPhase = 0;
+    this.walkPhase = 0; this.animT = 0; this.landT = 0; this.landHard = 0;
+    this._ropeDir = new THREE.Vector3(); this._tmp2 = new THREE.Vector3();
     for (const h of this.hooks) { h.state = 'idle'; h.obj = null; h.owner = null; }
   }
   chestPos(out = new THREE.Vector3()) { return out.set(this.pos.x, this.pos.y + P.chest, this.pos.z); }
@@ -251,6 +252,10 @@ export class Player {
       const hw = P.halfW, p = this.pos;
       if (this.world.boxHits(p.x - hw, p.y - 0.08, p.z - hw, p.x + hw, p.y, p.z + hw)) this.onGround = true;
     }
+    if (!wasGround && this.onGround && iy > 5) {
+      this.landT = 0.35; this.landHard = Math.min(1, iy / 16);
+      this.events.push({ type: 'land', speed: iy });
+    }
     const impact = Math.max(ix, iz, iy);
     if (hurtOnImpact && impact > P.impactSafe) {
       this.damage((impact - P.impactSafe) * P.impactMul, iy >= Math.max(ix, iz) ? 'fall' : 'wall');
@@ -292,41 +297,177 @@ export class Player {
     }
   }
 
-  // Blocky pose animation.
-  animate(dt, firstPerson) {
+  // ---------------- animation ----------------
+  // Each frame builds a target pose from the movement state, then eases the rig toward it.
+  animate(dt, firstPerson, scene) {
     const m = this.model;
     m.root.visible = !firstPerson;
     m.root.position.copy(this.pos);
-    const sp = Math.hypot(this.vel.x, this.vel.z);
-    // face the movement direction in the air, the camera on the ground
-    let face = this.yaw + Math.PI;
-    if (!this.onGround && sp > 4) face = Math.atan2(this.vel.x, this.vel.z);
-    const cur = m.root.rotation.y;
-    let diff = ((face - cur + Math.PI) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2) - Math.PI;
-    m.root.rotation.y = cur + diff * Math.min(1, dt * 10);
+    this.animT += dt;
+    this.landT = Math.max(0, this.landT - dt);
+    const v = this.vel;
+    const hsp = Math.hypot(v.x, v.z);
+    const attached = this.hooks.filter((h) => h.attached);
 
-    if (this.onGround) {
-      this.walkPhase += dt * sp * 1.6;
-      const s = Math.sin(this.walkPhase) * Math.min(1, sp / 6) * 0.9;
-      m.legL.rotation.x = s; m.legR.rotation.x = -s;
-      m.armL.rotation.x = -s * 0.8; m.armR.rotation.x = s * 0.8;
-      m.armL.rotation.z = 0; m.armR.rotation.z = 0;
+    // heading: movement direction when running or flying fast, else the camera
+    let face = this.yaw + Math.PI;
+    if (hsp > (this.onGround ? 1 : 4)) face = Math.atan2(v.x, v.z);
+    const cur = m.root.rotation.y;
+    const diff = ((face - cur + Math.PI) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2) - Math.PI;
+    m.root.rotation.y = cur + diff * Math.min(1, dt * (this.onGround ? 12 : 6));
+    const ry = m.root.rotation.y;
+
+    const T = {
+      hipsY: 0.92, tiltX: 0, tiltZ: 0, torsoX: 0, torsoY: 0, headX: 0,
+      lHip: 0, lHipZ: 0, lKnee: 0, rHip: 0, rHipZ: 0, rKnee: 0,
+      lSh: 0, lShZ: 0.08, lEl: -0.15, rSh: 0, rShZ: -0.08, rEl: -0.15,
+    };
+    const t = this.animT;
+    if (!this.alive) {
+      T.hipsY = 0.18; T.tiltX = -1.5; T.lShZ = 1.3; T.rShZ = -1.3; T.lHip = -0.2; T.rHip = 0.15; T.lKnee = 0.3;
+    } else if (this.onGround) {
+      if (this.landT > 0) {
+        const c = this.landT / 0.35 * this.landHard;
+        T.hipsY = 0.92 - 0.3 * c; T.lHip = T.rHip = -1.0 * c; T.lKnee = T.rKnee = 1.7 * c;
+        T.torsoX = 0.55 * c; T.tiltX = 0.15 * c; T.lSh = T.rSh = -0.7 * c; T.lShZ = 0.6 * c; T.rShZ = -0.6 * c;
+      } else if (hsp > 0.6) {
+        this.walkPhase += dt * hsp * 1.35;
+        const ph = this.walkPhase, s = Math.sin(ph), amp = Math.min(1, hsp / 7);
+        T.lHip = s * 0.85 * amp; T.rHip = -s * 0.85 * amp;
+        T.lKnee = amp * (0.15 + 1.1 * Math.max(0, Math.sin(ph - 1.4)));
+        T.rKnee = amp * (0.15 + 1.1 * Math.max(0, Math.sin(ph + Math.PI - 1.4)));
+        T.lSh = -s * 0.75 * amp; T.rSh = s * 0.75 * amp;
+        T.lEl = T.rEl = -0.5 - 0.4 * amp;
+        T.torsoX = 0.18 * amp; T.torsoY = -s * 0.12 * amp;
+        T.hipsY = 0.92 - Math.abs(Math.cos(ph)) * 0.06 * amp;
+      } else {
+        const b = Math.sin(t * 2.2);
+        T.torsoX = b * 0.025; T.headX = -b * 0.02; T.lShZ = 0.12 + b * 0.02; T.rShZ = -0.12 - b * 0.02;
+        T.lEl = T.rEl = -0.25; T.lHipZ = 0.05; T.rHipZ = -0.05;
+      }
     } else {
-      // flying pose: legs trailing, arms out holding blades
-      const lean = Math.min(1, this.speed() / 30);
-      m.legL.rotation.x = 0.5 + lean * 0.4; m.legR.rotation.x = 0.3 + lean * 0.4;
-      m.armL.rotation.x = -0.9; m.armR.rotation.x = -0.9;
-      m.armL.rotation.z = -0.35; m.armR.rotation.z = 0.35;
+      const lean = Math.min(1, this.speed() / 35);
+      if (this.braking) {
+        // landing thrusters: upright, legs forward, arms out for balance
+        T.tiltX = -0.4; T.lHip = T.rHip = -0.8; T.lKnee = T.rKnee = 0.7;
+        T.lShZ = 1.2; T.rShZ = -1.2; T.lSh = T.rSh = -0.3; T.lEl = T.rEl = -0.4;
+        T.headX = 0.3;
+      } else if (this.boosting && !attached.length) {
+        // flying dive along the boost
+        T.tiltX = 0.9 + lean * 0.5; T.lHip = 0.15; T.rHip = 0.3; T.lKnee = 0.25; T.rKnee = 0.5;
+        T.lSh = T.rSh = 0.6; T.lShZ = 0.35; T.rShZ = -0.35; T.lEl = T.rEl = -0.2; T.headX = -0.7;
+      } else if (attached.length) {
+        // hang from the rope: lean toward the anchor, legs tucked and trailing
+        const a = this._ropeDir.set(0, 0, 0);
+        for (const h of attached) a.add(h.anchor);
+        a.divideScalar(attached.length).sub(this.chestPos(this._tmp2)).normalize();
+        const lx = a.x * Math.cos(ry) - a.z * Math.sin(ry);
+        const lz = a.x * Math.sin(ry) + a.z * Math.cos(ry);
+        T.tiltX = clamp(Math.atan2(lz, Math.max(0.05, a.y)), -1.1, 1.3);
+        T.tiltZ = clamp(-Math.atan2(lx, Math.max(0.05, a.y)), -1.0, 1.0);
+        const kick = Math.sin(t * 3) * 0.15;
+        T.lHip = -0.5 + kick; T.rHip = -0.25 - kick; T.lKnee = 1.0; T.rKnee = 0.7;
+        T.lSh = T.rSh = -1.1; T.lShZ = 0.6; T.rShZ = -0.6; T.lEl = T.rEl = -0.5;
+        if (this.reeling) { T.lHip = T.rHip = -1.1; T.lKnee = T.rKnee = 1.6; }
+      } else if (v.y < -4) {
+        // falling: flail, harder the faster we drop
+        const f = Math.min(1, (-v.y - 4) / 22);
+        const w = t * (8 + f * 8);
+        T.tiltX = -0.25 * f + lean * 0.2;
+        T.lSh = -2.3 + Math.sin(w) * 0.6 * f; T.rSh = -2.3 + Math.sin(w + 2) * 0.6 * f;
+        T.lShZ = 0.6 + Math.sin(w * 0.7) * 0.4; T.rShZ = -0.6 - Math.sin(w * 0.7 + 1) * 0.4;
+        T.lEl = T.rEl = -0.4;
+        T.lHip = -0.4 + Math.sin(w) * 0.7 * f; T.rHip = -0.4 + Math.sin(w + Math.PI) * 0.7 * f;
+        T.lKnee = 0.6 + Math.max(0, Math.sin(w)) * 0.8; T.rKnee = 0.6 + Math.max(0, Math.sin(w + Math.PI)) * 0.8;
+        T.headX = 0.35 * f;
+      } else {
+        // rising / apex: tucked, arms spread
+        T.tiltX = lean * 0.4; T.lHip = T.rHip = -0.7; T.lKnee = T.rKnee = 1.2;
+        T.lSh = T.rSh = -0.5; T.lShZ = 1.0; T.rShZ = -1.0; T.lEl = T.rEl = -0.6;
+      }
     }
     if (this.slashT > 0) {
       const k = 1 - this.slashT / 0.32;
-      const a = -2.4 + k * 3.2;
-      m.armL.rotation.x = a; m.armR.rotation.x = a;
+      const a = -2.9 + k * 3.7;
+      T.lSh = T.rSh = a; T.lShZ = 0.7 - k * 1.1; T.rShZ = -0.7 + k * 1.1;
+      T.lEl = T.rEl = -0.15; T.torsoX += 0.35 * k; T.torsoY = (k - 0.5) * 0.6;
     }
-    if (this.swapT > 0) { m.armL.rotation.x = 0.6; m.armR.rotation.x = 0.6; }
-    m.spin.rotation.y = this.spin && this.slashT > 0 ? (1 - this.slashT / 0.32) * Math.PI * 2 : 0;
-    m.head.rotation.x = -this.pitch * 0.4;
+    if (this.swapT > 0) { T.lSh = T.rSh = 0.35; T.lEl = T.rEl = -1.5; T.lShZ = 0.3; T.rShZ = -0.3; T.headX = 0.4; }
+    if (this.hurtT > 0) { T.torsoX -= this.hurtT * 1.2; T.headX -= this.hurtT; }
+
+    // ease toward the pose
+    const k = 1 - Math.exp(-dt * (this.onGround ? 16 : 10));
+    const L = (o, key, val) => { o[key] += (val - o[key]) * k; };
+    L(m.hips.position, 'y', T.hipsY);
+    L(m.hips.rotation, 'x', T.tiltX); L(m.hips.rotation, 'z', T.tiltZ);
+    L(m.torso.rotation, 'x', T.torsoX); L(m.torso.rotation, 'y', T.torsoY);
+    L(m.head.rotation, 'x', T.headX - this.pitch * 0.35);
+    L(m.legL.hip.rotation, 'x', T.lHip); L(m.legL.hip.rotation, 'z', T.lHipZ); L(m.legL.knee.rotation, 'x', T.lKnee);
+    L(m.legR.hip.rotation, 'x', T.rHip); L(m.legR.hip.rotation, 'z', T.rHipZ); L(m.legR.knee.rotation, 'x', T.rKnee);
+    L(m.armL.sh.rotation, 'x', T.lSh); L(m.armL.sh.rotation, 'z', T.lShZ); L(m.armL.elbow.rotation, 'x', T.lEl);
+    L(m.armR.sh.rotation, 'x', T.rSh); L(m.armR.sh.rotation, 'z', T.rShZ); L(m.armR.elbow.rotation, 'x', T.rEl);
+
+    // the arm on each attached rope reaches toward its anchor
+    if (this.alive && !this.onGround && this.slashT <= 0) {
+      m.root.updateMatrixWorld(true);
+      for (const h of this.hooks) {
+        if (h.state !== 'attached' && h.state !== 'flying') continue;
+        const arm = h.side < 0 ? m.armL : m.armR;
+        const d = this._tmp2.copy(h.tip);
+        m.torso.worldToLocal(d).sub(arm.sh.position).normalize();
+        const ax = Math.atan2(-d.z, -d.y), az = Math.asin(clamp(d.x, -1, 1));
+        arm.sh.rotation.x += (ax - arm.sh.rotation.x) * k * 1.5;
+        arm.sh.rotation.z += (az - arm.sh.rotation.z) * k * 1.5;
+        arm.elbow.rotation.x += (0 - arm.elbow.rotation.x) * k;
+      }
+    }
+    m.hips.rotation.y = this.spin && this.slashT > 0 ? (1 - this.slashT / 0.32) * Math.PI * 2 : 0;
     const bladeVisible = this.sharp > 0 && this.swapT <= 0;
-    m.armL.userData.blade.visible = bladeVisible; m.armR.userData.blade.visible = bladeVisible;
+    m.armL.blade.visible = bladeVisible; m.armR.blade.visible = bladeVisible;
+    this.updateScarf(dt, scene, firstPerson);
+  }
+
+  // Verlet scarf tail hanging from the back of the neck.
+  updateScarf(dt, scene, hidden) {
+    const N = 6, SEG = 0.13;
+    const anchor = this.model.scarfAnchor.getWorldPosition(this._tmp2);
+    if (!this.scarf) {
+      this.scarf = { p: [], q: [], meshes: [] };
+      const geo = new THREE.BoxGeometry(0.11, 0.025, SEG);
+      geo.translate(0, 0, SEG / 2);
+      for (let i = 0; i < N; i++) {
+        this.scarf.p.push(anchor.clone()); this.scarf.q.push(anchor.clone());
+        if (i < N - 1) { const mesh = new THREE.Mesh(geo, this.model.scarfMat); scene.add(mesh); this.scarf.meshes.push(mesh); }
+      }
+    }
+    const { p, q, meshes } = this.scarf;
+    if (p[0].distanceTo(anchor) > 5) for (let i = 0; i < N; i++) { p[i].copy(anchor); q[i].copy(anchor); }
+    const h = Math.min(dt, 1 / 30);
+    for (let i = 1; i < N; i++) {
+      const vx = p[i].x - q[i].x, vy = p[i].y - q[i].y, vz = p[i].z - q[i].z;
+      q[i].copy(p[i]);
+      // air drag pulls each node toward rest; a little flutter noise
+      const fl = Math.sin(this.animT * 23 + i * 1.7) * 0.004 * Math.min(1, this.speed() / 10);
+      p[i].x += vx * 0.9 + fl; p[i].y += vy * 0.9 - 9 * h * h; p[i].z += vz * 0.9 - fl;
+    }
+    for (let it = 0; it < 4; it++) {
+      p[0].copy(anchor);
+      for (let i = 1; i < N; i++) {
+        const a = p[i - 1], b = p[i];
+        const dx = b.x - a.x, dy = b.y - a.y, dz = b.z - a.z;
+        const d = Math.hypot(dx, dy, dz) || 1e-4;
+        const s = (d - SEG) / d;
+        if (i === 1) { b.x -= dx * s; b.y -= dy * s; b.z -= dz * s; }
+        else { a.x += dx * s * 0.5; a.y += dy * s * 0.5; a.z += dz * s * 0.5; b.x -= dx * s * 0.5; b.y -= dy * s * 0.5; b.z -= dz * s * 0.5; }
+      }
+    }
+    for (let i = 0; i < N - 1; i++) {
+      const mesh = meshes[i];
+      mesh.visible = !hidden;
+      mesh.position.copy(p[i]);
+      mesh.lookAt(p[i + 1]);
+    }
   }
 }
+
+function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }

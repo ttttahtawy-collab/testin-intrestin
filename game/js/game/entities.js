@@ -217,7 +217,7 @@
       this.x0 = this.x; this.y0 = this.y;
       this.axis = sp.axis; this.travel = sp.travel;
       this.phase = 0;
-      this.period = (this.travel * 2) / 115 + 0.6;
+      this.period = (this.travel * 2) / 140 + 0.6;
       this.prevX = this.x; this.prevY = this.y; this.dx = 0; this.dy = 0; this.vy = 0;
       this.isPlatform = true;
     }

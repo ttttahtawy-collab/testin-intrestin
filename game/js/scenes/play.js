@@ -192,6 +192,7 @@
           this.say(this.def.bossIntro || [], () => {
             this.boss.active = true;
             this.bossActiveT = 0;
+            this.bossBanner = 2.6;
             this.sfx('roar');
             this.shake(10, 0.6);
             G.Music.play(this.def.boss === 'king' ? 'final' : 'boss');
@@ -219,6 +220,7 @@
         return;
       }
       this.introT += dt;
+      if (this.bossBanner > 0) this.bossBanner -= dt;
       if (this.hitstopT > 0) { this.hitstopT -= dt; return; }
       this.time += dt;
       this.stepWorld(dt, false);
@@ -690,6 +692,17 @@
         ctx.fillStyle = 'rgba(255,255,255,0.3)';
         ctx.fillRect(bx, by, bw * k, 5);
         if (b.vulnerable && Math.floor(this.t * 6) % 2 === 0) UI.text(ctx, 'HIT IT NOW!', W / 2, by - 40, { size: 20, weight: 700, align: 'center', color: '#ffe14a', stroke: 5, strokeColor: 'rgba(60,20,0,0.7)' });
+      }
+      if (this.bossBanner > 0 && b) {
+        const t = 2.6 - this.bossBanner;
+        const k = t < 0.3 ? U.ease.outBack(t / 0.3) : this.bossBanner < 0.4 ? this.bossBanner / 0.4 : 1;
+        ctx.save();
+        ctx.globalAlpha = U.clamp(k, 0, 1);
+        ctx.fillStyle = 'rgba(10,8,25,0.55)';
+        ctx.fillRect(0, H * 0.3 - 50 * k, W, 100 * k);
+        UI.text(ctx, b.name, W / 2 + (1 - k) * 200, H * 0.3 - 8, { size: 48, weight: 700, align: 'center', color: '#fff', stroke: 8, strokeColor: '#b3261e' });
+        UI.text(ctx, b.title.toUpperCase(), W / 2 - (1 - k) * 200, H * 0.3 + 30, { size: 18, weight: 700, align: 'center', color: '#ffd38a' });
+        ctx.restore();
       }
       if (this.bossDefeated && this.goal && this.state === 'play') {
         UI.text(ctx, 'The Prism Gate is open! →', W / 2, H - 40, { size: 20, weight: 700, align: 'center', color: '#fff', stroke: 5, strokeColor: 'rgba(10,10,30,0.6)', alpha: 0.6 + 0.4 * Math.sin(this.t * 4) });

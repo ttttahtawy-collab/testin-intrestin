@@ -25,6 +25,9 @@
       this.layer = 0;
       this.contact = true;
       this.phase = 1;
+      this.maxWindowHits = 3; // direct hits allowed per vulnerable window
+      this.windowHits = 0;
+      this._wasVul = false;
     }
     set(state) { this.state = state; this.st = 0; }
     get phase2() { return this.hp <= this.maxHp / 2; }
@@ -53,6 +56,8 @@
       if (!this.active) { this.idleIntro(dt, play); return; }
       this.st += dt;
       this.behave(dt, play);
+      if (this.vulnerable && !this._wasVul) this.windowHits = 0;
+      this._wasVul = this.vulnerable;
     }
     idleIntro(dt, play) { if (this.gravityOn !== false) this.physics(dt, play); }
     behave(dt, play) {}
@@ -62,6 +67,12 @@
       if (!this.vulnerable && kind !== 'reflect') {
         play.sfx('deny');
         return false;
+      }
+      if (kind !== 'reflect' && this.windowHits >= this.maxWindowHits) { play.sfx('deny'); return false; }
+      if (kind !== 'reflect') {
+        this.windowHits++;
+        // after the last allowed hit, shorten the window so the fight keeps moving
+        if (this.windowHits >= this.maxWindowHits) this.st = Math.max(this.st, 99);
       }
       this.hp -= dmg;
       this.flashT = 0.18;

@@ -43,7 +43,7 @@ export function createStory(game) {
       mattis: { x: CX + 12, y: TOP, z: CZ + 639.5, yaw: 0 },
       bramC: { x: cor.plaza.x + 5, z: cor.plaza.z + 5 },
       bramM: { x: mer.plaza.x + 5, z: mer.plaza.z + 5 },
-      bramCamp: { x: I.yard.x + 8, z: I.yard.z0 - 6 },
+      bramCamp: { x: I.yard.x - 14, z: I.yard.z0 - 8 },
       osric: { x: cor.plaza.x - 5, z: cor.plaza.z + 5 },
     };
   };
@@ -504,7 +504,7 @@ export function createStory(game) {
   function spawnDummy() {
     const I = info();
     if (S.d.dummy && !S.d.dummy.removed) S.d.dummy.remove();
-    S.d.dummy = g.spawnTitan('pure', I.yard.x + 0.5, I.yard.z - 1.5, 7.5, { dummy: true, yaw: 0 });
+    S.d.dummy = g.spawnTitan('pure', I.yard.x + 0.5, I.yard.z - 1.5, 7.5, { dummy: true, yaw: Math.PI / 2 });
   }
 
   const CH_START = {
@@ -680,7 +680,7 @@ export function createStory(game) {
       // garrison soldiers keep watch near you
       const bgs = g.scouts.filter((s) => s.bg && s.alive);
       for (const s of bgs) if (dist2(s.pos, p) > 650) { s.alive = false; s.dispose(); }
-      if (bgs.length < 6 && !S.siege) {
+      if (bgs.length < 6 && !S.siege && S.active !== 0) {
         const dep = info().depots.filter((dd) => dd.kind === 'wall' && dist2(dd, p) < 320 && !bgs.some((s) => dist2(s.home, dd) < 20));
         if (dep.length) {
           const dd = dep[Math.floor(Math.random() * dep.length)];

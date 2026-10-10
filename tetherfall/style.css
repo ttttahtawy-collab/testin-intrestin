@@ -150,3 +150,4 @@ button.small { padding: 6px 10px; font-size: 14px; margin: 4px 0; text-align: le
 #map-quest, .log { font-size: 14px; line-height: 1.5; color: #dfe5ee; text-align: left; }
 #map-quest b, .log b { color: #ffd34a; }
 @media (max-width: 800px) { .mapwrap { flex-direction: column; } .mapwrap .side { width: auto; } }
+#clickhint { position: absolute; left: 50%; top: 42%; transform: translateX(-50%); background: rgba(16, 22, 36, 0.85); border: 1px solid var(--edge); padding: 8px 18px; font-size: 18px; letter-spacing: 1px; }

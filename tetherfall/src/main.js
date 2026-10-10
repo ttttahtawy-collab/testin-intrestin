@@ -16,7 +16,7 @@ import { createStory } from './story.js';
 const $ = (id) => document.getElementById(id);
 
 // ---------------- settings & save ----------------
-const settings = { sens: 1.6, fov: 75, vol: 0.7, inv: false, view: 320, assist: true };
+const settings = { sens: 1.6, fov: 75, vol: 0.7, inv: false, view: 300, assist: true };
 try { Object.assign(settings, JSON.parse(localStorage.getItem('tetherfall-settings') || '{}')); } catch (e) { /* storage unavailable */ }
 function saveSettings() { try { localStorage.setItem('tetherfall-settings', JSON.stringify(settings)); } catch (e) { /* ignore */ } }
 const SAVE_KEY = 'tetherfall-save-v2';
@@ -245,7 +245,7 @@ window.addEventListener('keyup', (e) => {
 });
 canvas.addEventListener('mousedown', (e) => {
   if (game.state !== 'playing') return;
-  if (!locked()) lockPointer();
+  if (!locked()) { lockPointer(); return; } // the first click only takes the mouse
   if (e.button === 0) pressHook(0);
   if (e.button === 2) pressHook(1);
   if (e.button === 1 || e.button === 3 || e.button === 4) { napeStrike(); e.preventDefault(); }
@@ -596,7 +596,7 @@ game.pickTarget = (t) => {
     if (d > sight) continue;
     let s = d;
     if (h === player) s -= t.st.erratic ? 70 : t.boss ? 50 : 15;
-    if (h.kind === 'civilian') s -= 12;
+    if (h.kind === 'civilian') s -= 30; // townsfolk are what they really want
     if (h.pos.y - t.pos.y > t.H * 2.5 && !t.st.throws) s += 60; // out of reach up a wall: less interesting
     if (s < bs) { bs = s; best = h; }
   }
@@ -1195,7 +1195,10 @@ function buildFarMesh() {
     }
     const k = (j * N + i) * 3;
     pos[k] = i * S; pos[k + 1] = sum / n - 0.6; pos[k + 2] = j * S;
-    col[k] = Math.pow(r / n / 255, 2.2); col[k + 1] = Math.pow(gg / n / 255, 2.2); col[k + 2] = Math.pow(bb / n / 255, 2.2);
+    // muted toward grey and a hazy green so distant towns read as haze, not confetti
+    const l = (r + gg + bb) / (3 * n);
+    const mute = (c, haze) => Math.pow((c / n * 0.45 + l * 0.35 + haze * 0.2) / 255, 2.2);
+    col[k] = mute(r, 96); col[k + 1] = mute(gg, 120); col[k + 2] = mute(bb, 84);
   }
   const idx = [];
   for (let j = 0; j < N - 1; j++) for (let i = 0; i < N - 1; i++) {
@@ -1371,6 +1374,7 @@ function updateHud(dt) {
     setText('boss-name', boss.name + (boss.st.armor && !boss.legsOut() ? ' · armoured' : boss.st.armor ? ' · KNEELING — strike now!' : boss.steamT > 0 ? ' · venting steam' : ''));
     setStyle('boss-fill', 'width', Math.max(0, boss.hp / boss.maxHp * 100).toFixed(1) + '%');
   } else bb.classList.add('hidden');
+  $('clickhint').classList.toggle('hidden', locked());
   // zone name
   const z = ZONE_NAMES[zoneOf(p.x, p.z)];
   if (z !== zoneName) { zoneName = z; $('zone').textContent = z; $('zone').classList.remove('fade'); void $('zone').offsetWidth; $('zone').classList.add('fade'); }

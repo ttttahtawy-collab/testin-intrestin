@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tetherfall</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Oswald:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">{ "imports": { "three": "./vendor/three.module.min.js" } }</script>
+</head>
+<body>
+  <canvas id="game"></canvas>
+
+  <div id="hud" class="hidden">
+    <div id="labels"></div>
+    <div id="topcenter">
+      <div id="mode-title">First Flight</div>
+      <div id="mode-sub">Learn the Tether Rig</div>
+      <div id="objective"></div>
+      <div id="counters" class="hidden"></div>
+      <div id="boss" class="hidden"><div id="boss-name"></div><div class="bar"><div id="boss-fill" class="fill"></div></div></div>
+    </div>
+    <div id="zone"></div>
+
+    <div id="topleft">
+      <div id="kills"><span class="flag"></span><b id="kill-count">0</b> FELLED <span class="sep">·</span> <b id="marks">0</b> MARKS</div>
+      <div id="dialog" class="hidden">
+        <canvas id="portrait" width="16" height="16"></canvas>
+        <div><div id="dialog-name"></div><div id="dialog-text"></div></div>
+      </div>
+      <div id="radio"></div>
+    </div>
+
+    <div id="topright">
+      <canvas id="minimap" width="200" height="200"></canvas>
+      <div id="speed">0 km/h</div>
+    </div>
+
+    <div id="bottomleft" class="panel">
+      <div class="label">HEALTH</div>
+      <div class="bar"><div id="health-bar" class="fill red"></div></div>
+      <div class="label">GAS <span id="gas-pct">100%</span></div>
+      <div class="bar segmented"><div id="gas-bar" class="fill blue"></div></div>
+      <div class="label">BLADES</div>
+      <div id="blades"><div id="blade-l" class="blade"><i id="blade-li"></i></div><div id="blade-r" class="blade"><i id="blade-ri"></i></div>
+        <div><b id="spares">×8</b><small>SPARE PAIRS · R TO SWAP</small></div></div>
+    </div>
+
+    <div id="help" class="panel">
+      <div><b>LMB / RMB</b><span>left / right anchor (hold)</span></div>
+      <div><b>SPACE</b><span>gas boost · jump</span></div>
+      <div><b>SHIFT</b><span>reel in fast</span></div>
+      <div><b>G</b><span>landing thrusters (brake)</span></div>
+      <div><b>WASD</b><span>run · steer &amp; pump swings</span></div>
+      <div><b>F</b><span>slash · spin cut · cut free when grabbed</span></div>
+      <div><b>T</b><span>lock on to a titan</span></div>
+      <div><b>X / MMB</b><span>nape strike</span></div>
+      <div><b>R</b><span>swap blades</span></div>
+      <div><b>E</b><span>talk · resupply · interact</span></div>
+      <div><b>U</b><span>upgrades (at depots)</span></div>
+      <div><b>M</b><span>map · fast travel · log</span></div>
+      <div><b>V</b><span>camera view</span></div>
+      <div><b>H</b><span>hide this help</span></div>
+      <div><b>ESC</b><span>pause</span></div>
+    </div>
+
+    <div id="crosshair"><div class="ring"></div><div class="dot"></div><div id="aim-dist"></div></div>
+    <div id="lock" class="hidden"></div>
+    <div id="strike" class="hidden"></div>
+    <div id="struggle" class="hidden"><div class="title">GRABBED — HAMMER <b>F</b></div><div class="bar"><div id="struggle-fill" class="fill"></div></div><div class="bar thin"><div id="struggle-time" class="fill red"></div></div></div>
+    <div id="prompt" class="hidden"></div>
+    <div id="popup"></div>
+    <div id="title-card" class="hidden"></div>
+    <div id="vignette"></div>
+    <div id="build-tag" class="hidden">BUILD MODE · LMB break · RMB place · 1-6 block</div>
+  </div>
+
+  <div id="talk" class="hidden">
+    <canvas id="talk-portrait" width="16" height="16"></canvas>
+    <div><div id="talk-name"></div><div id="talk-text"></div><div class="hint">E — continue · Esc — leave</div></div>
+  </div>
+
+  <div id="shop" class="screen hidden">
+    <div class="card wide">
+      <h2>Quartermaster</h2>
+      <p class="tag">You have <b id="shop-marks">0</b> marks. Earn more by felling titans, saving people, finishing missions and bounties.</p>
+      <div id="shop-list"></div>
+      <button id="btn-shop-close" class="ghost">Close</button>
+    </div>
+  </div>
+
+  <div id="bigmap" class="screen hidden">
+    <div class="mapwrap">
+      <canvas id="bigmap-canvas" width="720" height="720"></canvas>
+      <div class="side">
+        <h2>Map</h2>
+        <div id="map-quest"></div>
+        <h3>Fast travel</h3>
+        <p id="travel-note" class="hint"></p>
+        <div id="travel-list"></div>
+        <button id="btn-map-close" class="ghost">Close (M)</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="menu" class="screen">
+    <div class="card">
+      <h1>TETHERFALL</h1>
+      <p class="tag">Three walls. One rig. Endless giants.</p>
+      <button id="btn-continue">Begin the story</button>
+      <button id="btn-new" class="ghost hidden">New story <small>keeps your upgrades and marks</small></button>
+      <button id="btn-siege">Siege of Tharsk <small>endless waves · how long can the gate hold?</small></button>
+      <button id="btn-training" class="ghost">Training <small>replay First Flight</small></button>
+      <button id="btn-settings" class="ghost">Settings</button>
+      <p id="menu-stats" class="hint"></p>
+      <p class="hint">Click to capture the mouse. Turning mouse sensitivity up helps at high speed.</p>
+    </div>
+  </div>
+
+  <div id="pause" class="screen hidden">
+    <div class="card">
+      <h2>Paused</h2>
+      <p id="pause-log" class="log"></p>
+      <button id="btn-resume">Resume</button>
+      <button id="btn-settings2" class="ghost">Settings</button>
+      <button id="btn-quit" class="ghost">Main menu</button>
+    </div>
+  </div>
+
+  <div id="settings" class="screen hidden">
+    <div class="card">
+      <h2>Settings</h2>
+      <label>Mouse sensitivity <output id="o-sens"></output><input id="s-sens" type="range" min="0.2" max="4" step="0.1"></label>
+      <label>Field of view <output id="o-fov"></output><input id="s-fov" type="range" min="60" max="100" step="1"></label>
+      <label>View distance <output id="o-view"></output><input id="s-view" type="range" min="160" max="560" step="20"></label>
+      <label>Volume <output id="o-vol"></output><input id="s-vol" type="range" min="0" max="1" step="0.05"></label>
+      <label class="check"><input id="s-assist" type="checkbox"> Flight assist (aim snap, glide off walls, auto-brake)</label>
+      <label class="check"><input id="s-inv" type="checkbox"> Invert mouse Y</label>
+      <button id="btn-back">Back</button>
+    </div>
+  </div>
+
+  <div id="dead" class="screen hidden">
+    <div class="card">
+      <h2 id="dead-title">You fell</h2>
+      <p id="dead-text"></p>
+      <button id="btn-respawn">Try again</button>
+      <button id="btn-quit2" class="ghost">Main menu</button>
+    </div>
+  </div>
+
+  <div id="complete" class="screen hidden">
+    <div class="card">
+      <h2 id="complete-title"></h2>
+      <p id="complete-text"></p>
+      <button id="btn-next">Continue</button>
+    </div>
+  </div>
+
+  <div id="loading" class="screen">
+    <div class="card"><h1>TETHERFALL</h1><p id="load-text">Raising the walls…</p><div class="bar"><div id="load-bar" class="fill blue"></div></div></div>
+  </div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

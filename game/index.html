@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#0b0d18">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Ember and the Shattered Prism</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<canvas id="game" aria-label="Ember and the Shattered Prism game canvas"></canvas>
+<div id="boot">Loading…</div>
+<noscript>This game needs JavaScript enabled.</noscript>
+
+<!-- Core engine -->
+<script src="js/core/util.js"></script>
+<script src="js/core/input.js"></script>
+<script src="js/core/audio.js"></script>
+<script src="js/core/music.js"></script>
+<script src="js/core/save.js"></script>
+<script src="js/core/renderer.js"></script>
+<script src="js/core/scenes.js"></script>
+<script src="js/core/particles.js"></script>
+<script src="js/core/ui.js"></script>
+
+<!-- Art -->
+<script src="js/art/themes.js"></script>
+<script src="js/art/hero.js"></script>
+<script src="js/art/background.js"></script>
+<script src="js/art/tiles.js"></script>
+<script src="js/art/icons.js"></script>
+
+<!-- Gameplay -->
+<script src="js/game/physics.js"></script>
+<script src="js/game/level.js"></script>
+<script src="js/game/abilities.js"></script>
+<script src="js/game/player.js"></script>
+<script src="js/game/entities.js"></script>
+<script src="js/game/enemies.js"></script>
+<script src="js/game/bosses.js"></script>
+
+<!-- Data -->
+<script src="js/data/worlds.js"></script>
+<script src="js/data/levels/world1.js"></script>
+<script src="js/data/levels/world2.js"></script>
+<script src="js/data/levels/world3.js"></script>
+<script src="js/data/levels/world4.js"></script>
+<script src="js/data/story.js"></script>
+
+<!-- Scenes -->
+<script src="js/scenes/title.js"></script>
+<script src="js/scenes/slots.js"></script>
+<script src="js/scenes/options.js"></script>
+<script src="js/scenes/cutscene.js"></script>
+<script src="js/scenes/overworld.js"></script>
+<script src="js/scenes/shop.js"></script>
+<script src="js/scenes/play.js"></script>
+<script src="js/scenes/results.js"></script>
+<script src="js/scenes/credits.js"></script>
+
+<script src="js/main.js"></script>
+</body>
+</html>
